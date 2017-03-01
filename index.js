@@ -1,5 +1,6 @@
 // © 2016-2017 Resurface Labs LLC
 
 module.exports = function () {
-    console.log("Using resurfaceio-logger-nodejs");
+    var version = require('./package.json').version;
+    console.log(`Using resurfaceio-logger-nodejs, version ${version}`);
 };
