@@ -12,7 +12,7 @@ npm init -y
 npm install resurfaceio/resurfaceio-logger-nodejs
 ```
 
-### Using API Directly
+## Using API Directly
 
 ```
 var logger = require('resurfaceio-logger-nodejs');
