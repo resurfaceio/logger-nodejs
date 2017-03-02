@@ -25,6 +25,6 @@ Committing changes:
 ```
 git add -A
 git commit -m "#123 Updated readme"       (123 is the GitHub issue number)
-git pull
+git pull --rebase                         (avoid merge bubbles)
 git push origin master
 ```
