@@ -11,7 +11,7 @@ If you don't use WebStorm, that's ok, but your code may get reformatted.
 ```
 git clone git@github.com:resurfaceio/resurfaceio-logger-nodejs.git
 cd resurfaceio-logger-nodejs
-git pull
+npm install
 ```
 
 Running unit tests:
