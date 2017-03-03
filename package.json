@@ -1,8 +1,10 @@
 {
-  "name": "resurfaceio-logger-nodejs",
-  "version": "1.0.4",
+  "name": "resurfaceio-logger",
+  "version": "1.0.5",
   "description": "Library for usage logging",
-  "main": "http_logger.js",
+  "directories": {
+    "lib": "./lib"
+  },
   "scripts": {
     "test": "mocha --reporter spec"
   },
@@ -10,7 +12,7 @@
     "type": "git",
     "url": "git+https://github.com/resurfaceio/resurfaceio-logger-nodejs.git"
   },
-  "author": "RobDickinson",
+  "author": "Rob Dickinson (https://github.com/RobDickinson)",
   "license": "Apache-2.0",
   "bugs": {
     "url": "https://github.com/resurfaceio/resurfaceio-logger-nodejs/issues"

@@ -4,7 +4,7 @@ const chai = require('chai');
 const expect = chai.expect;
 chai.use(require('chai-string'));
 
-let HttpLogger = require('../http_logger');
+let HttpLogger = require('../lib/http_logger');
 
 describe('HttpLogger', function () {
 
