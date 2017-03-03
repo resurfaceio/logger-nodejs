@@ -1,14 +1,23 @@
 // © 2016-2017 Resurface Labs LLC
 
-const assert = require('chai').assert;
+const chai = require('chai');
+const expect = chai.expect;
+chai.use(require('chai-string'));
+
 let HttpLogger = require('../http_logger');
 
 describe('HttpLogger', function () {
 
-    describe('#default', function () {
-        it('calls default method', function () {
-            HttpLogger();
-            assert.equal(1, 1);
+    describe('#version_lookup', function () {
+        it('returns valid value', function () {
+            let version = HttpLogger.version_lookup();
+            expect(version).to.exist;
+            expect(version).to.be.a('string');
+            expect(version.length).to.be.above(0);
+            expect(version).to.startsWith('1.0.');
+            expect(version.indexOf('\\')).to.be.below(0);
+            expect(version.indexOf('\"')).to.be.below(0);
+            expect(version.indexOf('\'')).to.be.below(0);
         });
     });
 
