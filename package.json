@@ -1,8 +1,8 @@
 {
   "name": "resurfaceio-logger",
-  "version": "1.0.6",
+  "version": "1.0.7",
   "description": "Library for usage logging",
-  "main": "./lib/http_logger.js",
+  "main": "./lib/all.js",
   "directories": {
     "lib": "./lib"
   },
