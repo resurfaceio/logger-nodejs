@@ -15,6 +15,6 @@ npm install resurfaceio/resurfaceio-logger-nodejs
 ## Using API Directly
 
 ```
-var logger = require('resurfaceio-logger-nodejs');
-logger();
+var logger = require('resurfaceio-logger');
+console.log(logger.version_lookup());
 ```
