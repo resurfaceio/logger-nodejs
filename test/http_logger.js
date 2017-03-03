@@ -1,13 +1,15 @@
 // © 2016-2017 Resurface Labs LLC
 
 const assert = require('chai').assert;
-let index = require('../index');
+let HttpLogger = require('../http_logger');
 
-describe('Index', function () {
+describe('HttpLogger', function () {
+
     describe('#default', function () {
         it('calls default method', function () {
-            index();
+            HttpLogger();
             assert.equal(1, 1);
         });
     });
+
 });

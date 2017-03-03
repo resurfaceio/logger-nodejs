@@ -2,7 +2,7 @@
   "name": "resurfaceio-logger-nodejs",
   "version": "1.0.3",
   "description": "Library for usage logging",
-  "main": "index.js",
+  "main": "http_logger.js",
   "scripts": {
     "test": "mocha --reporter spec"
   },
