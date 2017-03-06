@@ -9,8 +9,11 @@ chai.use(require('chai-string'));
 describe('HttpLogger', function () {
 
     describe('#constructor', function () {
-        it('constructs instance', function () {
-            expect(new HttpLogger()).to.exist;
+        it('constructs instance and confirms version', function () {
+            const logger = new HttpLogger();
+            expect(logger).to.exist;
+            expect(logger.constructor.name).to.equal('HttpLogger');
+            expect(logger.version()).to.equal(HttpLogger.version_lookup());
         });
     });
 
