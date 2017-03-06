@@ -13,7 +13,7 @@ describe('HttpLogger', function () {
             const logger = new HttpLogger();
             expect(logger).to.exist;
             expect(logger.constructor.name).to.equal('HttpLogger');
-            expect(logger.version()).to.equal(HttpLogger.version_lookup());
+            expect(logger.version).to.equal(HttpLogger.version_lookup());
         });
     });
 
