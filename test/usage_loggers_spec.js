@@ -10,15 +10,9 @@ const expect = chai.expect;
  */
 describe('UsageLogger', function () {
 
-    it('enables and disables all loggers', function () {
-        // todo create HttpLogger with demo url
-        // todo expect logger to be enabled
-        UsageLoggers.disable();
-        expect(UsageLoggers.isEnabled()).to.be.false;
-        // todo expect logger to be disabled
-        UsageLoggers.enable();
-        expect(UsageLoggers.isEnabled()).to.be.true;
-        // todo expect logger to be enabled
+    it('provides default url', function () {
+        const url = UsageLoggers.urlByDefault();
+        expect(url).not.to.exist;
     });
 
     it('provides demo url', function () {
@@ -27,12 +21,6 @@ describe('UsageLogger', function () {
         expect(url).to.be.a('string');
         expect(url.length).to.be.above(0);
         expect(url).to.startsWith('https://');
-        // todo missing parsing test
-    });
-
-    it('provides empty default url', function () {
-        const url = UsageLoggers.urlByDefault();
-        expect(url).not.to.exist;
     });
 
 });
