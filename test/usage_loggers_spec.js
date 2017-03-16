@@ -8,14 +8,14 @@ const expect = chai.expect;
 /**
  * Tests against utilities for all usage loggers.
  */
-describe('UsageLogger', function () {
+describe('UsageLogger', () => {
 
-    it('provides default url', function () {
+    it('provides default url', () => {
         const url = UsageLoggers.urlByDefault();
         expect(url).not.to.exist;
     });
 
-    it('provides demo url', function () {
+    it('provides demo url', () => {
         const url = UsageLoggers.urlForDemo();
         expect(url).to.exist;
         expect(url).to.be.a('string');

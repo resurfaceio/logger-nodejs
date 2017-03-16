@@ -11,15 +11,15 @@ const MOCK_AGENT = helper.MOCK_AGENT;
 /**
  * Tests against basic usage logger to embed or extend.
  */
-describe('BaseLogger', function () {
+describe('BaseLogger', () => {
 
-    it('creates a valid object', function () {
+    it('creates a valid object', () => {
         const logger = new BaseLogger();
         expect(logger).to.exist;
         expect(logger.constructor['name']).to.equal('BaseLogger');
     });
 
-    it('manages multiple instances', function () {
+    it('manages multiple instances', () => {
         const agent1 = 'agent1';
         const agent2 = 'AGENT2';
         const agent3 = 'aGeNt3';
@@ -51,7 +51,7 @@ describe('BaseLogger', function () {
         expect(logger3.enabled).to.be.true;
     });
 
-    it('provides valid version', function () {
+    it('provides valid version', () => {
         const version = BaseLogger.version_lookup();
         expect(version).to.exist;
         expect(version).to.be.a('string');
@@ -67,7 +67,7 @@ describe('BaseLogger', function () {
         expect(logger['_version']).to.equal(BaseLogger.version_lookup());
     });
 
-    it('performs enabling when expected', function () {
+    it('performs enabling when expected', () => {
         let logger = new BaseLogger(MOCK_AGENT, {url: 'DEMO', enabled: false});
         expect(logger.enabled).to.be.false;
         expect(logger.url).to.equal(UsageLoggers.urlForDemo());
@@ -87,7 +87,7 @@ describe('BaseLogger', function () {
         expect(logger.enabled).to.be.true;
     });
 
-    it('skips enabling for invalid urls', function () {
+    it('skips enabling for invalid urls', () => {
         for (let i = 0; i < helper.URLS_INVALID.length; i++) {
             const logger = new BaseLogger(MOCK_AGENT, {url: helper.URLS_INVALID[i]});
             expect(logger.enabled).to.be.false;
@@ -97,7 +97,7 @@ describe('BaseLogger', function () {
         }
     });
 
-    it('skips enabling for missing url', function () {
+    it('skips enabling for missing url', () => {
         const logger = new BaseLogger(MOCK_AGENT);
         expect(logger.enabled).to.be.false;
         expect(logger.url).to.be.null;
@@ -105,7 +105,7 @@ describe('BaseLogger', function () {
         expect(logger.enabled).to.be.false;
     });
 
-    it('skips enabling for null url', function () {
+    it('skips enabling for null url', () => {
         const logger = new BaseLogger(MOCK_AGENT, {url: null});
         expect(logger.enabled).to.be.false;
         expect(logger.url).to.be.null;
@@ -113,7 +113,7 @@ describe('BaseLogger', function () {
         expect(logger.enabled).to.be.false;
     });
 
-    it('skips logging when disabled', function () {
+    it('skips logging when disabled', () => {
         for (let i = 0; i < helper.URLS_DENIED.length; i++) {
             const logger = new BaseLogger(MOCK_AGENT, {url: helper.URLS_DENIED[i]}).disable();
             expect(logger.enabled).to.be.false;
@@ -121,20 +121,20 @@ describe('BaseLogger', function () {
         }
     });
 
-    it('submits to demo url', function () {
+    it('submits to demo url', () => {
         const logger = new BaseLogger(MOCK_AGENT, {url: 'DEMO'});
         // todo use JsonMessage to format message
         expect(logger.submit('{}')).to.be.true;
     });
 
-    it('submits to demo url via http', function () {
+    it('submits to demo url via http', () => {
         const logger = new BaseLogger(MOCK_AGENT, {url: UsageLoggers.urlForDemo().replace('https:', 'http:')});
         expect(logger.url.startsWith('http://')).to.be.true;
         // todo use JsonMessage to format message
         expect(logger.submit('{}')).to.be.true;
     });
 
-    it('submits to denied url and fails', function () {
+    it('submits to denied url and fails', () => {
         for (let i = 0; i < helper.URLS_DENIED.length; i++) {
             const logger = new BaseLogger(MOCK_AGENT, {url: helper.URLS_DENIED[i]});
             expect(logger.enabled).to.be.true;
@@ -142,7 +142,7 @@ describe('BaseLogger', function () {
         }
     });
 
-    it('submits to queue', function () {
+    it('submits to queue', () => {
         let queue = [];
         const logger = new BaseLogger(MOCK_AGENT, {queue: queue, url: helper.URLS_DENIED[0]});
         expect(logger.url).to.be.null;
@@ -154,7 +154,7 @@ describe('BaseLogger', function () {
         expect(queue.length).to.equal(2);
     });
 
-    it('silently ignores invalid option types', function () {
+    it('silently ignores invalid option types', () => {
         let logger = new BaseLogger(MOCK_AGENT, {queue: new Set()});
         expect(logger.enabled).to.be.false;
         expect(logger._queue).to.be.null;
@@ -181,7 +181,7 @@ describe('BaseLogger', function () {
         expect(logger.url).to.be.null;
     });
 
-    it('silently ignores writes to agent', function () {
+    it('silently ignores writes to agent', () => {
         const logger = new BaseLogger(MOCK_AGENT);
         logger._agent = '1234';
         logger['_agent'] = '1234';
@@ -191,7 +191,7 @@ describe('BaseLogger', function () {
         expect(logger.agent).to.equal(MOCK_AGENT);
     });
 
-    it('silently ignores writes to enabled', function () {
+    it('silently ignores writes to enabled', () => {
         const logger = new BaseLogger();
         logger._enableable = true;
         logger['_enableable'] = true;
@@ -201,7 +201,7 @@ describe('BaseLogger', function () {
         expect(logger.enabled).to.be.false;
     });
 
-    it('silently ignores writes to queue', function () {
+    it('silently ignores writes to queue', () => {
         let queue = [];
         const logger = new BaseLogger(MOCK_AGENT, {queue: queue});
         logger._queue = '1234';
@@ -209,7 +209,7 @@ describe('BaseLogger', function () {
         expect(logger._queue).to.equal(queue);
     });
 
-    it('silently ignores writes to url', function () {
+    it('silently ignores writes to url', () => {
         const logger = new BaseLogger(MOCK_AGENT, {url: UsageLoggers.urlForDemo()});
         logger._url = '1234';
         logger['_url'] = '1234';
@@ -219,7 +219,7 @@ describe('BaseLogger', function () {
         expect(logger.url).to.equal(UsageLoggers.urlForDemo());
     });
 
-    it('silently ignores writes to version', function () {
+    it('silently ignores writes to version', () => {
         const logger = new BaseLogger();
         logger._version = 'X.Y.Z';
         logger['_version'] = 'X.Y.Z';
