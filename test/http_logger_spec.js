@@ -1,12 +1,13 @@
 // © 2016-2017 Resurface Labs LLC
 
+const chai = require('chai');
+chai.use(require('chai-as-promised'));
+chai.use(require('chai-string'));
+const expect = chai.expect;
+const helper = require('./helper');
+
 const HttpLogger = require('../lib/all').HttpLogger;
 const UsageLoggers = require('../lib/all').UsageLoggers;
-
-const chai = require('chai');
-const expect = chai.expect;
-chai.use(require('chai-string'));
-const helper = require('./helper');
 
 /**
  * Tests against usage logger for HTTP/HTTPS protocol.
@@ -54,9 +55,9 @@ describe('HttpLogger', () => {
         expect(agent).to.be.a('string');
         expect(agent.length).to.be.above(0);
         expect(agent).to.endsWith('.js');
-        expect(agent.indexOf('\\')).to.be.below(0);
-        expect(agent.indexOf('\"')).to.be.below(0);
-        expect(agent.indexOf('\'')).to.be.below(0);
+        expect(agent).not.to.contain('\\');
+        expect(agent).not.to.contain('\"');
+        expect(agent).not.to.contain('\'');
         expect(new HttpLogger().agent).to.equal(agent);
     });
 
@@ -64,7 +65,7 @@ describe('HttpLogger', () => {
         for (let i = 0; i < helper.URLS_DENIED.length; i++) {
             const logger = new HttpLogger({url: helper.URLS_DENIED[i]}).disable();
             expect(logger.enabled).to.be.false;
-            expect(logger.submit(null)).to.be.true;  // would fail if enabled
+            expect(logger.submit(null)).to.be.fulfilled.and.to.eventually.be.true;  // would fail if enabled
             // todo convert submit() to log() above
         }
     });

@@ -1,12 +1,14 @@
 // © 2016-2017 Resurface Labs LLC
 
-const BaseLogger = require('../lib/all').BaseLogger;
-const UsageLoggers = require('../lib/all').UsageLoggers;
-
 const chai = require('chai');
+chai.use(require('chai-as-promised'));
+chai.use(require('chai-string'));
 const expect = chai.expect;
 const helper = require('./helper');
 const MOCK_AGENT = helper.MOCK_AGENT;
+
+const BaseLogger = require('../lib/all').BaseLogger;
+const UsageLoggers = require('../lib/all').UsageLoggers;
 
 /**
  * Tests against basic usage logger to embed or extend.
@@ -57,9 +59,9 @@ describe('BaseLogger', () => {
         expect(version).to.be.a('string');
         expect(version.length).to.be.above(0);
         expect(version).to.startsWith('1.0.');
-        expect(version.indexOf('\\')).to.be.below(0);
-        expect(version.indexOf('\"')).to.be.below(0);
-        expect(version.indexOf('\'')).to.be.below(0);
+        expect(version).not.to.contain('\\');
+        expect(version).not.to.contain('\"');
+        expect(version).not.to.contain('\'');
         const logger = new BaseLogger();
         expect(logger.version).to.equal(BaseLogger.version_lookup());
         expect(logger._version).to.equal(BaseLogger.version_lookup());
@@ -117,28 +119,28 @@ describe('BaseLogger', () => {
         for (let i = 0; i < helper.URLS_DENIED.length; i++) {
             const logger = new BaseLogger(MOCK_AGENT, {url: helper.URLS_DENIED[i]}).disable();
             expect(logger.enabled).to.be.false;
-            expect(logger.submit(null)).to.be.true;  // would fail if enabled
+            expect(logger.submit(null)).to.be.fulfilled.and.to.eventually.be.true;  // would fail if enabled
         }
     });
 
     it('submits to demo url', () => {
         const logger = new BaseLogger(MOCK_AGENT, {url: 'DEMO'});
         // todo use JsonMessage to format message
-        expect(logger.submit('{}')).to.be.true;
+        return logger.submit('{}');
     });
 
     it('submits to demo url via http', () => {
         const logger = new BaseLogger(MOCK_AGENT, {url: UsageLoggers.urlForDemo().replace('https:', 'http:')});
-        expect(logger.url.startsWith('http://')).to.be.true;
+        expect(logger.url).to.startsWith('http://');
         // todo use JsonMessage to format message
-        expect(logger.submit('{}')).to.be.true;
+        return logger.submit('{}');
     });
 
     it('submits to denied url and fails', () => {
         for (let i = 0; i < helper.URLS_DENIED.length; i++) {
             const logger = new BaseLogger(MOCK_AGENT, {url: helper.URLS_DENIED[i]});
             expect(logger.enabled).to.be.true;
-            expect(logger.submit('{}')).to.be.false;
+            expect(logger.submit('{}')).to.be.fulfilled.and.to.eventually.be.false;
         }
     });
 
@@ -148,13 +150,13 @@ describe('BaseLogger', () => {
         expect(logger.url).to.be.null;
         expect(logger.enabled).to.be.true;
         expect(queue.length).to.equal(0);
-        expect(logger.submit('{}')).to.be.true;
+        expect(logger.submit('{}')).to.be.fulfilled.and.to.eventually.be.true;
         expect(queue.length).to.equal(1);
-        expect(logger.submit('{}')).to.be.true;
+        expect(logger.submit('{}')).to.be.fulfilled.and.to.eventually.be.true;
         expect(queue.length).to.equal(2);
     });
 
-    it('silently ignores invalid option types', () => {
+    it('silently ignores unexpected option classes', () => {
         let logger = new BaseLogger(MOCK_AGENT, {queue: new Set()});
         expect(logger.enabled).to.be.false;
         expect(logger._queue).to.be.null;

@@ -1,9 +1,9 @@
 // © 2016-2017 Resurface Labs LLC
 
-const UsageLoggers = require('../lib/all').UsageLoggers;
-
 const chai = require('chai');
 const expect = chai.expect;
+
+const UsageLoggers = require('../lib/all').UsageLoggers;
 
 /**
  * Tests against utilities for all usage loggers.
