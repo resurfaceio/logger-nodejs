@@ -125,15 +125,13 @@ describe('BaseLogger', () => {
 
     it('submits to demo url', () => {
         const logger = new BaseLogger(MOCK_AGENT, {url: 'DEMO'});
-        // todo use JsonMessage to format message
-        return logger.submit('{}');
+        return logger.submit(JSON.stringify(logger.message('test-https', Date.now())));
     });
 
     it('submits to demo url via http', () => {
         const logger = new BaseLogger(MOCK_AGENT, {url: UsageLoggers.urlForDemo().replace('https:', 'http:')});
         expect(logger.url).to.startsWith('http://');
-        // todo use JsonMessage to format message
-        return logger.submit('{}');
+        return logger.submit(JSON.stringify(logger.message('test-http', Date.now())));
     });
 
     it('submits to denied url and fails', () => {
