@@ -129,7 +129,7 @@ describe('BaseLogger', () => {
     });
 
     it('submits to demo url via http', () => {
-        const logger = new BaseLogger(MOCK_AGENT, {url: UsageLoggers.urlForDemo().replace('https:', 'http:')});
+        const logger = new BaseLogger(MOCK_AGENT, {url: UsageLoggers.urlForDemo().replace('https://', 'http://')});
         expect(logger.url).to.startsWith('http://');
         return logger.submit(JSON.stringify(logger.message('test-http', Date.now())));
     });

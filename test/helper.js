@@ -3,7 +3,20 @@
 const UsageLoggers = require('../lib/all').UsageLoggers;
 
 module.exports = {
+
     MOCK_AGENT: 'helper.js',
+
     URLS_DENIED: [`${UsageLoggers.urlForDemo()}/noway3is5this1valid2`, 'https://www.noway3is5this1valid2.com/'],
-    URLS_INVALID: ['', 'noway3is5this1valid2', 'ftp:\\www.noway3is5this1valid2.com/', 'urn:ISSN:1535–3613']
+
+    URLS_INVALID: ['', 'noway3is5this1valid2', 'ftp:\\www.noway3is5this1valid2.com/', 'urn:ISSN:1535–3613'],
+
+    parseable: (json) => {
+        if (json === null || !json.startsWith('{') || !json.endsWith('}')) return false;
+        try {
+            JSON.parse(json);
+            return true;
+        } catch (e) {
+            return false;
+        }
+    }
 };
