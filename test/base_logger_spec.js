@@ -15,13 +15,13 @@ const UsageLoggers = require('../lib/all').UsageLoggers;
  */
 describe('BaseLogger', () => {
 
-    it('creates a valid object', () => {
+    it('creates instance', () => {
         const logger = new BaseLogger();
         expect(logger).to.exist;
         expect(logger.constructor['name']).to.equal('BaseLogger');
     });
 
-    it('manages multiple instances', () => {
+    it('creates multiple instances', () => {
         const agent1 = 'agent1';
         const agent2 = 'AGENT2';
         const agent3 = 'aGeNt3';
@@ -53,7 +53,7 @@ describe('BaseLogger', () => {
         expect(logger3.enabled).to.be.true;
     });
 
-    it('provides valid version', () => {
+    it('has valid version', () => {
         const version = BaseLogger.version_lookup();
         expect(version).to.exist;
         expect(version).to.be.a('string');

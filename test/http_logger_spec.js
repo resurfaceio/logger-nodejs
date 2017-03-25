@@ -14,13 +14,13 @@ const UsageLoggers = require('../lib/all').UsageLoggers;
  */
 describe('HttpLogger', () => {
 
-    it('creates a valid object', () => {
+    it('creates instance', () => {
         const logger = new HttpLogger();
         expect(logger).to.exist;
         expect(logger.constructor['name']).to.equal('HttpLogger');
     });
 
-    it('manages multiple instances', () => {
+    it('creates multiple instances', () => {
         const url1 = 'http://resurface.io';
         const url2 = 'http://whatever.com';
         const logger1 = new HttpLogger({url: url1});
@@ -49,7 +49,7 @@ describe('HttpLogger', () => {
         expect(logger3.enabled).to.be.true;
     });
 
-    it('provides valid agent', () => {
+    it('has valid agent', () => {
         const agent = HttpLogger.AGENT;
         expect(agent).to.exist;
         expect(agent).to.be.a('string');
