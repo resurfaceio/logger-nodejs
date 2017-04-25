@@ -14,20 +14,15 @@ const HttpLogger = require('../lib/all').HttpLogger;
  */
 describe('HttpLogger', () => {
 
-    it('appends request and response', () => {
-        const json = new HttpLogger().append_to_buffer('', helper.MOCK_NOW, helper.mockRequest(), helper.mockResponse());
+    it('formats message', () => {
+        const json = new HttpLogger().format(helper.mockRequest(), undefined, helper.mockResponse(), undefined, helper.MOCK_NOW);
         expect(parseable(json)).to.be.true;
-        expect(json).to.contain(`\"agent\":\"${HttpLogger.AGENT}\"`);
-        expect(json).to.contain("\"category\":\"http\"");
-        expect(json).to.contain(`\"version\":\"${HttpLogger.version_lookup()}\"`);
-        expect(json).to.contain(`\"now\":\"${helper.MOCK_NOW}\"`);
-        expect(json).not.to.contain("\"request_body\"");
-        // todo test request_headers
-        expect(json).to.contain("\"request_method\":\"GET\"");
-        expect(json).to.contain(`\"request_url\":\"${helper.MOCK_URL}\"`);
-        // todo test response_body
-        expect(json).to.contain(`\"response_code\":\"200\"`);
-        // todo test response_headers
+        expect(json).to.contain(`[\"agent\",\"${HttpLogger.AGENT}\"]`);
+        expect(json).to.contain(`[\"version\",\"${HttpLogger.version_lookup()}\"]`);
+        expect(json).to.contain(`[\"now\",\"${helper.MOCK_NOW}\"]`);
+        expect(json).to.contain("[\"request_method\",\"GET\"]");
+        expect(json).to.contain(`[\"request_url\",\"${helper.MOCK_URL}\"]`);
+        expect(json).to.contain(`[\"response_code\",\"200\"]`);
     });
 
 });

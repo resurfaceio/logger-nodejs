@@ -6,7 +6,7 @@ module.exports = {
 
     MOCK_AGENT: 'helper.js',
 
-    MOCK_NOW: 1455908640173,
+    MOCK_NOW: '1455908640173',
 
     MOCK_URL: 'http://localhost/index.html?boo=yah',
 
@@ -30,7 +30,7 @@ module.exports = {
     },
 
     parseable: (json) => {
-        if (json === null || !json.startsWith('{') || !json.endsWith('}')) return false;
+        if (json === null || !json.startsWith('[') || !json.endsWith(']')) return false;
         try {
             JSON.parse(json);
             return true;

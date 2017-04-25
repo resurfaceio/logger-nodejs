@@ -17,7 +17,9 @@ describe('HttpLogger', () => {
     it('creates instance', () => {
         const logger = new HttpLogger();
         expect(logger).to.exist;
+        expect(logger.agent).to.equal(HttpLogger.AGENT);
         expect(logger.constructor['name']).to.equal('HttpLogger');
+        expect(logger.enabled).to.be.false;
     });
 
     it('creates multiple instances', () => {
@@ -65,8 +67,7 @@ describe('HttpLogger', () => {
         for (let i = 0; i < helper.URLS_DENIED.length; i++) {
             const logger = new HttpLogger({url: helper.URLS_DENIED[i]}).disable();
             expect(logger.enabled).to.be.false;
-            expect(logger.submit(null)).to.be.fulfilled.and.to.eventually.be.true;  // would fail if enabled
-            // todo convert submit() to log() above
+            expect(logger.log(null)).to.be.fulfilled.and.to.eventually.be.true;  // would fail if enabled
         }
     });
 

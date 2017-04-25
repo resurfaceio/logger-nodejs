@@ -4,8 +4,11 @@ const chai = require('chai');
 chai.use(require('chai-as-promised'));
 chai.use(require('chai-string'));
 const expect = chai.expect;
+
 const helper = require('./helper');
 const MOCK_AGENT = helper.MOCK_AGENT;
+const MOCK_NOW = helper.MOCK_NOW;
+const parseable = helper.parseable;
 
 const BaseLogger = require('../lib/all').BaseLogger;
 const UsageLoggers = require('../lib/all').UsageLoggers;
@@ -16,9 +19,11 @@ const UsageLoggers = require('../lib/all').UsageLoggers;
 describe('BaseLogger', () => {
 
     it('creates instance', () => {
-        const logger = new BaseLogger();
+        const logger = new BaseLogger(MOCK_AGENT);
         expect(logger).to.exist;
+        expect(logger.agent).to.equal(MOCK_AGENT);
         expect(logger.constructor['name']).to.equal('BaseLogger');
+        expect(logger.enabled).to.be.false;
     });
 
     it('creates multiple instances', () => {
@@ -125,13 +130,29 @@ describe('BaseLogger', () => {
 
     it('submits to demo url', () => {
         const logger = new BaseLogger(MOCK_AGENT, {url: 'DEMO'});
-        return logger.submit(JSON.stringify(logger.message('test-https', Date.now())));
+        const message = [
+            ['agent', logger.agent],
+            ['version', logger.version],
+            ['now', MOCK_NOW],
+            ['protocol', 'https']
+        ];
+        const json = JSON.stringify(message);
+        expect(parseable(json)).to.be.true;
+        return logger.submit(json);
     });
 
     it('submits to demo url via http', () => {
         const logger = new BaseLogger(MOCK_AGENT, {url: UsageLoggers.urlForDemo().replace('https://', 'http://')});
         expect(logger.url).to.startsWith('http://');
-        return logger.submit(JSON.stringify(logger.message('test-http', Date.now())));
+        const message = [
+            ['agent', logger.agent],
+            ['version', logger.version],
+            ['now', MOCK_NOW],
+            ['protocol', 'http']
+        ];
+        const json = JSON.stringify(message);
+        expect(parseable(json)).to.be.true;
+        return logger.submit(json);
     });
 
     it('submits to denied url and fails', () => {
