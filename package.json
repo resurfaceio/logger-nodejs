@@ -11,14 +11,14 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/resurfaceio/resurfaceio-logger-nodejs.git"
+    "url": "git+https://github.com/resurfaceio/logger-nodejs.git"
   },
   "author": "Rob Dickinson (https://github.com/RobDickinson)",
   "license": "Apache-2.0",
   "bugs": {
-    "url": "https://github.com/resurfaceio/resurfaceio-logger-nodejs/issues"
+    "url": "https://github.com/resurfaceio/logger-nodejs/issues"
   },
-  "homepage": "https://github.com/resurfaceio/resurfaceio-logger-nodejs#readme",
+  "homepage": "https://github.com/resurfaceio/logger-nodejs#readme",
   "devDependencies": {
     "chai": "^3.5.0",
     "chai-as-promised": "^6.0.0",

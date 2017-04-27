@@ -9,7 +9,7 @@ If you don't use WebStorm, that's ok, but your code may get reformatted.
 ## Git Workflow
 
 ```
-git clone git@github.com:resurfaceio/resurfaceio-logger-nodejs.git
+git clone git@github.com:resurfaceio/logger-nodejs.git resurfaceio-logger-nodejs
 cd resurfaceio-logger-nodejs
 npm install
 ```
