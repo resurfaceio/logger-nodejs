@@ -5,10 +5,7 @@ This library makes it easy to log actual usage of Node.js apps.
 
 ## Installing with npm
 
-    mkdir test
-    cd test
-    npm init -y
-    npm install resurfaceio/logger-nodejs
+    npm install resurfaceio/logger-nodejs --save
 
 ## Using API Directly
 
