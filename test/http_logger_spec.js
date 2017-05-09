@@ -6,8 +6,9 @@ chai.use(require('chai-string'));
 const expect = chai.expect;
 const helper = require('./helper');
 
-const HttpLogger = require('../lib/all').HttpLogger;
-const UsageLoggers = require('../lib/all').UsageLoggers;
+const resurfaceio = require('../lib/all');
+const HttpLogger = resurfaceio.HttpLogger;
+const UsageLoggers = resurfaceio.UsageLoggers;
 
 /**
  * Tests against usage logger for HTTP/HTTPS protocol.

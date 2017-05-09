@@ -10,8 +10,9 @@ const MOCK_AGENT = helper.MOCK_AGENT;
 const MOCK_NOW = helper.MOCK_NOW;
 const parseable = helper.parseable;
 
-const BaseLogger = require('../lib/all').BaseLogger;
-const UsageLoggers = require('../lib/all').UsageLoggers;
+const resurfaceio = require('../lib/all');
+const BaseLogger = resurfaceio.BaseLogger;
+const UsageLoggers = resurfaceio.UsageLoggers;
 
 /**
  * Tests against basic usage logger to embed or extend.

@@ -1,6 +1,9 @@
 // © 2016-2017 Resurface Labs LLC
 
-const UsageLoggers = require('../lib/all').UsageLoggers;
+const resurfaceio = require('../lib/all');
+const HttpRequestImpl = resurfaceio.HttpRequestImpl;
+const HttpResponseImpl = resurfaceio.HttpResponseImpl;
+const UsageLoggers = resurfaceio.UsageLoggers;
 
 module.exports = {
 
@@ -17,18 +20,18 @@ module.exports = {
     MOCK_URLS_INVALID: ['', 'noway3is5this1valid2', 'ftp:\\www.noway3is5this1valid2.com/', 'urn:ISSN:1535–3613'],
 
     mockRequest() {
-        return {
-            hostname: 'localhost',
-            method: 'GET',
-            protocol: 'http',
-            url: '/index.html?boo=yah'
-        }
+        const r = new HttpRequestImpl();
+        r.hostname = 'localhost';
+        r.method = 'GET';
+        r.protocol = 'http';
+        r.url = '/index.html?boo=yah';
+        return r;
     },
 
     mockResponse() {
-        return {
-            statusCode: 200
-        }
+        const r = new HttpResponseImpl();
+        r.statusCode = 200;
+        return r;
     },
 
     parseable: (json) => {
