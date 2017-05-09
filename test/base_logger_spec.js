@@ -63,7 +63,7 @@ describe('BaseLogger', () => {
         expect(version).to.exist;
         expect(version).to.be.a('string');
         expect(version.length).to.be.above(0);
-        expect(version).to.startsWith('1.0.');
+        expect(version).to.startsWith('1.7.');
         expect(version).not.to.contain('\\');
         expect(version).not.to.contain('\"');
         expect(version).not.to.contain('\'');
