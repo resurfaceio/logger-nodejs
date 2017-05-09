@@ -95,8 +95,8 @@ describe('BaseLogger', () => {
     });
 
     it('skips enabling for invalid urls', () => {
-        for (let i = 0; i < helper.URLS_INVALID.length; i++) {
-            const logger = new BaseLogger(MOCK_AGENT, {url: helper.URLS_INVALID[i]});
+        for (let i = 0; i < helper.MOCK_URLS_INVALID.length; i++) {
+            const logger = new BaseLogger(MOCK_AGENT, {url: helper.MOCK_URLS_INVALID[i]});
             expect(logger.enabled).to.be.false;
             expect(logger.url).to.be.null;
             logger.enable();
@@ -121,8 +121,8 @@ describe('BaseLogger', () => {
     });
 
     it('skips logging when disabled', () => {
-        for (let i = 0; i < helper.URLS_DENIED.length; i++) {
-            const logger = new BaseLogger(MOCK_AGENT, {url: helper.URLS_DENIED[i]}).disable();
+        for (let i = 0; i < helper.MOCK_URLS_DENIED.length; i++) {
+            const logger = new BaseLogger(MOCK_AGENT, {url: helper.MOCK_URLS_DENIED[i]}).disable();
             expect(logger.enabled).to.be.false;
             expect(logger.submit(null)).to.be.fulfilled.and.to.eventually.be.true;  // would fail if enabled
         }
@@ -156,8 +156,8 @@ describe('BaseLogger', () => {
     });
 
     it('submits to denied url and fails', () => {
-        for (let i = 0; i < helper.URLS_DENIED.length; i++) {
-            const logger = new BaseLogger(MOCK_AGENT, {url: helper.URLS_DENIED[i]});
+        for (let i = 0; i < helper.MOCK_URLS_DENIED.length; i++) {
+            const logger = new BaseLogger(MOCK_AGENT, {url: helper.MOCK_URLS_DENIED[i]});
             expect(logger.enabled).to.be.true;
             expect(logger.submit('{}')).to.be.fulfilled.and.to.eventually.be.false;
         }
@@ -165,7 +165,7 @@ describe('BaseLogger', () => {
 
     it('submits to queue', () => {
         let queue = [];
-        const logger = new BaseLogger(MOCK_AGENT, {queue: queue, url: helper.URLS_DENIED[0]});
+        const logger = new BaseLogger(MOCK_AGENT, {queue: queue, url: helper.MOCK_URLS_DENIED[0]});
         expect(logger.url).to.be.null;
         expect(logger.enabled).to.be.true;
         expect(queue.length).to.equal(0);

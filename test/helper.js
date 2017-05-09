@@ -6,16 +6,18 @@ module.exports = {
 
     MOCK_AGENT: 'helper.js',
 
+    MOCK_JSON: '{ "hello" : "world" }',
+
     MOCK_NOW: '1455908640173',
 
     MOCK_URL: 'http://localhost/index.html?boo=yah',
 
-    URLS_DENIED: [`${UsageLoggers.urlForDemo()}/noway3is5this1valid2`, 'https://www.noway3is5this1valid2.com/'],
+    MOCK_URLS_DENIED: [`${UsageLoggers.urlForDemo()}/noway3is5this1valid2`, 'https://www.noway3is5this1valid2.com/'],
 
-    URLS_INVALID: ['', 'noway3is5this1valid2', 'ftp:\\www.noway3is5this1valid2.com/', 'urn:ISSN:1535–3613'],
+    MOCK_URLS_INVALID: ['', 'noway3is5this1valid2', 'ftp:\\www.noway3is5this1valid2.com/', 'urn:ISSN:1535–3613'],
 
     mockRequest() {
-        return {                                // todo: missing headers, port, body
+        return {
             hostname: 'localhost',
             method: 'GET',
             protocol: 'http',
@@ -24,7 +26,7 @@ module.exports = {
     },
 
     mockResponse() {
-        return {                               // todo: missing headers, body
+        return {
             statusCode: 200
         }
     },

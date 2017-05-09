@@ -64,8 +64,8 @@ describe('HttpLogger', () => {
     });
 
     it('skips logging when disabled', () => {
-        for (let i = 0; i < helper.URLS_DENIED.length; i++) {
-            const logger = new HttpLogger({url: helper.URLS_DENIED[i]}).disable();
+        for (let i = 0; i < helper.MOCK_URLS_DENIED.length; i++) {
+            const logger = new HttpLogger({url: helper.MOCK_URLS_DENIED[i]}).disable();
             expect(logger.enabled).to.be.false;
             expect(logger.log(null)).to.be.fulfilled.and.to.eventually.be.true;  // would fail if enabled
         }
