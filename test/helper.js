@@ -13,7 +13,9 @@ module.exports = {
 
     MOCK_NOW: '1455908640173',
 
-    MOCK_URL: 'http://localhost/index.html?boo=yah',
+    MOCK_QUERY_STRING: 'boo=yah',
+
+    MOCK_URL: 'http://localhost/index.html',  // todo should have port?
 
     MOCK_URLS_DENIED: [`${UsageLoggers.urlForDemo()}/noway3is5this1valid2`, 'https://www.noway3is5this1valid2.com/'],
 
@@ -24,12 +26,42 @@ module.exports = {
         r.hostname = 'localhost';
         r.method = 'GET';
         r.protocol = 'http';
-        r.url = '/index.html?boo=yah';
+        r.url = '/index.html';
+        return r;
+    },
+
+    mockRequestWithBody() {
+        const r = new HttpRequestImpl();
+        r.headers['content-type'] = 'Application/JSON';
+        r.hostname = 'localhost';
+        r.method = 'POST';
+        r.protocol = 'http';
+        r.url = `/index.html?boo=yah`;
+        return r;
+    },
+
+    mockRequestWithBody2() {
+        const r = new HttpRequestImpl();
+        r.headers['content-type'] = 'Application/JSON';
+        r.hostname = 'localhost';
+        r.method = 'POST';
+        r.protocol = 'http';
+        r.url = `/index.html?boo=yah`;
+        r.headers['ABC'] = '123';
+        r.add_header('A', '1');
+        r.add_header('A', '2');
         return r;
     },
 
     mockResponse() {
         const r = new HttpResponseImpl();
+        r.statusCode = 200;
+        return r;
+    },
+
+    mockResponseWithBody() {
+        const r = new HttpResponseImpl();
+        r.headers['content-type'] = 'text/html; charset=utf-8';
         r.statusCode = 200;
         return r;
     },
