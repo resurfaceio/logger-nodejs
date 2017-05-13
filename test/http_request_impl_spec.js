@@ -32,7 +32,7 @@ describe('HttpRequestImpl', () => {
 
         r.add_header(key, val);
         expect(Object.keys(r.headers).length).to.equal(1);
-        expect(r.headers[key]).to.equal(`${val2},${val}`);
+        expect(r.headers[key]).to.equal(`${val2}, ${val}`);
 
         r.headers[key2] = val2;
         expect(Object.keys(r.headers).length).to.equal(2);

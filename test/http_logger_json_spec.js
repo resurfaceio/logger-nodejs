@@ -44,7 +44,7 @@ describe('HttpLogger', () => {
         const json = new HttpLogger().format(helper.mockRequestWithBody2(), '', helper.mockResponse(), undefined);
         expect(parseable(json)).to.be.true;
         expect(json).not.to.contain('request_body');  // todo not supported yet
-        expect(json).to.contain("[\"request_header.a\",\"1,2\"]");
+        expect(json).to.contain("[\"request_header.a\",\"1, 2\"]");
         expect(json).to.contain("[\"request_header.abc\",\"123\"]");
         expect(json).to.contain("[\"request_header.content-type\",\"Application/JSON\"]");
         expect(json).to.contain("[\"request_method\",\"POST\"]");
