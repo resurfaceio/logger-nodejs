@@ -5,7 +5,7 @@ This library makes it easy to log actual usage of Node.js apps.
 
 ## Installing with npm
 
-    npm install resurfaceio/logger-nodejs --save
+    npm install resurfaceio-logger --save
 
 ## Using API Directly
 
@@ -13,18 +13,18 @@ This library makes it easy to log actual usage of Node.js apps.
     
     // manage all loggers (even those not created yet)
     const UsageLoggers = resurfaceio.UsageLoggers;
-    UsageLoggers.disable();                                          // disable all loggers
-    UsageLoggers.enable();                                           // enable all loggers
+    UsageLoggers.disable();                                        // disable all loggers
+    UsageLoggers.enable();                                         // enable all loggers
     
     // create and configure logger
     const HttpLogger = resurfaceio.HttpLogger;
-    var logger = new HttpLogger({queue: queue});                     // log to appendable list
-    logger = new HttpLogger({queue: queue, enabled: false});         // (initially disabled)
-    logger = new HttpLogger({url: my_https_url});                    // log to https url
-    logger = new HttpLogger({url: my_https_url, enabled: false});    // (initially disabled)
-    logger.disable();                                                // enable this logger
-    logger.enable();                                                 // disable this logger
-    if (logger.enabled) ...                                          // test if this enabled
+    var logger = new HttpLogger({queue: queue});                   // log to appendable list
+    logger = new HttpLogger({queue: queue, enabled: false});       // (initially disabled)
+    logger = new HttpLogger({url: my_https_url});                  // log to https url
+    logger = new HttpLogger({url: my_https_url, enabled: false});  // (initially disabled)
+    logger.disable();                                              // enable this logger
+    logger.enable();                                               // disable this logger
+    if (logger.enabled) ...                                        // test if this enabled
     
     // submit a custom message (destination may accept or not)
     logger.submit('...');

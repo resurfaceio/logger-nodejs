@@ -1,4 +1,4 @@
-# resurfaceio-logger-nodejs
+# Contributing to resurfaceio-logger-nodejs
 &copy; 2016-2017 Resurface Labs LLC
 
 ## Coding Conventions
@@ -28,3 +28,15 @@ git commit -m "#123 Updated readme"       (123 is the GitHub issue number)
 git pull --rebase                         (avoid merge bubbles)
 git push origin master
 ```
+
+All [integration tests](https://github.com/resurfaceio/logger-tests) must pass prior to making changes public.
+
+Push changes to [npmjs.com](https://npmjs.com/):
+
+```
+npm publish .
+git tag v1.x.x
+git push origin master --tags
+```
+
+Finish by incrementing the version number. (search/replace on version string)
