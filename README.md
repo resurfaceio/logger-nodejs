@@ -27,4 +27,4 @@ This library makes it easy to log actual usage of Node.js apps.
     if (logger.enabled) ...                                        // test if this enabled
     
     // submit a custom message (destination may accept or not)
-    logger.submit('...');
+    logger.submit('...').then(console.log('Submitted');
