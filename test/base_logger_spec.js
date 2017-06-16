@@ -6,6 +6,7 @@ chai.use(require('chai-string'));
 const expect = chai.expect;
 
 const helper = require('./helper');
+const DEMO_URL = helper.DEMO_URL;
 const MOCK_AGENT = helper.MOCK_AGENT;
 const MOCK_NOW = helper.MOCK_NOW;
 const parseable = helper.parseable;
@@ -35,7 +36,7 @@ describe('BaseLogger', () => {
         const url2 = 'http://whatever.com';
         const logger1 = new BaseLogger(agent1, url1);
         const logger2 = new BaseLogger(agent2, {url: url2});
-        const logger3 = new BaseLogger(agent3, {url: 'DEMO'});
+        const logger3 = new BaseLogger(agent3, {url: DEMO_URL});
 
         expect(logger1.agent).to.equal(agent1);
         expect(logger1.enabled).to.be.true;
@@ -45,7 +46,7 @@ describe('BaseLogger', () => {
         expect(logger2.url).to.equal(url2);
         expect(logger3.agent).to.equal(agent3);
         expect(logger3.enabled).to.be.true;
-        expect(logger3.url).to.equal(UsageLoggers.urlForDemo());
+        expect(logger3.url).to.equal(DEMO_URL);
 
         UsageLoggers.disable();
         expect(UsageLoggers.enabled).to.be.false;
@@ -76,16 +77,10 @@ describe('BaseLogger', () => {
     });
 
     it('performs enabling when expected', () => {
-        let logger = new BaseLogger(MOCK_AGENT, {url: 'DEMO', enabled: false});
+        let logger = new BaseLogger(MOCK_AGENT, {url: DEMO_URL, enabled: false});
         expect(logger.enabled).to.be.false;
-        expect(logger.url).to.equal(UsageLoggers.urlForDemo());
+        expect(logger.url).to.equal(DEMO_URL);
         logger.enable();
-        expect(logger.enabled).to.be.true;
-
-        logger = new BaseLogger(MOCK_AGENT, {url: UsageLoggers.urlForDemo(), enabled: true});
-        expect(logger.enabled).to.be.true;
-        expect(logger.url).to.equal(UsageLoggers.urlForDemo());
-        logger.enable().disable().enable().disable().disable().disable().enable();
         expect(logger.enabled).to.be.true;
 
         logger = new BaseLogger(MOCK_AGENT, {queue: [], enabled: false});
@@ -130,7 +125,7 @@ describe('BaseLogger', () => {
     });
 
     it('submits to demo url', () => {
-        const logger = new BaseLogger(MOCK_AGENT, {url: 'DEMO'});
+        const logger = new BaseLogger(MOCK_AGENT, {url: DEMO_URL});
         const message = [
             ['agent', logger.agent],
             ['version', logger.version],
@@ -143,7 +138,7 @@ describe('BaseLogger', () => {
     });
 
     it('submits to demo url via http', () => {
-        const logger = new BaseLogger(MOCK_AGENT, {url: UsageLoggers.urlForDemo().replace('https://', 'http://')});
+        const logger = new BaseLogger(MOCK_AGENT, {url: DEMO_URL.replace('https://', 'http://')});
         expect(logger.url).to.startsWith('http://');
         const message = [
             ['agent', logger.agent],
@@ -232,13 +227,13 @@ describe('BaseLogger', () => {
     });
 
     it('silently ignores writes to url', () => {
-        const logger = new BaseLogger(MOCK_AGENT, {url: UsageLoggers.urlForDemo()});
+        const logger = new BaseLogger(MOCK_AGENT, {url: DEMO_URL});
         logger._url = '1234';
         logger['_url'] = '1234';
-        expect(logger.url).to.equal(UsageLoggers.urlForDemo());
+        expect(logger.url).to.equal(DEMO_URL);
         logger.url = '1234';
         logger['url'] = '1234';
-        expect(logger.url).to.equal(UsageLoggers.urlForDemo());
+        expect(logger.url).to.equal(DEMO_URL);
     });
 
     it('silently ignores writes to version', () => {

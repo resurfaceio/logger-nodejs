@@ -15,12 +15,4 @@ describe('UsageLogger', () => {
         expect(url).not.to.exist;
     });
 
-    it('provides demo url', () => {
-        const url = UsageLoggers.urlForDemo();
-        expect(url).to.exist;
-        expect(url).to.be.a('string');
-        expect(url.length).to.be.above(0);
-        expect(url).to.startsWith('https://');
-    });
-
 });

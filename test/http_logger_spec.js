@@ -5,6 +5,7 @@ chai.use(require('chai-as-promised'));
 chai.use(require('chai-string'));
 const expect = chai.expect;
 const helper = require('./helper');
+const DEMO_URL = helper.DEMO_URL;
 
 const resurfaceio = require('../lib/all');
 const HttpLogger = resurfaceio.HttpLogger;
@@ -28,7 +29,7 @@ describe('HttpLogger', () => {
         const url2 = 'http://whatever.com';
         const logger1 = new HttpLogger({url: url1});
         const logger2 = new HttpLogger({url: url2});
-        const logger3 = new HttpLogger({url: 'DEMO'});
+        const logger3 = new HttpLogger({url: DEMO_URL});
 
         expect(logger1.agent).to.equal(HttpLogger.AGENT);
         expect(logger1.enabled).to.be.true;
@@ -38,7 +39,7 @@ describe('HttpLogger', () => {
         expect(logger2.url).to.equal(url2);
         expect(logger3.agent).to.equal(HttpLogger.AGENT);
         expect(logger3.enabled).to.be.true;
-        expect(logger3.url).to.equal(UsageLoggers.urlForDemo());
+        expect(logger3.url).to.equal(DEMO_URL);
 
         UsageLoggers.disable();
         expect(UsageLoggers.enabled).to.be.false;
