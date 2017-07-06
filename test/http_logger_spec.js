@@ -27,7 +27,7 @@ describe('HttpLogger', () => {
     it('creates multiple instances', () => {
         const url1 = 'http://resurface.io';
         const url2 = 'http://whatever.com';
-        const logger1 = new HttpLogger({url: url1});
+        const logger1 = new HttpLogger(url1);
         const logger2 = new HttpLogger({url: url2});
         const logger3 = new HttpLogger({url: DEMO_URL});
 

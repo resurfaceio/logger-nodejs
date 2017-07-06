@@ -18,10 +18,10 @@ This library makes it easy to log actual usage of Node.js apps.
     
     // create and configure logger
     const HttpLogger = resurfaceio.HttpLogger;
-    var logger = new HttpLogger({queue: queue});                   // log to appendable list
-    logger = new HttpLogger({queue: queue, enabled: false});       // (initially disabled)
-    logger = new HttpLogger({url: my_https_url});                  // log to https url
+    var logger = new HttpLogger(my_https_url);                     // log to remote url
     logger = new HttpLogger({url: my_https_url, enabled: false});  // (initially disabled)
+    logger = new HttpLogger({queue: queue});                       // log to appendable list
+    logger = new HttpLogger({queue: queue, enabled: false});       // (initially disabled)
     logger.disable();                                              // enable this logger
     logger.enable();                                               // disable this logger
     if (logger.enabled) ...                                        // test if this enabled
