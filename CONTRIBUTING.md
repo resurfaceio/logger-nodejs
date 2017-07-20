@@ -31,8 +31,6 @@ git push origin master
 
 ## Release Process
 
-All [integration tests](https://github.com/resurfaceio/logger-tests) must pass first.
-
 Push artifacts to [npmjs.com](https://npmjs.com/):
 
 ```
