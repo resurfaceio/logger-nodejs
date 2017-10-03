@@ -30,7 +30,7 @@ describe('HttpResponseImpl', () => {
         expect(Object.keys(r.headers).length).to.equal(1);
         expect(r.headers[key]).to.equal(val2);
 
-        r.add_header(key, val);
+        r.addHeader(key, val);
         expect(Object.keys(r.headers).length).to.equal(1);
         expect(r.headers[key]).to.equal(`${val2}, ${val}`);
 

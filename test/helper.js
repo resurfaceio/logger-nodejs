@@ -51,8 +51,8 @@ module.exports = {
         r.protocol = 'http';
         r.url = `/index.html?boo=yah`;
         r.headers['ABC'] = '123';
-        r.add_header('A', '1');
-        r.add_header('A', '2');
+        r.addHeader('A', '1');
+        r.addHeader('A', '2');
         return r;
     },
 
