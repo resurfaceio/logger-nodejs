@@ -27,14 +27,12 @@ describe('HttpLogger', () => {
         expect(json).to.contain(`[\"request_url\",\"${helper.MOCK_URL}\"]`);
         expect(json).not.to.contain('request_body');
         expect(json).not.to.contain('request_header');
-        expect(json).not.to.contain('response_body');
-        expect(json).not.to.contain('response_header');
     });
 
     it('formats request with body', () => {
-        const json = new HttpLogger().format(helper.mockRequestWithBody(), undefined, helper.mockResponse(), undefined);
+        const json = new HttpLogger().format(helper.mockRequestWithBody(), helper.MOCK_JSON, helper.mockResponse(), undefined);
         expect(parseable(json)).to.be.true;
-        expect(json).not.to.contain('request_body');  // todo not supported yet
+        expect(json).to.contain("[\"request_body\",\"" + helper.MOCK_JSON_ESCAPED + "\"]");
         expect(json).to.contain("[\"request_header.content-type\",\"Application/JSON\"]");
         expect(json).to.contain("[\"request_method\",\"POST\"]");
         expect(json).to.contain(`[\"request_url\",\"${helper.MOCK_URL}?${helper.MOCK_QUERY_STRING}\"]`);
@@ -43,15 +41,15 @@ describe('HttpLogger', () => {
     it('formats request with empty body', () => {
         const json = new HttpLogger().format(helper.mockRequestWithBody2(), '', helper.mockResponse(), undefined);
         expect(parseable(json)).to.be.true;
-        expect(json).not.to.contain('request_body');  // todo not supported yet
         expect(json).to.contain("[\"request_header.a\",\"1, 2\"]");
         expect(json).to.contain("[\"request_header.abc\",\"123\"]");
         expect(json).to.contain("[\"request_header.content-type\",\"Application/JSON\"]");
         expect(json).to.contain("[\"request_method\",\"POST\"]");
         expect(json).to.contain(`[\"request_url\",\"${helper.MOCK_URL}?${helper.MOCK_QUERY_STRING}\"]`);
+        expect(json).not.to.contain('request_body');
     });
 
-    it('formats request with nil method and url', () => {
+    it('formats request with missing details', () => {
         const json = new HttpLogger().format(new HttpRequestImpl(), undefined, helper.mockResponse(), undefined, helper.MOCK_NOW);
         expect(parseable(json)).to.be.true;
         expect(json).not.to.contain('request_body');
@@ -69,9 +67,9 @@ describe('HttpLogger', () => {
     });
 
     it('formats response with body', () => {
-        const json = new HttpLogger().format(helper.mockRequest(), undefined, helper.mockResponseWithBody(), undefined);
+        const json = new HttpLogger().format(helper.mockRequest(), undefined, helper.mockResponseWithBody(), helper.MOCK_JSON);
         expect(parseable(json)).to.be.true;
-        expect(json).not.to.contain('response_body');  // todo not supported yet
+        expect(json).to.contain("[\"response_body\",\"" + helper.MOCK_JSON_ESCAPED + "\"]");
         expect(json).to.contain(`[\"response_code\",\"200\"]`);
         expect(json).to.contain("[\"response_header.content-type\",\"text/html; charset=utf-8\"]");
     });
@@ -79,15 +77,14 @@ describe('HttpLogger', () => {
     it('formats response with empty body', () => {
         const json = new HttpLogger().format(helper.mockRequest(), undefined, helper.mockResponseWithBody(), '');
         expect(parseable(json)).to.be.true;
-        expect(json).not.to.contain('response_body');  // todo not supported yet
         expect(json).to.contain(`[\"response_code\",\"200\"]`);
         expect(json).to.contain("[\"response_header.content-type\",\"text/html; charset=utf-8\"]");
+        expect(json).not.to.contain('response_body');
     });
 
-    it('formats response with undefined content type and response code', () => {
+    it('formats response with missing details', () => {
         const json = new HttpLogger().format(helper.mockRequest(), undefined, new HttpResponseImpl(), '');
         expect(parseable(json)).to.be.true;
-        expect(json).not.to.contain('request_body');
         expect(json).not.to.contain('response_body');
         expect(json).not.to.contain('response_code');
         expect(json).not.to.contain('response_header');

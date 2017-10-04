@@ -14,6 +14,8 @@ module.exports = {
 
     MOCK_JSON: '{ "hello" : "world" }',
 
+    MOCK_JSON_ESCAPED: '{ \\"hello\\" : \\"world\\" }',
+
     MOCK_NOW: '1455908640173',
 
     MOCK_QUERY_STRING: 'boo=yah',
