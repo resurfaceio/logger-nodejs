@@ -4,7 +4,6 @@ const resurfaceio = require('../lib/all');
 const DemoURL = 'https://demo.resurface.io/ping';
 const HttpRequestImpl = resurfaceio.HttpRequestImpl;
 const HttpResponseImpl = resurfaceio.HttpResponseImpl;
-const UsageLoggers = resurfaceio.UsageLoggers;
 
 module.exports = {
 
@@ -35,17 +34,18 @@ module.exports = {
         return r;
     },
 
-    mockRequestWithBody() {
+    mockRequestWithJson() {
         const r = new HttpRequestImpl();
         r.headers['content-type'] = 'Application/JSON';
         r.hostname = 'localhost';
         r.method = 'POST';
         r.protocol = 'http';
         r.url = `/index.html?boo=yah`;
+        r.query['query1'] = 'QUERY1';
         return r;
     },
 
-    mockRequestWithBody2() {
+    mockRequestWithJson2() {
         const r = new HttpRequestImpl();
         r.headers['content-type'] = 'Application/JSON';
         r.hostname = 'localhost';
@@ -55,6 +55,9 @@ module.exports = {
         r.headers['ABC'] = '123';
         r.addHeader('A', '1');
         r.addHeader('A', '2');
+        r.body['body1'] = 'BODY1';
+        r.query['query1'] = 'QUERY1';
+        r.query['query2'] = 'QUERY2';
         return r;
     },
 
@@ -64,7 +67,7 @@ module.exports = {
         return r;
     },
 
-    mockResponseWithBody() {
+    mockResponseWithHtml() {
         const r = new HttpResponseImpl();
         r.headers['content-type'] = 'text/html; charset=utf-8';
         r.statusCode = 200;

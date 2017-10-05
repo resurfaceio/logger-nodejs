@@ -12,6 +12,30 @@ const HttpRequestImpl = require('../lib/all').HttpRequestImpl;
  */
 describe('HttpRequestImpl', () => {
 
+    it('uses body', () => {
+        const key = '3456';
+        const key2 = 'egret';
+        const val = 'u-turn!';
+        const val2 = 'swell?';
+
+        const r = new HttpRequestImpl();
+        expect(Object.keys(r.body).length).to.equal(0);
+        expect(r.body[key]).not.to.exist;
+
+        r.body[key] = val;
+        expect(Object.keys(r.body).length).to.equal(1);
+        expect(r.body[key]).to.equal(val);
+
+        r.body[key] = val2;
+        expect(Object.keys(r.body).length).to.equal(1);
+        expect(r.body[key]).to.equal(val2);
+
+        r.body[key2] = val2;
+        expect(Object.keys(r.body).length).to.equal(2);
+        expect(r.body[key2]).to.equal(val2);
+        expect(r.body[key2.toUpperCase()]).not.to.exist;
+    });
+
     it('uses headers', () => {
         const key = '2345';
         const key2 = 'fish';
@@ -59,6 +83,30 @@ describe('HttpRequestImpl', () => {
         const r = new HttpRequestImpl();
         r.protocol = val;
         expect(r.protocol).to.equal(val);
+    });
+
+    it('uses query', () => {
+        const key = '4567';
+        const key2 = 'gracious';
+        const val = 'forever-more';
+        const val2 = 'carson';
+
+        const r = new HttpRequestImpl();
+        expect(Object.keys(r.query).length).to.equal(0);
+        expect(r.query[key]).not.to.exist;
+
+        r.query[key] = val;
+        expect(Object.keys(r.query).length).to.equal(1);
+        expect(r.query[key]).to.equal(val);
+
+        r.query[key] = val2;
+        expect(Object.keys(r.query).length).to.equal(1);
+        expect(r.query[key]).to.equal(val2);
+
+        r.query[key2] = val2;
+        expect(Object.keys(r.query).length).to.equal(2);
+        expect(r.query[key2]).to.equal(val2);
+        expect(r.query[key2.toUpperCase()]).not.to.exist;
     });
 
     it('uses url', () => {
