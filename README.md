@@ -27,7 +27,7 @@ Requires Node.js 6.10.x or later. The only runtime dependency is `valid-url` (ht
 
 ## Installing With npm
 
-```ecmascript 6
+```js
 npm install resurfaceio-logger --save
 ```
 
@@ -37,7 +37,7 @@ npm install resurfaceio-logger --save
 
 After <a href="#installing_with_npm">installing the module</a>, create a logger and call it from the routes of interest.
 
-```ecmascript 6
+```js
 const resurfaceio = require('resurfaceio-logger');
 const HttpLogger = resurfaceio.HttpLogger;
 const logger = new HttpLogger({url: 'https://my-logging-url'});
@@ -66,7 +66,7 @@ After <a href="#installing_with_npm">installing the module</a>, ...
 
 Set the `USAGE_LOGGERS_URL` environment variable to provide a default value whenever the URL is not specified.
 
-```ecmascript 6
+```js
 // from command line
 export USAGE_LOGGERS_URL="https://my-logging-url"
 
@@ -76,7 +76,7 @@ heroku config:set USAGE_LOGGERS_URL=https://my-logging-url
 
 Loggers look for this environment variable when no URL is provided.
 
-```ecmascript 6
+```js
 // for basic logger
 var logger = new HttpLogger();
 ```
@@ -91,7 +91,7 @@ not send any logging data, and the result returned by the `log` method will alwa
 All loggers for an application can be enabled or disabled at once with the `UsageLoggers` class. This even controls
 loggers that have not yet been created by the application.
 
-```ecmascript 6
+```js
 UsageLoggers.disable();    // disable all loggers
 UsageLoggers.enable();     // enable all loggers
 ```
@@ -100,7 +100,7 @@ All loggers can be permanently disabled with the `USAGE_LOGGERS_DISABLE` environ
 loggers will never become enabled, even if `UsageLoggers.enable()` is called by the application. This is primarily 
 done by automated tests to disable all logging even if other control logic exists. 
 
-```ecmascript 6
+```js
 // from command line
 export USAGE_LOGGERS_DISABLE="true"
 
@@ -115,7 +115,7 @@ heroku config:set USAGE_LOGGERS_DISABLE=true
 Loggers can be directly integrated into your application with this API, which gives complete control over how
 usage logging is implemented.
 
-```ecmascript 6
+```js
 const resurfaceio = require('resurfaceio-logger');
 const HttpLogger = resurfaceio.HttpLogger;
 
