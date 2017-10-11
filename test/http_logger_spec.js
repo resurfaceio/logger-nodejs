@@ -53,6 +53,29 @@ describe('HttpLogger', () => {
         expect(logger3.enabled).to.be.true;
     });
 
+    it('detects string content types', () => {
+        expect(HttpLogger.isStringContentType(undefined)).to.be.false;
+        expect(HttpLogger.isStringContentType(null)).to.be.false;
+        expect(HttpLogger.isStringContentType('')).to.be.false;
+        expect(HttpLogger.isStringContentType(' ')).to.be.false;
+        expect(HttpLogger.isStringContentType('/')).to.be.false;
+        expect(HttpLogger.isStringContentType('application/')).to.be.false;
+        expect(HttpLogger.isStringContentType('json')).to.be.false;
+        expect(HttpLogger.isStringContentType('html')).to.be.false;
+        expect(HttpLogger.isStringContentType('xml')).to.be.false;
+
+        expect(HttpLogger.isStringContentType('application/json')).to.be.true;
+        expect(HttpLogger.isStringContentType('application/soap')).to.be.true;
+        expect(HttpLogger.isStringContentType('application/xml')).to.be.true;
+        expect(HttpLogger.isStringContentType('application/x-www-form-urlencoded')).to.be.true;
+        expect(HttpLogger.isStringContentType('text/html')).to.be.true;
+        expect(HttpLogger.isStringContentType('text/html; charset=utf-8')).to.be.true;
+        expect(HttpLogger.isStringContentType('text/plain')).to.be.true;
+        expect(HttpLogger.isStringContentType('text/plain123')).to.be.true;
+        expect(HttpLogger.isStringContentType('text/xml')).to.be.true;
+        expect(HttpLogger.isStringContentType('Text/XML')).to.be.true;
+    });
+
     it('has valid agent', () => {
         const agent = HttpLogger.AGENT;
         expect(agent).to.exist;
