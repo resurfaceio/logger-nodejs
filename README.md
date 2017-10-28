@@ -38,9 +38,11 @@ npm install resurfaceio-logger --save
 After <a href="#installing_with_npm">installing the module</a>, create a logger and call it from the routes of interest.
 
 ```js
+const express = require('express');
+const app = express();
+
 const resurfaceio = require('resurfaceio-logger');
-const HttpLogger = resurfaceio.HttpLogger;
-const logger = new HttpLogger({url: 'https://my-logging-url'});
+const logger = new resurfaceio.HttpLogger({url: 'https://my-logging-url'});
 
 app.get('/', function (request, response) {
     response.render('pages/index', function (err, html) {
@@ -54,7 +56,20 @@ app.get('/', function (request, response) {
 
 ## Logging From Express Middleware
 
-After <a href="#installing_with_npm">installing the module</a>, ...
+After <a href="#installing_with_npm">installing the module</a>, add a `HttpLoggerForExpress` instance to your app, after
+any body parsers in use.
+
+```js
+const express = require('express');
+const app = express();
+
+// add body parsers
+
+const resurfaceio = require('resurfaceio-logger');
+resurfaceio.HttpLoggerForExpress.add(app, {url: 'https://my-logging-url'});
+
+// define routes
+```
 
 <a name="advanced_topics"/>
 
