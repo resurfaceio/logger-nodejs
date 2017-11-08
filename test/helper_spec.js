@@ -17,6 +17,7 @@ describe('Helper', () => {
     });
 
     it('detects invalid json', () => {
+        expect(parseable(undefined)).to.be.false;
         expect(parseable(null)).to.be.false;
         expect(parseable('')).to.be.false;
         expect(parseable(' ')).to.be.false;

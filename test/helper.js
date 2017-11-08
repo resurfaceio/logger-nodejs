@@ -75,7 +75,7 @@ module.exports = {
     },
 
     parseable: (json) => {
-        if (json === null || !json.startsWith('[') || !json.endsWith(']')) return false;
+        if (json == undefined || !json.startsWith('[') || !json.endsWith(']')) return false;
         try {
             JSON.parse(json);
             return true;

@@ -55,7 +55,7 @@ describe('HttpLogger', () => {
     });
 
     it('formats request with missing details', () => {
-        const json = new HttpLogger().format(new HttpRequestImpl(), undefined, helper.mockResponse(), undefined, helper.MOCK_NOW);
+        const json = new HttpLogger().format(new HttpRequestImpl(), null, helper.mockResponse(), undefined, helper.MOCK_NOW);
         expect(parseable(json)).to.be.true;
         expect(json).not.to.contain('request_body');
         expect(json).not.to.contain('request_header');
@@ -89,7 +89,7 @@ describe('HttpLogger', () => {
     });
 
     it('formats response with missing details', () => {
-        const json = new HttpLogger().format(helper.mockRequest(), undefined, new HttpResponseImpl(), '');
+        const json = new HttpLogger().format(helper.mockRequest(), undefined, new HttpResponseImpl(), null);
         expect(parseable(json)).to.be.true;
         expect(json).not.to.contain('response_body');
         expect(json).not.to.contain('response_code');

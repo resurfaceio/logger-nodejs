@@ -116,6 +116,14 @@ describe('BaseLogger', () => {
         expect(logger.enabled).to.be.false;
     });
 
+    it('skips enabling for undefined url', () => {
+        const logger = new BaseLogger(MOCK_AGENT, {url: undefined});
+        expect(logger.enabled).to.be.false;
+        expect(logger.url).to.be.null;
+        logger.enable();
+        expect(logger.enabled).to.be.false;
+    });
+
     it('skips logging when disabled', () => {
         for (let i = 0; i < helper.MOCK_URLS_DENIED.length; i++) {
             const logger = new BaseLogger(MOCK_AGENT, {url: helper.MOCK_URLS_DENIED[i]}).disable();
