@@ -18,7 +18,7 @@ const HttpResponseImpl = resurfaceio.HttpResponseImpl;
 describe('HttpLogger', () => {
 
     it('formats request', () => {
-        const json = new HttpLogger().format(helper.mockRequest(), undefined, helper.mockResponse(), undefined, helper.MOCK_NOW);
+        const json = new HttpLogger().format(helper.mockRequest(), helper.mockResponse(), undefined, undefined, helper.MOCK_NOW);
         expect(parseable(json)).to.be.true;
         expect(json).to.contain(`[\"agent\",\"${HttpLogger.AGENT}\"]`);
         expect(json).to.contain(`[\"version\",\"${HttpLogger.version_lookup()}\"]`);
@@ -31,7 +31,7 @@ describe('HttpLogger', () => {
     });
 
     it('formats request with body', () => {
-        const json = new HttpLogger().format(helper.mockRequestWithJson(), helper.MOCK_JSON, helper.mockResponse(), undefined);
+        const json = new HttpLogger().format(helper.mockRequestWithJson(), helper.mockResponse(), undefined, helper.MOCK_JSON);
         expect(parseable(json)).to.be.true;
         expect(json).to.contain("[\"request_body\",\"" + helper.MOCK_JSON_ESCAPED + "\"]");
         expect(json).to.contain("[\"request_header.content-type\",\"Application/JSON\"]");
@@ -41,7 +41,7 @@ describe('HttpLogger', () => {
     });
 
     it('formats request with empty body', () => {
-        const json = new HttpLogger().format(helper.mockRequestWithJson2(), '', helper.mockResponse(), undefined);
+        const json = new HttpLogger().format(helper.mockRequestWithJson2(), helper.mockResponse(), undefined, '');
         expect(parseable(json)).to.be.true;
         expect(json).to.contain("[\"request_header.a\",\"1, 2\"]");
         expect(json).to.contain("[\"request_header.abc\",\"123\"]");
@@ -55,7 +55,7 @@ describe('HttpLogger', () => {
     });
 
     it('formats request with missing details', () => {
-        const json = new HttpLogger().format(new HttpRequestImpl(), null, helper.mockResponse(), undefined, helper.MOCK_NOW);
+        const json = new HttpLogger().format(new HttpRequestImpl(), helper.mockResponse(), undefined, null, helper.MOCK_NOW);
         expect(parseable(json)).to.be.true;
         expect(json).not.to.contain('request_body');
         expect(json).not.to.contain('request_header');
@@ -65,7 +65,7 @@ describe('HttpLogger', () => {
     });
 
     it('formats response', () => {
-        const json = new HttpLogger().format(helper.mockRequest(), undefined, helper.mockResponse(), undefined);
+        const json = new HttpLogger().format(helper.mockRequest(), helper.mockResponse());
         expect(parseable(json)).to.be.true;
         expect(json).to.contain(`[\"response_code\",\"200\"]`);
         expect(json).not.to.contain('response_body');
@@ -73,7 +73,7 @@ describe('HttpLogger', () => {
     });
 
     it('formats response with body', () => {
-        const json = new HttpLogger().format(helper.mockRequest(), undefined, helper.mockResponseWithHtml(), helper.MOCK_JSON);
+        const json = new HttpLogger().format(helper.mockRequest(), helper.mockResponseWithHtml(), helper.MOCK_JSON);
         expect(parseable(json)).to.be.true;
         expect(json).to.contain("[\"response_body\",\"" + helper.MOCK_JSON_ESCAPED + "\"]");
         expect(json).to.contain(`[\"response_code\",\"200\"]`);
@@ -81,7 +81,7 @@ describe('HttpLogger', () => {
     });
 
     it('formats response with empty body', () => {
-        const json = new HttpLogger().format(helper.mockRequest(), undefined, helper.mockResponseWithHtml(), '');
+        const json = new HttpLogger().format(helper.mockRequest(), helper.mockResponseWithHtml(), '');
         expect(parseable(json)).to.be.true;
         expect(json).to.contain(`[\"response_code\",\"200\"]`);
         expect(json).to.contain("[\"response_header.content-type\",\"text/html; charset=utf-8\"]");
@@ -89,7 +89,7 @@ describe('HttpLogger', () => {
     });
 
     it('formats response with missing details', () => {
-        const json = new HttpLogger().format(helper.mockRequest(), undefined, new HttpResponseImpl(), null);
+        const json = new HttpLogger().format(helper.mockRequest(), new HttpResponseImpl(), null);
         expect(parseable(json)).to.be.true;
         expect(json).not.to.contain('response_body');
         expect(json).not.to.contain('response_code');

@@ -47,7 +47,7 @@ const logger = new resurfaceio.HttpLogger({url: 'https://my-logging-url'});
 app.get('/', function (request, response) {
     response.render('pages/index', function (err, html) {
         response.status(200).send(html);
-        logger.log(request, undefined, response, html);
+        logger.log(request, response, html);
     });
 });
 ```
@@ -155,10 +155,10 @@ response.addHeader('B', '234');
 response.statusCode = 200;
 
 // log objects defined above
-logger.log(request, undefined, response, undefined);
+logger.log(request, response);
 
 // log with specified request/response bodies
-logger.log(request, 'my-request-body', response, 'my-response-body');
+logger.log(request, response, 'my-response-body', 'my-request-body');
 
 // submit a custom message (destination may accept or not)
 logger.submit('...').then(console.log('Submitted');
