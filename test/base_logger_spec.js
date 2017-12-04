@@ -26,6 +26,7 @@ describe('BaseLogger', () => {
         expect(logger.agent).to.equal(MOCK_AGENT);
         expect(logger.constructor['name']).to.equal('BaseLogger');
         expect(logger.enabled).to.be.false;
+        expect(logger.skip_compression).to.be.false;
     });
 
     it('creates multiple instances', () => {
@@ -153,6 +154,22 @@ describe('BaseLogger', () => {
             ['version', logger.version],
             ['now', MOCK_NOW],
             ['protocol', 'http']
+        ];
+        const json = JSON.stringify(message);
+        expect(parseable(json)).to.be.true;
+        return logger.submit(json);
+    });
+
+    it('submits to demo url without compression', () => {
+        const logger = new BaseLogger(MOCK_AGENT, {url: DEMO_URL});
+        logger.skip_compression = true;
+        expect(logger.skip_compression).to.be.true;
+        const message = [
+            ['agent', logger.agent],
+            ['version', logger.version],
+            ['now', MOCK_NOW],
+            ['protocol', 'https'],
+            ['skip_compression', 'true']
         ];
         const json = JSON.stringify(message);
         expect(parseable(json)).to.be.true;
