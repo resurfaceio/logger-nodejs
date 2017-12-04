@@ -26,7 +26,6 @@ describe('BaseLogger', () => {
         expect(logger.agent).to.equal(MOCK_AGENT);
         expect(logger.constructor['name']).to.equal('BaseLogger');
         expect(logger.enabled).to.be.false;
-        expect(logger.skip_compression).to.be.false;
     });
 
     it('creates multiple instances', () => {
@@ -269,6 +268,21 @@ describe('BaseLogger', () => {
         logger.version = 'X.Y.Z';
         logger['version'] = 'X.Y.Z';
         expect(logger.version).to.equal(BaseLogger.version_lookup());
+    });
+
+    it('uses skip options', () => {
+        const logger = new BaseLogger(MOCK_AGENT, DEMO_URL);
+        expect(logger.skip_compression).to.be.false;
+        expect(logger.skip_submission).to.be.false;
+
+        logger.skip_compression = true;
+        expect(logger.skip_compression).to.be.true;
+        expect(logger.skip_submission).to.be.false;
+
+        logger.skip_compression = false;
+        logger.skip_submission = true;
+        expect(logger.skip_compression).to.be.false;
+        expect(logger.skip_submission).to.be.true;
     });
 
 });
