@@ -34,22 +34,22 @@ describe('HttpLogger', () => {
         const json = new HttpLogger().format(helper.mockRequestWithJson(), helper.mockResponse(), undefined, helper.MOCK_JSON);
         expect(parseable(json)).to.be.true;
         expect(json).to.contain("[\"request_body\",\"" + helper.MOCK_JSON_ESCAPED + "\"]");
-        expect(json).to.contain("[\"request_header.content-type\",\"Application/JSON\"]");
+        expect(json).to.contain("[\"request_header:content-type\",\"Application/JSON\"]");
         expect(json).to.contain("[\"request_method\",\"POST\"]");
-        expect(json).to.contain("[\"request_param.query1\",\"QUERY1\"]");
+        expect(json).to.contain("[\"request_param:query1\",\"QUERY1\"]");
         expect(json).to.contain(`[\"request_url\",\"${helper.MOCK_URL}?${helper.MOCK_QUERY_STRING}\"]`);
     });
 
     it('formats request with empty body', () => {
         const json = new HttpLogger().format(helper.mockRequestWithJson2(), helper.mockResponse(), undefined, '');
         expect(parseable(json)).to.be.true;
-        expect(json).to.contain("[\"request_header.a\",\"1, 2\"]");
-        expect(json).to.contain("[\"request_header.abc\",\"123\"]");
-        expect(json).to.contain("[\"request_header.content-type\",\"Application/JSON\"]");
+        expect(json).to.contain("[\"request_header:a\",\"1, 2\"]");
+        expect(json).to.contain("[\"request_header:abc\",\"123\"]");
+        expect(json).to.contain("[\"request_header:content-type\",\"Application/JSON\"]");
         expect(json).to.contain("[\"request_method\",\"POST\"]");
-        expect(json).to.contain("[\"request_param.body1\",\"BODY1\"]");
-        expect(json).to.contain("[\"request_param.query1\",\"QUERY1\"]");
-        expect(json).to.contain("[\"request_param.query2\",\"QUERY2\"]");
+        expect(json).to.contain("[\"request_param:body1\",\"BODY1\"]");
+        expect(json).to.contain("[\"request_param:query1\",\"QUERY1\"]");
+        expect(json).to.contain("[\"request_param:query2\",\"QUERY2\"]");
         expect(json).to.contain(`[\"request_url\",\"${helper.MOCK_URL}?${helper.MOCK_QUERY_STRING}\"]`);
         expect(json).not.to.contain('request_body');
     });
@@ -77,14 +77,14 @@ describe('HttpLogger', () => {
         expect(parseable(json)).to.be.true;
         expect(json).to.contain("[\"response_body\",\"" + helper.MOCK_JSON_ESCAPED + "\"]");
         expect(json).to.contain(`[\"response_code\",\"200\"]`);
-        expect(json).to.contain("[\"response_header.content-type\",\"text/html; charset=utf-8\"]");
+        expect(json).to.contain("[\"response_header:content-type\",\"text/html; charset=utf-8\"]");
     });
 
     it('formats response with empty body', () => {
         const json = new HttpLogger().format(helper.mockRequest(), helper.mockResponseWithHtml(), '');
         expect(parseable(json)).to.be.true;
         expect(json).to.contain(`[\"response_code\",\"200\"]`);
-        expect(json).to.contain("[\"response_header.content-type\",\"text/html; charset=utf-8\"]");
+        expect(json).to.contain("[\"response_header:content-type\",\"text/html; charset=utf-8\"]");
         expect(json).not.to.contain('response_body');
     });
 
