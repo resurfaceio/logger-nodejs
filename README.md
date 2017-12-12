@@ -135,10 +135,10 @@ const resurfaceio = require('resurfaceio-logger');
 const HttpLogger = resurfaceio.HttpLogger;
 
 // create and configure logger
-const logger = new HttpLogger(my_https_url);                   // log to remote url
+const logger = new HttpLogger({url: my_https_url});            // log to remote url
 logger = new HttpLogger({url: my_https_url, enabled: false});  // (initially disabled)
-logger = new HttpLogger({queue: queue});                       // log to appendable list
-logger = new HttpLogger({queue: queue, enabled: false});       // (initially disabled)
+logger = new HttpLogger({queue: my_queue});                    // log to appendable list
+logger = new HttpLogger({queue: my_queue, enabled: false});    // (initially disabled)
 logger.disable();                                              // enable this logger
 logger.enable();                                               // disable this logger
 if (logger.enabled) ...                                        // test if this enabled
