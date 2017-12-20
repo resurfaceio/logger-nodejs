@@ -25,6 +25,7 @@ describe('BaseLogger', () => {
         expect(logger).to.exist;
         expect(logger.agent).to.equal(MOCK_AGENT);
         expect(logger.constructor['name']).to.equal('BaseLogger');
+        expect(logger.enableable).to.be.false;
         expect(logger.enabled).to.be.false;
     });
 
@@ -39,12 +40,15 @@ describe('BaseLogger', () => {
         const logger3 = new BaseLogger(agent3, {url: DEMO_URL});
 
         expect(logger1.agent).to.equal(agent1);
+        expect(logger1.enableable).to.be.true;
         expect(logger1.enabled).to.be.true;
         expect(logger1.url).to.equal(url1);
         expect(logger2.agent).to.equal(agent2);
+        expect(logger2.enableable).to.be.true;
         expect(logger2.enabled).to.be.true;
         expect(logger2.url).to.equal(url2);
         expect(logger3.agent).to.equal(agent3);
+        expect(logger3.enableable).to.be.true;
         expect(logger3.enabled).to.be.true;
         expect(logger3.url).to.equal(DEMO_URL);
 
@@ -78,12 +82,14 @@ describe('BaseLogger', () => {
 
     it('performs enabling when expected', () => {
         let logger = new BaseLogger(MOCK_AGENT, {url: DEMO_URL, enabled: false});
+        expect(logger.enableable).to.be.true;
         expect(logger.enabled).to.be.false;
         expect(logger.url).to.equal(DEMO_URL);
         logger.enable();
         expect(logger.enabled).to.be.true;
 
         logger = new BaseLogger(MOCK_AGENT, {queue: [], enabled: false});
+        expect(logger.enableable).to.be.true;
         expect(logger.enabled).to.be.false;
         expect(logger.url).to.be.null;
         logger.enable().disable().enable();
@@ -93,6 +99,7 @@ describe('BaseLogger', () => {
     it('skips enabling for invalid urls', () => {
         for (let i = 0; i < helper.MOCK_URLS_INVALID.length; i++) {
             const logger = new BaseLogger(MOCK_AGENT, {url: helper.MOCK_URLS_INVALID[i]});
+            expect(logger.enableable).to.be.false;
             expect(logger.enabled).to.be.false;
             expect(logger.url).to.be.null;
             logger.enable();
@@ -102,6 +109,7 @@ describe('BaseLogger', () => {
 
     it('skips enabling for missing url', () => {
         const logger = new BaseLogger(MOCK_AGENT);
+        expect(logger.enableable).to.be.false;
         expect(logger.enabled).to.be.false;
         expect(logger.url).to.be.null;
         logger.enable();
@@ -110,6 +118,7 @@ describe('BaseLogger', () => {
 
     it('skips enabling for null url', () => {
         const logger = new BaseLogger(MOCK_AGENT, {url: null});
+        expect(logger.enableable).to.be.false;
         expect(logger.enabled).to.be.false;
         expect(logger.url).to.be.null;
         logger.enable();
@@ -118,6 +127,7 @@ describe('BaseLogger', () => {
 
     it('skips enabling for undefined url', () => {
         const logger = new BaseLogger(MOCK_AGENT, {url: undefined});
+        expect(logger.enableable).to.be.false;
         expect(logger.enabled).to.be.false;
         expect(logger.url).to.be.null;
         logger.enable();
@@ -127,6 +137,7 @@ describe('BaseLogger', () => {
     it('skips logging when disabled', () => {
         for (let i = 0; i < helper.MOCK_URLS_DENIED.length; i++) {
             const logger = new BaseLogger(MOCK_AGENT, {url: helper.MOCK_URLS_DENIED[i]}).disable();
+            expect(logger.enableable).to.be.true;
             expect(logger.enabled).to.be.false;
             expect(logger.submit(null)).to.be.fulfilled;  // would be rejected if enabled
         }
@@ -178,6 +189,7 @@ describe('BaseLogger', () => {
     it('submits to denied url and fails', () => {
         for (let i = 0; i < helper.MOCK_URLS_DENIED.length; i++) {
             const logger = new BaseLogger(MOCK_AGENT, {url: helper.MOCK_URLS_DENIED[i]});
+            expect(logger.enableable).to.be.true;
             expect(logger.enabled).to.be.true;
             expect(logger.submit('{}')).to.be.rejected;
         }
@@ -187,6 +199,7 @@ describe('BaseLogger', () => {
         let queue = [];
         const logger = new BaseLogger(MOCK_AGENT, {queue: queue, url: helper.MOCK_URLS_DENIED[0]});
         expect(logger.url).to.be.null;
+        expect(logger.enableable).to.be.true;
         expect(logger.enabled).to.be.true;
         expect(queue.length).to.equal(0);
         expect(logger.submit('{}')).to.be.fulfilled;
@@ -197,26 +210,31 @@ describe('BaseLogger', () => {
 
     it('silently ignores unexpected option classes', () => {
         let logger = new BaseLogger(MOCK_AGENT, {queue: new Set()});
+        expect(logger.enableable).to.be.false;
         expect(logger.enabled).to.be.false;
         expect(logger._queue).to.be.null;
         expect(logger.url).to.be.null;
 
         logger = new BaseLogger(MOCK_AGENT, {queue: 'ASDF'});
+        expect(logger.enableable).to.be.false;
         expect(logger.enabled).to.be.false;
         expect(logger._queue).to.be.null;
         expect(logger.url).to.be.null;
 
         logger = new BaseLogger(MOCK_AGENT, {url: []});
+        expect(logger.enableable).to.be.false;
         expect(logger.enabled).to.be.false;
         expect(logger._queue).to.be.null;
         expect(logger.url).to.be.null;
 
         logger = new BaseLogger(MOCK_AGENT, []);
+        expect(logger.enableable).to.be.false;
         expect(logger.enabled).to.be.false;
         expect(logger._queue).to.be.null;
         expect(logger.url).to.be.null;
 
         logger = new BaseLogger(MOCK_AGENT, new Set());
+        expect(logger.enableable).to.be.false;
         expect(logger.enabled).to.be.false;
         expect(logger._queue).to.be.null;
         expect(logger.url).to.be.null;
@@ -239,6 +257,7 @@ describe('BaseLogger', () => {
         logger['_enabled'] = true;
         logger._enabled = true;
         logger['_enabled'] = true;
+        expect(logger.enableable).to.be.false;
         expect(logger.enabled).to.be.false;
     });
 

@@ -21,6 +21,7 @@ describe('HttpLogger', () => {
         expect(logger).to.exist;
         expect(logger.agent).to.equal(HttpLogger.AGENT);
         expect(logger.constructor['name']).to.equal('HttpLogger');
+        expect(logger.enableable).to.be.false;
         expect(logger.enabled).to.be.false;
     });
 
@@ -32,12 +33,15 @@ describe('HttpLogger', () => {
         const logger3 = new HttpLogger({url: DEMO_URL});
 
         expect(logger1.agent).to.equal(HttpLogger.AGENT);
+        expect(logger1.enableable).to.be.true;
         expect(logger1.enabled).to.be.true;
         expect(logger1.url).to.equal(url1);
         expect(logger2.agent).to.equal(HttpLogger.AGENT);
+        expect(logger2.enableable).to.be.true;
         expect(logger2.enabled).to.be.true;
         expect(logger2.url).to.equal(url2);
         expect(logger3.agent).to.equal(HttpLogger.AGENT);
+        expect(logger3.enableable).to.be.true;
         expect(logger3.enabled).to.be.true;
         expect(logger3.url).to.equal(DEMO_URL);
 
@@ -91,6 +95,7 @@ describe('HttpLogger', () => {
     it('skips logging when disabled', () => {
         for (let i = 0; i < helper.MOCK_URLS_DENIED.length; i++) {
             const logger = new HttpLogger({url: helper.MOCK_URLS_DENIED[i]}).disable();
+            expect(logger.enableable).to.be.true;
             expect(logger.enabled).to.be.false;
             expect(logger.log(null)).to.be.fulfilled.and.to.eventually.be.true;  // would fail if enabled
         }
