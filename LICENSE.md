@@ -8,7 +8,7 @@ You can do what you like with our software, as long as you include the required 
 
 ## Legal Notice
 
-&copy; 2016-2017 Resurface Labs LLC
+&copy; 2016-2018 Resurface Labs LLC
 
 Licensed under the Apache License, Version 2.0 (the "License"); you may not use this software except in compliance with the License. You may obtain a copy of the License
 here: http://www.apache.org/licenses/LICENSE-2.0

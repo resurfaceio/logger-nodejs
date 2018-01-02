@@ -1,4 +1,4 @@
-// © 2016-2017 Resurface Labs LLC
+// © 2016-2018 Resurface Labs LLC
 
 const chai = require('chai');
 const expect = chai.expect;

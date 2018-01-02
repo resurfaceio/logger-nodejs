@@ -1,5 +1,5 @@
 # resurfaceio-logger-nodejs
-&copy; 2016-2017 Resurface Labs LLC
+&copy; 2016-2018 Resurface Labs LLC
 
 This library makes it easy to log actual usage of Node.js apps.
 

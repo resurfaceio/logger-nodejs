@@ -1,5 +1,5 @@
 # Contributing to resurfaceio-logger-nodejs
-&copy; 2016-2017 Resurface Labs LLC
+&copy; 2016-2018 Resurface Labs LLC
 
 ## Coding Conventions
 
