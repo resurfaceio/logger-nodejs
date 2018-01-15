@@ -97,8 +97,8 @@ describe('BaseLogger', () => {
     });
 
     it('skips enabling for invalid urls', () => {
-        for (let i = 0; i < helper.MOCK_URLS_INVALID.length; i++) {
-            const logger = new BaseLogger(MOCK_AGENT, {url: helper.MOCK_URLS_INVALID[i]});
+        for (let url of helper.MOCK_URLS_INVALID) {
+            const logger = new BaseLogger(MOCK_AGENT, {url: url});
             expect(logger.enableable).to.be.false;
             expect(logger.enabled).to.be.false;
             expect(logger.url).to.be.null;
@@ -135,8 +135,8 @@ describe('BaseLogger', () => {
     });
 
     it('skips logging when disabled', () => {
-        for (let i = 0; i < helper.MOCK_URLS_DENIED.length; i++) {
-            const logger = new BaseLogger(MOCK_AGENT, {url: helper.MOCK_URLS_DENIED[i]}).disable();
+        for (let url of helper.MOCK_URLS_DENIED) {
+            const logger = new BaseLogger(MOCK_AGENT, {url: url}).disable();
             expect(logger.enableable).to.be.true;
             expect(logger.enabled).to.be.false;
             expect(logger.submit(null)).to.be.fulfilled;  // would be rejected if enabled
@@ -187,8 +187,8 @@ describe('BaseLogger', () => {
     });
 
     it('submits to denied url and fails', () => {
-        for (let i = 0; i < helper.MOCK_URLS_DENIED.length; i++) {
-            const logger = new BaseLogger(MOCK_AGENT, {url: helper.MOCK_URLS_DENIED[i]});
+        for (let url of helper.MOCK_URLS_DENIED) {
+            const logger = new BaseLogger(MOCK_AGENT, {url: url});
             expect(logger.enableable).to.be.true;
             expect(logger.enabled).to.be.true;
             expect(logger.submit('{}')).to.be.rejected;
