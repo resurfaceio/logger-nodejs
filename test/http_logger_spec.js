@@ -26,8 +26,8 @@ describe('HttpLogger', () => {
     });
 
     it('creates multiple instances', () => {
-        const url1 = 'http://resurface.io';
-        const url2 = 'http://whatever.com';
+        const url1 = 'https://resurface.io';
+        const url2 = 'https://whatever.com';
         const logger1 = new HttpLogger(url1);
         const logger2 = new HttpLogger({url: url2});
         const logger3 = new HttpLogger({url: DEMO_URL});
@@ -99,6 +99,17 @@ describe('HttpLogger', () => {
             expect(logger.enabled).to.be.false;
             expect(logger.log(null)).to.be.fulfilled.and.to.eventually.be.true;  // would fail if enabled
         }
+    });
+
+    it('silently ignores writes to enabled', () => {
+        const logger = new HttpLogger();
+        logger._enableable = true;
+        logger['_enableable'] = true;
+        logger['_enabled'] = true;
+        logger._enabled = true;
+        logger['_enabled'] = true;
+        expect(logger.enableable).to.be.false;
+        expect(logger.enabled).to.be.false;
     });
 
 });
