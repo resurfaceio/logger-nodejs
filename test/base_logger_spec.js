@@ -69,7 +69,7 @@ describe('BaseLogger', () => {
         expect(version).to.exist;
         expect(version).to.be.a('string');
         expect(version.length).to.be.above(0);
-        expect(version).to.startsWith('1.8.');
+        expect(version).to.startsWith('1.9.');
         expect(version).not.to.contain('\\');
         expect(version).not.to.contain('\"');
         expect(version).not.to.contain('\'');
@@ -248,17 +248,6 @@ describe('BaseLogger', () => {
         logger.agent = '1234';
         logger['agent'] = '1234';
         expect(logger.agent).to.equal(MOCK_AGENT);
-    });
-
-    it('silently ignores writes to enabled', () => {
-        const logger = new BaseLogger();
-        logger._enableable = true;
-        logger['_enableable'] = true;
-        logger['_enabled'] = true;
-        logger._enabled = true;
-        logger['_enabled'] = true;
-        expect(logger.enableable).to.be.false;
-        expect(logger.enabled).to.be.false;
     });
 
     it('silently ignores writes to queue', () => {
