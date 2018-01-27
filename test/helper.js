@@ -15,6 +15,21 @@ module.exports = {
 
     MOCK_JSON_ESCAPED: '{ \\"hello\\" : \\"world\\" }',
 
+    MOCK_HTML: "<html>Hello World!</html>",
+
+    MOCK_HTML2: "<html>Hola Mundo!</html>",
+
+    MOCK_HTML3: "<html>1 World 2 World Red World Blue World!</html>",
+
+    MOCK_HTML4: "<html>1 World\n2 World\nRed World \nBlue World!\n</html>",
+
+    MOCK_HTML5: `<html>
+<input type="hidden">SENSITIVE</input>
+<input class='foo' type="hidden">
+SENSITIVE
+</input>
+</html>`,
+
     MOCK_NOW: '1455908640173',
 
     MOCK_QUERY_STRING: 'boo=yah',

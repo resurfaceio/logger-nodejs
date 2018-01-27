@@ -88,6 +88,14 @@ describe('HttpLogger', () => {
         expect(json).not.to.contain('response_body');
     });
 
+    it('formats response with header array', () => {
+        const response = helper.mockResponseWithHtml();
+        response.addHeader('blah', ['A', 'BCD', 'EF']);
+        const json = new HttpLogger().format(helper.mockRequest(), response, helper.MOCK_JSON);
+        expect(parseable(json)).to.be.true;
+        expect(json).to.contain("[\"response_header:blah\",\"ABCDEF\"]");
+    });
+
     it('formats response with missing details', () => {
         const json = new HttpLogger().format(helper.mockRequest(), new HttpResponseImpl(), null);
         expect(parseable(json)).to.be.true;
