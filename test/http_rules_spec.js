@@ -158,14 +158,17 @@ describe('HttpRules', () => {
         parse_fail("/.*/ copy_session_field /(.*))/");
 
         // with valid regexes
-        parse_ok("copy_session_field !.*!", "copy_session_field", null, ".*", null);
-        parse_ok("copy_session_field /.*/", "copy_session_field", null, ".*", null);
+        parse_ok("copy_session_field !.*!", "copy_session_field", null, "^.*$", null);
+        parse_ok("copy_session_field /.*/", "copy_session_field", null, "^.*$", null);
+        parse_ok("copy_session_field /^.*/", "copy_session_field", null, "^.*$", null);
+        parse_ok("copy_session_field /.*$/", "copy_session_field", null, "^.*$", null);
+        parse_ok("copy_session_field /^.*$/", "copy_session_field", null, "^.*$", null);
 
         // with valid regexes and escape sequences
-        parse_ok("copy_session_field !A\\!|B!", "copy_session_field", null, "A!|B", null);
-        parse_ok("copy_session_field |A\\|B|", "copy_session_field", null, "A|B", null);
-        parse_ok("copy_session_field |A\\|B\\|C|", "copy_session_field", null, "A|B|C", null);
-        parse_ok("copy_session_field /A\\/B\\/C/", "copy_session_field", null, "A/B/C", null);
+        parse_ok("copy_session_field !A\\!|B!", "copy_session_field", null, "^A!|B$", null);
+        parse_ok("copy_session_field |A\\|B|", "copy_session_field", null, "^A|B$", null);
+        parse_ok("copy_session_field |A\\|B\\|C|", "copy_session_field", null, "^A|B|C$", null);
+        parse_ok("copy_session_field /A\\/B\\/C/", "copy_session_field", null, "^A/B/C$", null);
     });
 
     it('parses remove rules', () => {
@@ -187,19 +190,19 @@ describe('HttpRules', () => {
 
         // with valid regexes
         parse_ok("%request_header:cookie|response_header:set-cookie% remove",
-            "remove", "request_header:cookie|response_header:set-cookie", null, null);
+            "remove", "^request_header:cookie|response_header:set-cookie$", null, null);
         parse_ok("/request_header:cookie|response_header:set-cookie/ remove",
-            "remove", "request_header:cookie|response_header:set-cookie", null, null);
+            "remove", "^request_header:cookie|response_header:set-cookie$", null, null);
 
         // with valid regexes and escape sequences
         parse_ok("!request_header\\!|response_header:set-cookie! remove",
-            "remove", "request_header!|response_header:set-cookie", null, null);
+            "remove", "^request_header!|response_header:set-cookie$", null, null);
         parse_ok("|request_header:cookie\\|response_header:set-cookie| remove",
-            "remove", "request_header:cookie|response_header:set-cookie", null, null);
+            "remove", "^request_header:cookie|response_header:set-cookie$", null, null);
         parse_ok("|request_header:cookie\\|response_header:set-cookie\\|boo| remove",
-            "remove", "request_header:cookie|response_header:set-cookie|boo", null, null);
+            "remove", "^request_header:cookie|response_header:set-cookie|boo$", null, null);
         parse_ok("/request_header:cookie\\/response_header:set-cookie\\/boo/ remove",
-            "remove", "request_header:cookie/response_header:set-cookie/boo", null, null);
+            "remove", "^request_header:cookie/response_header:set-cookie/boo$", null, null);
     });
 
     it('parses remove_if rules', () => {
@@ -237,19 +240,19 @@ describe('HttpRules', () => {
 
         // with valid regexes
         parse_ok("%response_body% remove_if %<!--SKIP_BODY_LOGGING-->%",
-            "remove_if", "response_body", "<!--SKIP_BODY_LOGGING-->", null);
+            "remove_if", "^response_body$", "^<!--SKIP_BODY_LOGGING-->$", null);
         parse_ok("/response_body/ remove_if /<!--SKIP_BODY_LOGGING-->/",
-            "remove_if", "response_body", "<!--SKIP_BODY_LOGGING-->", null);
+            "remove_if", "^response_body$", "^<!--SKIP_BODY_LOGGING-->$", null);
 
         // with valid regexes and escape sequences
         parse_ok("!request_body|response_body! remove_if |<!--IGNORE_LOGGING-->\\|<!-SKIP-->|",
-            "remove_if", "request_body|response_body", "<!--IGNORE_LOGGING-->|<!-SKIP-->", null);
+            "remove_if", "^request_body|response_body$", "^<!--IGNORE_LOGGING-->|<!-SKIP-->$", null);
         parse_ok("|request_body\\|response_body| remove_if |<!--IGNORE_LOGGING-->\\|<!-SKIP-->|",
-            "remove_if", "request_body|response_body", "<!--IGNORE_LOGGING-->|<!-SKIP-->", null);
+            "remove_if", "^request_body|response_body$", "^<!--IGNORE_LOGGING-->|<!-SKIP-->$", null);
         parse_ok("|request_body\\|response_body\\|boo| remove_if |<!--IGNORE_LOGGING-->\\|<!-SKIP-->\\|asdf|",
-            "remove_if", "request_body|response_body|boo", "<!--IGNORE_LOGGING-->|<!-SKIP-->|asdf", null);
+            "remove_if", "^request_body|response_body|boo$", "^<!--IGNORE_LOGGING-->|<!-SKIP-->|asdf$", null);
         parse_ok("/request_body\\/response_body\\/boo/ remove_if |<!--IGNORE_LOGGING-->\\|<!-SKIP-->\\|asdf|",
-            "remove_if", "request_body/response_body/boo", "<!--IGNORE_LOGGING-->|<!-SKIP-->|asdf", null);
+            "remove_if", "^request_body/response_body/boo$", "^<!--IGNORE_LOGGING-->|<!-SKIP-->|asdf$", null);
     });
 
     it('parses remove_unless rules', () => {
@@ -287,19 +290,19 @@ describe('HttpRules', () => {
 
         // with valid regexes
         parse_ok("%response_body% remove_unless %<!--PERFORM_BODY_LOGGING-->%",
-            "remove_unless", "response_body", "<!--PERFORM_BODY_LOGGING-->", null);
+            "remove_unless", "^response_body$", "^<!--PERFORM_BODY_LOGGING-->$", null);
         parse_ok("/response_body/ remove_unless /<!--PERFORM_BODY_LOGGING-->/",
-            "remove_unless", "response_body", "<!--PERFORM_BODY_LOGGING-->", null);
+            "remove_unless", "^response_body$", "^<!--PERFORM_BODY_LOGGING-->$", null);
 
         // with valid regexes and escape sequences
         parse_ok("!request_body|response_body! remove_unless |<!--PERFORM_LOGGING-->\\|<!-SKIP-->|",
-            "remove_unless", "request_body|response_body", "<!--PERFORM_LOGGING-->|<!-SKIP-->", null);
+            "remove_unless", "^request_body|response_body$", "^<!--PERFORM_LOGGING-->|<!-SKIP-->$", null);
         parse_ok("|request_body\\|response_body| remove_unless |<!--PERFORM_LOGGING-->\\|<!-SKIP-->|",
-            "remove_unless", "request_body|response_body", "<!--PERFORM_LOGGING-->|<!-SKIP-->", null);
+            "remove_unless", "^request_body|response_body$", "^<!--PERFORM_LOGGING-->|<!-SKIP-->$", null);
         parse_ok("|request_body\\|response_body\\|boo| remove_unless |<!--PERFORM_LOGGING-->\\|<!-SKIP-->\\|skipit|",
-            "remove_unless", "request_body|response_body|boo", "<!--PERFORM_LOGGING-->|<!-SKIP-->|skipit", null);
+            "remove_unless", "^request_body|response_body|boo$", "^<!--PERFORM_LOGGING-->|<!-SKIP-->|skipit$", null);
         parse_ok("/request_body\\/response_body\\/boo/ remove_unless |<!--PERFORM_LOGGING-->\\|<!-SKIP-->\\|skipit|",
-            "remove_unless", "request_body/response_body/boo", "<!--PERFORM_LOGGING-->|<!-SKIP-->|skipit", null);
+            "remove_unless", "^request_body/response_body/boo$", "^<!--PERFORM_LOGGING-->|<!-SKIP-->|skipit$", null);
     });
 
     it('parses replace rules', () => {
@@ -344,24 +347,24 @@ describe('HttpRules', () => {
         parse_fail("/.*/ replace /1/, /");
 
         // with valid regexes
-        parse_ok("%response_body% replace %kurt%, %vagner%", "replace", "response_body", "kurt", "vagner");
-        parse_ok("/response_body/ replace /kurt/, /vagner/", "replace", "response_body", "kurt", "vagner");
+        parse_ok("%response_body% replace %kurt%, %vagner%", "replace", "^response_body$", "kurt", "vagner");
+        parse_ok("/response_body/ replace /kurt/, /vagner/", "replace", "^response_body$", "kurt", "vagner");
         parse_ok("%response_body|.+_header:.+% replace %kurt%, %vagner%",
-            "replace", "response_body|.+_header:.+", "kurt", "vagner");
+            "replace", "^response_body|.+_header:.+$", "kurt", "vagner");
         parse_ok("|response_body\\|.+_header:.+| replace |kurt|, |vagner\\|frazier|",
-            "replace", "response_body|.+_header:.+", "kurt", "vagner|frazier");
+            "replace", "^response_body|.+_header:.+$", "kurt", "vagner|frazier");
 
         // with valid regexes and escape sequences
         parse_ok("|response_body\\|.+_header:.+| replace |kurt|, |vagner|",
-            "replace", "response_body|.+_header:.+", "kurt", "vagner");
+            "replace", "^response_body|.+_header:.+$", "kurt", "vagner");
         parse_ok("|response_body\\|.+_header:.+\\|boo| replace |kurt|, |vagner|",
-            "replace", "response_body|.+_header:.+|boo", "kurt", "vagner");
+            "replace", "^response_body|.+_header:.+|boo$", "kurt", "vagner");
         parse_ok("|response_body| replace |kurt\\|bruce|, |vagner|",
-            "replace", "response_body", "kurt|bruce", "vagner");
+            "replace", "^response_body$", "kurt|bruce", "vagner");
         parse_ok("|response_body| replace |kurt\\|bruce\\|kevin|, |vagner|",
-            "replace", "response_body", "kurt|bruce|kevin", "vagner");
+            "replace", "^response_body$", "kurt|bruce|kevin", "vagner");
         parse_ok("|response_body| replace /kurt\\/bruce\\/kevin/, |vagner|",
-            "replace", "response_body", "kurt/bruce/kevin", "vagner");
+            "replace", "^response_body$", "kurt/bruce/kevin", "vagner");
     });
 
     it('parses sample rules', () => {
@@ -410,15 +413,15 @@ describe('HttpRules', () => {
         parse_fail("%.*% stop /1/, /2/, /3/ # blah");
 
         // with valid regexes
-        parse_ok("%request_header:skip_usage_logging% stop", "stop", "request_header:skip_usage_logging", null, null);
-        parse_ok("|request_header:skip_usage_logging| stop", "stop", "request_header:skip_usage_logging", null, null);
-        parse_ok("/request_header:skip_usage_logging/ stop", "stop", "request_header:skip_usage_logging", null, null);
+        parse_ok("%request_header:skip_usage_logging% stop", "stop", "^request_header:skip_usage_logging$", null, null);
+        parse_ok("|request_header:skip_usage_logging| stop", "stop", "^request_header:skip_usage_logging$", null, null);
+        parse_ok("/request_header:skip_usage_logging/ stop", "stop", "^request_header:skip_usage_logging$", null, null);
 
         // with valid regexes and escape sequences
-        parse_ok("!request_header\\!! stop", "stop", "request_header!", null, null);
-        parse_ok("|request_header\\|response_header| stop", "stop", "request_header|response_header", null, null);
-        parse_ok("|request_header\\|response_header\\|boo| stop", "stop", "request_header|response_header|boo", null, null);
-        parse_ok("/request_header\\/response_header\\/boo/ stop", "stop", "request_header/response_header/boo", null, null);
+        parse_ok("!request_header\\!! stop", "stop", "^request_header!$", null, null);
+        parse_ok("|request_header\\|response_header| stop", "stop", "^request_header|response_header$", null, null);
+        parse_ok("|request_header\\|response_header\\|boo| stop", "stop", "^request_header|response_header|boo$", null, null);
+        parse_ok("/request_header\\/response_header\\/boo/ stop", "stop", "^request_header/response_header/boo$", null, null);
 
     });
 
@@ -456,18 +459,18 @@ describe('HttpRules', () => {
         parse_fail("/.*/ stop_if /(.*))/");
 
         // with valid regexes
-        parse_ok("%response_body% stop_if %<!--IGNORE_LOGGING-->%", "stop_if", "response_body", "<!--IGNORE_LOGGING-->", null);
-        parse_ok("/response_body/ stop_if /<!--IGNORE_LOGGING-->/", "stop_if", "response_body", "<!--IGNORE_LOGGING-->", null);
+        parse_ok("%response_body% stop_if %<!--IGNORE_LOGGING-->%", "stop_if", "^response_body$", "^<!--IGNORE_LOGGING-->$", null);
+        parse_ok("/response_body/ stop_if /<!--IGNORE_LOGGING-->/", "stop_if", "^response_body$", "^<!--IGNORE_LOGGING-->$", null);
 
         // with valid regexes and escape sequences
         parse_ok("!request_body|response_body! stop_if |<!--IGNORE_LOGGING-->\\|<!-SKIP-->|",
-            "stop_if", "request_body|response_body", "<!--IGNORE_LOGGING-->|<!-SKIP-->", null);
+            "stop_if", "^request_body|response_body$", "^<!--IGNORE_LOGGING-->|<!-SKIP-->$", null);
         parse_ok("!request_body|response_body|boo\\!! stop_if |<!--IGNORE_LOGGING-->\\|<!-SKIP-->|",
-            "stop_if", "request_body|response_body|boo!", "<!--IGNORE_LOGGING-->|<!-SKIP-->", null);
+            "stop_if", "^request_body|response_body|boo!$", "^<!--IGNORE_LOGGING-->|<!-SKIP-->$", null);
         parse_ok("|request_body\\|response_body| stop_if |<!--IGNORE_LOGGING-->\\|<!-SKIP-->|",
-            "stop_if", "request_body|response_body", "<!--IGNORE_LOGGING-->|<!-SKIP-->", null);
+            "stop_if", "^request_body|response_body$", "^<!--IGNORE_LOGGING-->|<!-SKIP-->$", null);
         parse_ok("/request_body\\/response_body/ stop_if |<!--IGNORE_LOGGING-->\\|<!-SKIP-->\\|pipe\\||",
-            "stop_if", "request_body/response_body", "<!--IGNORE_LOGGING-->|<!-SKIP-->|pipe|", null);
+            "stop_if", "^request_body/response_body$", "^<!--IGNORE_LOGGING-->|<!-SKIP-->|pipe|$", null);
     });
 
     it('parses stop_unless rules', () => {
@@ -504,20 +507,20 @@ describe('HttpRules', () => {
         parse_fail("/.*/ stop_unless /(.*))/");
 
         // with valid regexes
-        parse_ok("%response_body% stop_unless %<!--DO_LOGGING-->%", "stop_unless", "response_body", "<!--DO_LOGGING-->", null);
-        parse_ok("/response_body/ stop_unless /<!--DO_LOGGING-->/", "stop_unless", "response_body", "<!--DO_LOGGING-->", null);
+        parse_ok("%response_body% stop_unless %<!--DO_LOGGING-->%", "stop_unless", "^response_body$", "^<!--DO_LOGGING-->$", null);
+        parse_ok("/response_body/ stop_unless /<!--DO_LOGGING-->/", "stop_unless", "^response_body$", "^<!--DO_LOGGING-->$", null);
 
         // with valid regexes and escape sequences
         parse_ok("!request_body|response_body! stop_unless |<!--DO_LOGGING-->\\|<!-NOSKIP-->|",
-            "stop_unless", "request_body|response_body", "<!--DO_LOGGING-->|<!-NOSKIP-->", null);
+            "stop_unless", "^request_body|response_body$", "^<!--DO_LOGGING-->|<!-NOSKIP-->$", null);
         parse_ok("!request_body|response_body|boo\\!! stop_unless |<!--DO_LOGGING-->\\|<!-NOSKIP-->|",
-            "stop_unless", "request_body|response_body|boo!", "<!--DO_LOGGING-->|<!-NOSKIP-->", null);
+            "stop_unless", "^request_body|response_body|boo!$", "^<!--DO_LOGGING-->|<!-NOSKIP-->$", null);
         parse_ok("|request_body\\|response_body| stop_unless |<!--DO_LOGGING-->\\|<!-NOSKIP-->|",
-            "stop_unless", "request_body|response_body", "<!--DO_LOGGING-->|<!-NOSKIP-->", null);
+            "stop_unless", "^request_body|response_body$", "^<!--DO_LOGGING-->|<!-NOSKIP-->$", null);
         parse_ok("|request_body\\|response_body| stop_unless |<!--DO_LOGGING-->\\|<!-NOSKIP-->\\|pipe\\||",
-            "stop_unless", "request_body|response_body", "<!--DO_LOGGING-->|<!-NOSKIP-->|pipe|", null);
+            "stop_unless", "^request_body|response_body$", "^<!--DO_LOGGING-->|<!-NOSKIP-->|pipe|$", null);
         parse_ok("/request_body\\/response_body/ stop_unless |<!--DO_LOGGING-->\\|<!-NOSKIP-->\\|pipe\\||",
-            "stop_unless", "request_body/response_body", "<!--DO_LOGGING-->|<!-NOSKIP-->|pipe|", null);
+            "stop_unless", "^request_body/response_body$", "^<!--DO_LOGGING-->|<!-NOSKIP-->|pipe|$", null);
     });
 
     it('raises expected errors', () => {
