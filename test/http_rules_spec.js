@@ -255,6 +255,56 @@ describe('HttpRules', () => {
             "remove_if", "^request_body/response_body/boo$", "^<!--IGNORE_LOGGING-->|<!-SKIP-->|asdf$", null);
     });
 
+    it('parses remove_if_found rules', () => {
+        // with extra params
+        parse_fail("|.*| remove_if_found %1%, %2%");
+        parse_fail("!.*! remove_if_found /1/, 2");
+        parse_fail("/.*/ remove_if_found /1/, /2");
+        parse_fail("/.*/ remove_if_found /1/, /2/");
+        parse_fail("/.*/ remove_if_found /1/, /2/, /3/ # blah");
+        parse_fail("!.*! remove_if_found %1%, %2%, %3%");
+        parse_fail("/.*/ remove_if_found /1/, /2/, 3");
+        parse_fail("/.*/ remove_if_found /1/, /2/, /3");
+        parse_fail("/.*/ remove_if_found /1/, /2/, /3/");
+        parse_fail("%.*% remove_if_found /1/, /2/, /3/ # blah");
+
+        // with missing params
+        parse_fail("!.*! remove_if_found");
+        parse_fail("/.*/ remove_if_found");
+        parse_fail("/.*/ remove_if_found /");
+        parse_fail("/.*/ remove_if_found //");
+        parse_fail("/.*/ remove_if_found blah");
+        parse_fail("/.*/ remove_if_found # bleep");
+        parse_fail("/.*/ remove_if_found blah # bleep");
+
+        // with invalid params
+        parse_fail("/.*/ remove_if_found /");
+        parse_fail("/.*/ remove_if_found //");
+        parse_fail("/.*/ remove_if_found ///");
+        parse_fail("/.*/ remove_if_found /*/");
+        parse_fail("/.*/ remove_if_found /?/");
+        parse_fail("/.*/ remove_if_found /+/");
+        parse_fail("/.*/ remove_if_found /(/");
+        parse_fail("/.*/ remove_if_found /(.*/");
+        parse_fail("/.*/ remove_if_found /(.*))/");
+
+        // with valid regexes
+        parse_ok("%response_body% remove_if_found %<!--SKIP_BODY_LOGGING-->%",
+            "remove_if_found", "^response_body$", "<!--SKIP_BODY_LOGGING-->", null);
+        parse_ok("/response_body/ remove_if_found /<!--SKIP_BODY_LOGGING-->/",
+            "remove_if_found", "^response_body$", "<!--SKIP_BODY_LOGGING-->", null);
+
+        // with valid regexes and escape sequences
+        parse_ok("!request_body|response_body! remove_if_found |<!--IGNORE_LOGGING-->\\|<!-SKIP-->|",
+            "remove_if_found", "^request_body|response_body$", "<!--IGNORE_LOGGING-->|<!-SKIP-->", null);
+        parse_ok("|request_body\\|response_body| remove_if_found |<!--IGNORE_LOGGING-->\\|<!-SKIP-->|",
+            "remove_if_found", "^request_body|response_body$", "<!--IGNORE_LOGGING-->|<!-SKIP-->", null);
+        parse_ok("|request_body\\|response_body\\|boo| remove_if_found |<!--IGNORE_LOGGING-->\\|<!-SKIP-->\\|asdf|",
+            "remove_if_found", "^request_body|response_body|boo$", "<!--IGNORE_LOGGING-->|<!-SKIP-->|asdf", null);
+        parse_ok("/request_body\\/response_body\\/boo/ remove_if_found |<!--IGNORE_LOGGING-->\\|<!-SKIP-->\\|asdf|",
+            "remove_if_found", "^request_body/response_body/boo$", "<!--IGNORE_LOGGING-->|<!-SKIP-->|asdf", null);
+    });
+
     it('parses remove_unless rules', () => {
         // with extra params
         parse_fail("|.*| remove_unless %1%, %2%");
@@ -303,6 +353,56 @@ describe('HttpRules', () => {
             "remove_unless", "^request_body|response_body|boo$", "^<!--PERFORM_LOGGING-->|<!-SKIP-->|skipit$", null);
         parse_ok("/request_body\\/response_body\\/boo/ remove_unless |<!--PERFORM_LOGGING-->\\|<!-SKIP-->\\|skipit|",
             "remove_unless", "^request_body/response_body/boo$", "^<!--PERFORM_LOGGING-->|<!-SKIP-->|skipit$", null);
+    });
+
+    it('parses remove_unless_found rules', () => {
+        // with extra params
+        parse_fail("|.*| remove_unless_found %1%, %2%");
+        parse_fail("!.*! remove_unless_found /1/, 2");
+        parse_fail("/.*/ remove_unless_found /1/, /2");
+        parse_fail("/.*/ remove_unless_found /1/, /2/");
+        parse_fail("/.*/ remove_unless_found /1/, /2/, /3/ # blah");
+        parse_fail("!.*! remove_unless_found %1%, %2%, %3%");
+        parse_fail("/.*/ remove_unless_found /1/, /2/, 3");
+        parse_fail("/.*/ remove_unless_found /1/, /2/, /3");
+        parse_fail("/.*/ remove_unless_found /1/, /2/, /3/");
+        parse_fail("%.*% remove_unless_found /1/, /2/, /3/ # blah");
+
+        // with missing params
+        parse_fail("!.*! remove_unless_found");
+        parse_fail("/.*/ remove_unless_found");
+        parse_fail("/.*/ remove_unless_found /");
+        parse_fail("/.*/ remove_unless_found //");
+        parse_fail("/.*/ remove_unless_found blah");
+        parse_fail("/.*/ remove_unless_found # bleep");
+        parse_fail("/.*/ remove_unless_found blah # bleep");
+
+        // with invalid params
+        parse_fail("/.*/ remove_unless_found /");
+        parse_fail("/.*/ remove_unless_found //");
+        parse_fail("/.*/ remove_unless_found ///");
+        parse_fail("/.*/ remove_unless_found /*/");
+        parse_fail("/.*/ remove_unless_found /?/");
+        parse_fail("/.*/ remove_unless_found /+/");
+        parse_fail("/.*/ remove_unless_found /(/");
+        parse_fail("/.*/ remove_unless_found /(.*/");
+        parse_fail("/.*/ remove_unless_found /(.*))/");
+
+        // with valid regexes
+        parse_ok("%response_body% remove_unless_found %<!--PERFORM_BODY_LOGGING-->%",
+            "remove_unless_found", "^response_body$", "<!--PERFORM_BODY_LOGGING-->", null);
+        parse_ok("/response_body/ remove_unless_found /<!--PERFORM_BODY_LOGGING-->/",
+            "remove_unless_found", "^response_body$", "<!--PERFORM_BODY_LOGGING-->", null);
+
+        // with valid regexes and escape sequences
+        parse_ok("!request_body|response_body! remove_unless_found |<!--PERFORM_LOGGING-->\\|<!-SKIP-->|",
+            "remove_unless_found", "^request_body|response_body$", "<!--PERFORM_LOGGING-->|<!-SKIP-->", null);
+        parse_ok("|request_body\\|response_body| remove_unless_found |<!--PERFORM_LOGGING-->\\|<!-SKIP-->|",
+            "remove_unless_found", "^request_body|response_body$", "<!--PERFORM_LOGGING-->|<!-SKIP-->", null);
+        parse_ok("|request_body\\|response_body\\|boo| remove_unless_found |<!--PERFORM_LOGGING-->\\|<!-SKIP-->\\|skipit|",
+            "remove_unless_found", "^request_body|response_body|boo$", "<!--PERFORM_LOGGING-->|<!-SKIP-->|skipit", null);
+        parse_ok("/request_body\\/response_body\\/boo/ remove_unless_found |<!--PERFORM_LOGGING-->\\|<!-SKIP-->\\|skipit|",
+            "remove_unless_found", "^request_body/response_body/boo$", "<!--PERFORM_LOGGING-->|<!-SKIP-->|skipit", null);
     });
 
     it('parses replace rules', () => {
@@ -473,6 +573,56 @@ describe('HttpRules', () => {
             "stop_if", "^request_body/response_body$", "^<!--IGNORE_LOGGING-->|<!-SKIP-->|pipe|$", null);
     });
 
+    it('parses stop_if_found rules', () => {
+        // with extra params
+        parse_fail("|.*| stop_if_found %1%, %2%");
+        parse_fail("!.*! stop_if_found /1/, 2");
+        parse_fail("/.*/ stop_if_found /1/, /2");
+        parse_fail("/.*/ stop_if_found /1/, /2/");
+        parse_fail("/.*/ stop_if_found /1/, /2/, /3/ # blah");
+        parse_fail("!.*! stop_if_found %1%, %2%, %3%");
+        parse_fail("/.*/ stop_if_found /1/, /2/, 3");
+        parse_fail("/.*/ stop_if_found /1/, /2/, /3");
+        parse_fail("/.*/ stop_if_found /1/, /2/, /3/");
+        parse_fail("%.*% stop_if_found /1/, /2/, /3/ # blah");
+
+        // with missing params
+        parse_fail("!.*! stop_if_found");
+        parse_fail("/.*/ stop_if_found");
+        parse_fail("/.*/ stop_if_found /");
+        parse_fail("/.*/ stop_if_found //");
+        parse_fail("/.*/ stop_if_found blah");
+        parse_fail("/.*/ stop_if_found # bleep");
+        parse_fail("/.*/ stop_if_found blah # bleep");
+
+        // with invalid params
+        parse_fail("/.*/ stop_if_found /");
+        parse_fail("/.*/ stop_if_found //");
+        parse_fail("/.*/ stop_if_found ///");
+        parse_fail("/.*/ stop_if_found /*/");
+        parse_fail("/.*/ stop_if_found /?/");
+        parse_fail("/.*/ stop_if_found /+/");
+        parse_fail("/.*/ stop_if_found /(/");
+        parse_fail("/.*/ stop_if_found /(.*/");
+        parse_fail("/.*/ stop_if_found /(.*))/");
+
+        // with valid regexes
+        parse_ok("%response_body% stop_if_found %<!--IGNORE_LOGGING-->%",
+            "stop_if_found", "^response_body$", "<!--IGNORE_LOGGING-->", null);
+        parse_ok("/response_body/ stop_if_found /<!--IGNORE_LOGGING-->/",
+            "stop_if_found", "^response_body$", "<!--IGNORE_LOGGING-->", null);
+
+        // with valid regexes and escape sequences
+        parse_ok("!request_body|response_body! stop_if_found |<!--IGNORE_LOGGING-->\\|<!-SKIP-->|",
+            "stop_if_found", "^request_body|response_body$", "<!--IGNORE_LOGGING-->|<!-SKIP-->", null);
+        parse_ok("!request_body|response_body|boo\\!! stop_if_found |<!--IGNORE_LOGGING-->\\|<!-SKIP-->|",
+            "stop_if_found", "^request_body|response_body|boo!$", "<!--IGNORE_LOGGING-->|<!-SKIP-->", null);
+        parse_ok("|request_body\\|response_body| stop_if_found |<!--IGNORE_LOGGING-->\\|<!-SKIP-->|",
+            "stop_if_found", "^request_body|response_body$", "<!--IGNORE_LOGGING-->|<!-SKIP-->", null);
+        parse_ok("/request_body\\/response_body/ stop_if_found |<!--IGNORE_LOGGING-->\\|<!-SKIP-->\\|pipe\\||",
+            "stop_if_found", "^request_body/response_body$", "<!--IGNORE_LOGGING-->|<!-SKIP-->|pipe|", null);
+    });
+
     it('parses stop_unless rules', () => {
         // with extra params
         parse_fail("|.*| stop_unless %1%, %2%");
@@ -521,6 +671,58 @@ describe('HttpRules', () => {
             "stop_unless", "^request_body|response_body$", "^<!--DO_LOGGING-->|<!-NOSKIP-->|pipe|$", null);
         parse_ok("/request_body\\/response_body/ stop_unless |<!--DO_LOGGING-->\\|<!-NOSKIP-->\\|pipe\\||",
             "stop_unless", "^request_body/response_body$", "^<!--DO_LOGGING-->|<!-NOSKIP-->|pipe|$", null);
+    });
+
+    it('parses stop_unless_found rules', () => {
+        // with extra params
+        parse_fail("|.*| stop_unless_found %1%, %2%");
+        parse_fail("!.*! stop_unless_found /1/, 2");
+        parse_fail("/.*/ stop_unless_found /1/, /2");
+        parse_fail("/.*/ stop_unless_found /1/, /2/");
+        parse_fail("/.*/ stop_unless_found /1/, /2/, /3/ # blah");
+        parse_fail("!.*! stop_unless_found %1%, %2%, %3%");
+        parse_fail("/.*/ stop_unless_found /1/, /2/, 3");
+        parse_fail("/.*/ stop_unless_found /1/, /2/, /3");
+        parse_fail("/.*/ stop_unless_found /1/, /2/, /3/");
+        parse_fail("%.*% stop_unless_found /1/, /2/, /3/ # blah");
+
+        // with missing params
+        parse_fail("!.*! stop_unless_found");
+        parse_fail("/.*/ stop_unless_found");
+        parse_fail("/.*/ stop_unless_found /");
+        parse_fail("/.*/ stop_unless_found //");
+        parse_fail("/.*/ stop_unless_found blah");
+        parse_fail("/.*/ stop_unless_found # bleep");
+        parse_fail("/.*/ stop_unless_found blah # bleep");
+
+        // with invalid params
+        parse_fail("/.*/ stop_unless_found /");
+        parse_fail("/.*/ stop_unless_found //");
+        parse_fail("/.*/ stop_unless_found ///");
+        parse_fail("/.*/ stop_unless_found /*/");
+        parse_fail("/.*/ stop_unless_found /?/");
+        parse_fail("/.*/ stop_unless_found /+/");
+        parse_fail("/.*/ stop_unless_found /(/");
+        parse_fail("/.*/ stop_unless_found /(.*/");
+        parse_fail("/.*/ stop_unless_found /(.*))/");
+
+        // with valid regexes
+        parse_ok("%response_body% stop_unless_found %<!--DO_LOGGING-->%",
+            "stop_unless_found", "^response_body$", "<!--DO_LOGGING-->", null);
+        parse_ok("/response_body/ stop_unless_found /<!--DO_LOGGING-->/",
+            "stop_unless_found", "^response_body$", "<!--DO_LOGGING-->", null);
+
+        // with valid regexes and escape sequences
+        parse_ok("!request_body|response_body! stop_unless_found |<!--DO_LOGGING-->\\|<!-NOSKIP-->|",
+            "stop_unless_found", "^request_body|response_body$", "<!--DO_LOGGING-->|<!-NOSKIP-->", null);
+        parse_ok("!request_body|response_body|boo\\!! stop_unless_found |<!--DO_LOGGING-->\\|<!-NOSKIP-->|",
+            "stop_unless_found", "^request_body|response_body|boo!$", "<!--DO_LOGGING-->|<!-NOSKIP-->", null);
+        parse_ok("|request_body\\|response_body| stop_unless_found |<!--DO_LOGGING-->\\|<!-NOSKIP-->|",
+            "stop_unless_found", "^request_body|response_body$", "<!--DO_LOGGING-->|<!-NOSKIP-->", null);
+        parse_ok("|request_body\\|response_body| stop_unless_found |<!--DO_LOGGING-->\\|<!-NOSKIP-->\\|pipe\\||",
+            "stop_unless_found", "^request_body|response_body$", "<!--DO_LOGGING-->|<!-NOSKIP-->|pipe|", null);
+        parse_ok("/request_body\\/response_body/ stop_unless_found |<!--DO_LOGGING-->\\|<!-NOSKIP-->\\|pipe\\||",
+            "stop_unless_found", "^request_body/response_body$", "<!--DO_LOGGING-->|<!-NOSKIP-->|pipe|", null);
     });
 
     it('raises expected errors', () => {

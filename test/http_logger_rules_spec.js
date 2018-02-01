@@ -268,6 +268,53 @@ describe('HttpLogger', () => {
         expect(queue[0]).not.to.contain("[\"response_body\",");
     });
 
+    it('uses remove_if_found rules', () => {
+        let queue = [];
+        let logger = new HttpLogger({queue: queue, rules: '!response_header:blahblahblah! remove_if_found !.*!'});
+        logger.log(helper.mockRequestWithJson2(), helper.mockResponseWithHtml(), helper.MOCK_HTML, helper.MOCK_JSON);
+        expect(queue.length).to.equal(1);
+
+        queue = [];
+        logger = new HttpLogger({queue: queue, rules: '!.*! remove_if_found !.*!'});
+        logger.log(helper.mockRequestWithJson2(), helper.mockResponseWithHtml(), helper.MOCK_HTML, helper.MOCK_JSON);
+        expect(queue.length).to.equal(0);
+
+        queue = [];
+        logger = new HttpLogger({queue: queue, rules: '!request_body! remove_if_found !.*!'});
+        logger.log(helper.mockRequestWithJson2(), helper.mockResponseWithHtml(), helper.MOCK_HTML, helper.MOCK_JSON);
+        expect(queue.length).to.equal(1);
+        expect(queue[0]).not.to.contain("[\"request_body\",");
+        expect(queue[0]).to.contain("[\"response_body\",");
+
+        queue = [];
+        logger = new HttpLogger({queue: queue, rules: '!response_body! remove_if_found !.*!'});
+        logger.log(helper.mockRequestWithJson2(), helper.mockResponseWithHtml(), helper.MOCK_HTML, helper.MOCK_JSON);
+        expect(queue.length).to.equal(1);
+        expect(queue[0]).to.contain("[\"request_body\",");
+        expect(queue[0]).not.to.contain("[\"response_body\",");
+
+        queue = [];
+        logger = new HttpLogger({queue: queue, rules: '!response_body|request_body! remove_if_found !World!'});
+        logger.log(helper.mockRequestWithJson2(), helper.mockResponseWithHtml(), helper.MOCK_HTML, helper.MOCK_JSON);
+        expect(queue.length).to.equal(1);
+        expect(queue[0]).to.contain("[\"request_body\",");
+        expect(queue[0]).not.to.contain("[\"response_body\",");
+
+        queue = [];
+        logger = new HttpLogger({queue: queue, rules: '!response_body|request_body! remove_if_found !.*World.*!'});
+        logger.log(helper.mockRequestWithJson2(), helper.mockResponseWithHtml(), helper.MOCK_HTML, helper.MOCK_JSON);
+        expect(queue.length).to.equal(1);
+        expect(queue[0]).to.contain("[\"request_body\",");
+        expect(queue[0]).not.to.contain("[\"response_body\",");
+
+        queue = [];
+        logger = new HttpLogger({queue: queue, rules: '!response_body|request_body! remove_if_found !blahblahblah!'});
+        logger.log(helper.mockRequestWithJson2(), helper.mockResponseWithHtml(), helper.MOCK_HTML, helper.MOCK_JSON);
+        expect(queue.length).to.equal(1);
+        expect(queue[0]).to.contain("[\"request_body\",");
+        expect(queue[0]).to.contain("[\"response_body\",");
+    });
+
     it('uses remove_unless rules', () => {
         let queue = [];
         let logger = new HttpLogger({queue: queue, rules: '!response_header:blahblahblah! remove_unless !.*!'});
@@ -309,6 +356,53 @@ describe('HttpLogger', () => {
 
         queue = [];
         logger = new HttpLogger({queue: queue, rules: "!response_body! remove_unless !.*!\n!request_body! remove_unless !.*!"});
+        logger.log(helper.mockRequestWithJson2(), helper.mockResponseWithHtml(), helper.MOCK_HTML, helper.MOCK_JSON);
+        expect(queue.length).to.equal(1);
+        expect(queue[0]).to.contain("[\"request_body\",");
+        expect(queue[0]).to.contain("[\"response_body\",");
+    });
+
+    it('uses remove_unless_found rules', () => {
+        let queue = [];
+        let logger = new HttpLogger({queue: queue, rules: '!response_header:blahblahblah! remove_unless_found !.*!'});
+        logger.log(helper.mockRequestWithJson2(), helper.mockResponseWithHtml(), helper.MOCK_HTML, helper.MOCK_JSON);
+        expect(queue.length).to.equal(1);
+
+        queue = [];
+        logger = new HttpLogger({queue: queue, rules: '!.*! remove_unless_found !blahblahblah!'});
+        logger.log(helper.mockRequestWithJson2(), helper.mockResponseWithHtml(), helper.MOCK_HTML, helper.MOCK_JSON);
+        expect(queue.length).to.equal(0);
+
+        queue = [];
+        logger = new HttpLogger({queue: queue, rules: '!request_body! remove_unless_found !blahblahblah!'});
+        logger.log(helper.mockRequestWithJson2(), helper.mockResponseWithHtml(), helper.MOCK_HTML, helper.MOCK_JSON);
+        expect(queue.length).to.equal(1);
+        expect(queue[0]).not.to.contain("[\"request_body\",");
+        expect(queue[0]).to.contain("[\"response_body\",");
+
+        queue = [];
+        logger = new HttpLogger({queue: queue, rules: '!response_body! remove_unless_found !blahblahblah!'});
+        logger.log(helper.mockRequestWithJson2(), helper.mockResponseWithHtml(), helper.MOCK_HTML, helper.MOCK_JSON);
+        expect(queue.length).to.equal(1);
+        expect(queue[0]).to.contain("[\"request_body\",");
+        expect(queue[0]).not.to.contain("[\"response_body\",");
+
+        queue = [];
+        logger = new HttpLogger({queue: queue, rules: '!response_body|request_body! remove_unless_found !World!'});
+        logger.log(helper.mockRequestWithJson2(), helper.mockResponseWithHtml(), helper.MOCK_HTML, helper.MOCK_JSON);
+        expect(queue.length).to.equal(1);
+        expect(queue[0]).not.to.contain("[\"request_body\",");
+        expect(queue[0]).to.contain("[\"response_body\",");
+
+        queue = [];
+        logger = new HttpLogger({queue: queue, rules: '!response_body|request_body! remove_unless_found !.*World.*!'});
+        logger.log(helper.mockRequestWithJson2(), helper.mockResponseWithHtml(), helper.MOCK_HTML, helper.MOCK_JSON);
+        expect(queue.length).to.equal(1);
+        expect(queue[0]).not.to.contain("[\"request_body\",");
+        expect(queue[0]).to.contain("[\"response_body\",");
+
+        queue = [];
+        logger = new HttpLogger({queue: queue, rules: '!response_body|request_body! remove_unless_found !.*!'});
         logger.log(helper.mockRequestWithJson2(), helper.mockResponseWithHtml(), helper.MOCK_HTML, helper.MOCK_JSON);
         expect(queue.length).to.equal(1);
         expect(queue[0]).to.contain("[\"request_body\",");
@@ -493,6 +587,33 @@ describe('HttpLogger', () => {
         expect(queue.length).to.equal(1);
     });
 
+    it('uses stop_if_found rules', () => {
+        let queue = [];
+        let logger = new HttpLogger({queue: queue, rules: '!response_header:blahblahblah! stop_if_found !.*!'});
+        logger.log(helper.mockRequestWithJson2(), helper.mockResponseWithHtml(), helper.MOCK_HTML, null);
+        expect(queue.length).to.equal(1);
+
+        queue = [];
+        logger = new HttpLogger({queue: queue, rules: '!response_body! stop_if_found !.*!'});
+        logger.log(helper.mockRequestWithJson2(), helper.mockResponseWithHtml(), helper.MOCK_HTML, helper.MOCK_JSON);
+        expect(queue.length).to.equal(0);
+
+        queue = [];
+        logger = new HttpLogger({queue: queue, rules: '!response_body! stop_if_found !World!'});
+        logger.log(helper.mockRequestWithJson2(), helper.mockResponseWithHtml(), helper.MOCK_HTML, helper.MOCK_JSON);
+        expect(queue.length).to.equal(0);
+
+        queue = [];
+        logger = new HttpLogger({queue: queue, rules: '!response_body! stop_if_found !.*World.*!'});
+        logger.log(helper.mockRequestWithJson2(), helper.mockResponseWithHtml(), helper.MOCK_HTML, helper.MOCK_JSON);
+        expect(queue.length).to.equal(0);
+
+        queue = [];
+        logger = new HttpLogger({queue: queue, rules: '!response_body! stop_if_found !blahblahblah!'});
+        logger.log(helper.mockRequestWithJson2(), helper.mockResponseWithHtml(), helper.MOCK_HTML, helper.MOCK_JSON);
+        expect(queue.length).to.equal(1);
+    });
+
     it('uses stop_unless rules', () => {
         let queue = [];
         let logger = new HttpLogger({queue: queue, rules: '!response_header:blahblahblah! stop_unless !.*!'});
@@ -511,6 +632,33 @@ describe('HttpLogger', () => {
 
         queue = [];
         logger = new HttpLogger({queue: queue, rules: '!response_body! stop_unless !.*blahblahblah.*!'});
+        logger.log(helper.mockRequestWithJson2(), helper.mockResponseWithHtml(), helper.MOCK_HTML, null);
+        expect(queue.length).to.equal(0);
+    });
+
+    it('uses stop_unless_found rules', () => {
+        let queue = [];
+        let logger = new HttpLogger({queue: queue, rules: '!response_header:blahblahblah! stop_unless_found !.*!'});
+        logger.log(helper.mockRequestWithJson2(), helper.mockResponseWithHtml(), helper.MOCK_HTML, null);
+        expect(queue.length).to.equal(0);
+
+        queue = [];
+        logger = new HttpLogger({queue: queue, rules: '!response_body! stop_unless_found !.*!'});
+        logger.log(helper.mockRequestWithJson2(), helper.mockResponseWithHtml(), helper.MOCK_HTML, null);
+        expect(queue.length).to.equal(1);
+
+        queue = [];
+        logger = new HttpLogger({queue: queue, rules: '!response_body! stop_unless_found !World!'});
+        logger.log(helper.mockRequestWithJson2(), helper.mockResponseWithHtml(), helper.MOCK_HTML, null);
+        expect(queue.length).to.equal(1);
+
+        queue = [];
+        logger = new HttpLogger({queue: queue, rules: '!response_body! stop_unless_found !.*World.*!'});
+        logger.log(helper.mockRequestWithJson2(), helper.mockResponseWithHtml(), helper.MOCK_HTML, null);
+        expect(queue.length).to.equal(1);
+
+        queue = [];
+        logger = new HttpLogger({queue: queue, rules: '!response_body! stop_unless_found !blahblahblah!'});
         logger.log(helper.mockRequestWithJson2(), helper.mockResponseWithHtml(), helper.MOCK_HTML, null);
         expect(queue.length).to.equal(0);
     });
