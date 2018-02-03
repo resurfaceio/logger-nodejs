@@ -12,6 +12,60 @@ const HttpRules = resurfaceio.HttpRules;
  */
 describe('HttpRules', () => {
 
+    it('includes standard rules', () => {
+        let rules = HttpRules.parse('include standard');
+        expect(rules.length).to.equal(3);
+        expect(rules.filter(r => 'remove' === r.verb).length).to.equal(1);
+        expect(rules.filter(r => 'replace' === r.verb).length).to.equal(2);
+
+        rules = HttpRules.parse("include standard\n");
+        expect(rules.length).to.equal(3);
+        rules = HttpRules.parse("include standard\nsample 50");
+        expect(rules.length).to.equal(4);
+        expect(rules.filter(r => 'sample' === r.verb).length).to.equal(1);
+
+        rules = HttpRules.parse("include standard\ninclude standard\n");
+        expect(rules.length).to.equal(6);
+        rules = HttpRules.parse("include standard\nsample 50\ninclude standard\n");
+        expect(rules.length).to.equal(7);
+    });
+
+    it('includes debug rules', () => {
+        let rules = HttpRules.parse('include debug');
+        expect(rules.length).to.equal(2);
+        expect(rules.filter(r => 'allow_http_url' === r.verb).length).to.equal(1);
+        expect(rules.filter(r => 'copy_session_field' === r.verb).length).to.equal(1);
+
+        rules = HttpRules.parse("include debug\n");
+        expect(rules.length).to.equal(2);
+        rules = HttpRules.parse("include debug\nsample 50");
+        expect(rules.length).to.equal(3);
+        expect(rules.filter(r => 'sample' === r.verb).length).to.equal(1);
+
+        rules = HttpRules.parse("include debug\ninclude debug\n");
+        expect(rules.length).to.equal(4);
+        rules = HttpRules.parse("include debug\nsample 50\ninclude debug\n");
+        expect(rules.length).to.equal(5);
+    });
+
+    it('includes weblog rules', () => {
+        let rules = HttpRules.parse('include weblog');
+        expect(rules.length).to.equal(2);
+        expect(rules.filter(r => 'remove' === r.verb).length).to.equal(1);
+        expect(rules.filter(r => 'replace' === r.verb).length).to.equal(1);
+
+        rules = HttpRules.parse("include weblog\n");
+        expect(rules.length).to.equal(2);
+        rules = HttpRules.parse("include weblog\nsample 50");
+        expect(rules.length).to.equal(3);
+        expect(rules.filter(r => 'sample' === r.verb).length).to.equal(1);
+
+        rules = HttpRules.parse("include weblog\ninclude weblog\n");
+        expect(rules.length).to.equal(4);
+        rules = HttpRules.parse("include weblog\nsample 50\ninclude weblog\n");
+        expect(rules.length).to.equal(5);
+    });
+
     function parse_fail(line) {
         try {
             HttpRules.parseRule(line);
@@ -765,35 +819,6 @@ describe('HttpRules', () => {
             expect(e.constructor.name).to.equal("EvalError");
             expect(e.message).to.equal("Unescaped separator (!) in rule: !!! stop");
         }
-    });
-
-    it('uses basic rules', () => {
-        let rules = HttpRules.parse(HttpRules.basicRules);
-        expect(rules.length).to.equal(3);
-        expect(rules.filter(r => 'remove' === r.verb).length).to.equal(1);
-        expect(rules.filter(r => 'replace' === r.verb).length).to.equal(2);
-
-        rules = HttpRules.parse('include basic');
-        expect(rules.length).to.equal(3);
-        expect(rules.filter(r => 'remove' === r.verb).length).to.equal(1);
-        expect(rules.filter(r => 'replace' === r.verb).length).to.equal(2);
-
-        rules = HttpRules.parse("include basic\n");
-        expect(rules.length).to.equal(3);
-        expect(rules.filter(r => 'remove' === r.verb).length).to.equal(1);
-        expect(rules.filter(r => 'replace' === r.verb).length).to.equal(2);
-
-        rules = HttpRules.parse("include basic\nsample 50");
-        expect(rules.length).to.equal(4);
-        expect(rules.filter(r => 'sample' === r.verb).length).to.equal(1);
-
-        rules = HttpRules.parse("include basic\ninclude basic\n");
-        expect(rules.length).to.equal(6);
-        expect(rules.filter(r => 'remove' === r.verb).length).to.equal(2);
-        expect(rules.filter(r => 'replace' === r.verb).length).to.equal(4);
-
-        rules = HttpRules.parse("include basic\nsample 50\ninclude basic\n");
-        expect(rules.length).to.equal(7);
     });
 
 });

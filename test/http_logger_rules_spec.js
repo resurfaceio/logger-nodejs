@@ -13,18 +13,9 @@ const HttpRules = resurfaceio.HttpRules;
  */
 describe('HttpLogger', () => {
 
-    it('includes predefined rules', () => {
-        expect(HttpLogger.defaultRules).to.equal(HttpRules.basicRules);
+    it('manages default rules', () => {
+        expect(HttpLogger.defaultRules).to.equal(HttpRules.standardRules);
         try {
-            HttpLogger.defaultRules = "include basic";
-            let rules = HttpRules.parse(HttpLogger.defaultRules);
-            expect(rules.length).to.equal(HttpRules.parse(HttpRules.basicRules).length);
-
-            HttpLogger.defaultRules = "include basic\nsample 50";
-            rules = HttpRules.parse(HttpLogger.defaultRules);
-            expect(rules.length).to.equal(HttpRules.parse(HttpRules.basicRules).length + 1);
-            expect(rules.filter(r => 'sample' === r.verb).length).to.equal(1);
-
             HttpLogger.defaultRules = '';
             expect(HttpLogger.defaultRules).to.equal('');
             expect(HttpRules.parse(HttpLogger.defaultRules).length).to.equal(0);
@@ -39,19 +30,19 @@ describe('HttpLogger', () => {
             expect(HttpRules.parse(HttpLogger.defaultRules).length).to.equal(0);
 
             HttpLogger.defaultRules = " include default\ninclude default\nsample 42";
-            rules = HttpRules.parse(HttpLogger.defaultRules);
+            let rules = HttpRules.parse(HttpLogger.defaultRules);
             expect(rules.length).to.equal(1);
             expect(rules.filter(r => 'sample' === r.verb).length).to.equal(1);
         } finally {
-            HttpLogger.defaultRules = HttpRules.basicRules;
+            HttpLogger.defaultRules = HttpRules.standardRules;
         }
     });
 
     it('overrides default rules', () => {
-        expect(HttpLogger.defaultRules).to.equal(HttpRules.basicRules);
+        expect(HttpLogger.defaultRules).to.equal(HttpRules.standardRules);
         try {
             let logger = new HttpLogger({url: "https://mysite.com"});
-            expect(logger.rules).to.equal(HttpRules.basicRules);
+            expect(logger.rules).to.equal(HttpRules.standardRules);
             logger = new HttpLogger({url: "https://mysite.com", rules: '# 123'});
             expect(logger.rules).to.equal('# 123');
 
@@ -73,7 +64,7 @@ describe('HttpLogger', () => {
             logger = new HttpLogger({url: "https://mysite.com", rules: 'include default\nskip_submission\n'});
             expect(logger.rules).to.equal("sample 42\n\nskip_submission\n");
         } finally {
-            HttpLogger.defaultRules = HttpRules.basicRules;
+            HttpLogger.defaultRules = HttpRules.standardRules;
         }
     });
 
