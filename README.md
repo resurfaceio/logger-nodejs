@@ -1,7 +1,7 @@
 # resurfaceio-logger-nodejs
 &copy; 2016-2018 Resurface Labs LLC
 
-This library makes it easy to log actual usage of Node.js apps.
+Logging usage of Node.js cloud apps, with user privacy by design.
 
 ## Contents
 
@@ -10,11 +10,8 @@ This library makes it easy to log actual usage of Node.js apps.
 <li><a href="#installing_with_npm">Installing With npm</a></li>
 <li><a href="#logging_from_express_route">Logging From Express Route</a></li>
 <li><a href="#logging_from_express_middleware">Logging From Express Middleware</a></li>
-<li><a href="#advanced_topics">Advanced Topics</a><ul>
-<li><a href="#setting_default_url">Setting Default URL</a></li>
-<li><a href="#enabling_and_disabling">Enabling and Disabling Loggers</a></li>
-<li><a href="#logging_api">Logging API</a></li>
-</ul></li>
+<li><a href="#logging_with_api">Logging With API</a></li>
+<li><a href="#privacy">Protecting User Privacy</a></li>
 </ul>
 
 <a name="dependencies"/>
@@ -42,10 +39,13 @@ const express = require('express');
 const app = express();
 
 const resurfaceio = require('resurfaceio-logger');
-const logger = new resurfaceio.HttpLogger({url: 'https://my-logging-url'});
+const logger = new resurfaceio.HttpLogger({
+    url: 'https://...',
+    rules: 'include standard'
+});
 
 app.get('/', function (request, response) {
-    response.render('pages/index', function (err, html) {
+    response.render('pages/index', function (e, html) {
         response.status(200).send(html);
         logger.log(request, response, html);
     });
@@ -66,100 +66,29 @@ const app = express();
 // add body parsers
 
 const resurfaceio = require('resurfaceio-logger');
-resurfaceio.HttpLoggerForExpress.add(app, {url: 'https://my-logging-url'});
+resurfaceio.HttpLoggerForExpress.add(app, {
+    url: 'https://...', 
+    rules: 'include standard'
+});
 
 // define routes
 ```
 
-<a name="advanced_topics"/>
+<a name="logging_with_api"/>
 
-## Advanced Topics
+## Logging With API
 
-<a name="setting_default_url"/>
+Loggers can be directly integrated into your application using our [API](API.md). This requires the most effort compared with
+the options described above, but also offers the greatest flexibility and control.
 
-### Setting Default URL
+[API documentation](API.md)
 
-Set the `USAGE_LOGGERS_URL` environment variable to provide a default value whenever the URL is not specified.
+<a name="privacy"/>
 
-```js
-// from command line
-export USAGE_LOGGERS_URL="https://my-logging-url"
+## Protecting User Privacy
 
-// for Heroku cli
-heroku config:set USAGE_LOGGERS_URL=https://my-logging-url
-```
+Loggers always have an active set of <a href="https://resurface.io/rules.html">rules</a> that control what data is logged
+and how sensitive data is masked. All of the examples above use a standard predefined set of rules (`include standard`),
+but logging rules are easily customized to meet the needs of any application.
 
-Loggers look for this environment variable when no URL is provided.
-
-```js
-// for basic logger
-var logger = new HttpLogger();
-```
-
-<a name="enabling_and_disabling"/>
-
-### Enabling and Disabling Loggers
-
-Individual loggers can be controlled through their `enable` and `disable` methods. When disabled, loggers will
-not send any logging data, and the result returned by the `log` method will always be true (success).
-
-All loggers for an application can be enabled or disabled at once with the `UsageLoggers` class. This even controls
-loggers that have not yet been created by the application.
-
-```js
-UsageLoggers.disable();    // disable all loggers
-UsageLoggers.enable();     // enable all loggers
-```
-
-All loggers can be permanently disabled with the `USAGE_LOGGERS_DISABLE` environment variable. When set to true,
-loggers will never become enabled, even if `UsageLoggers.enable()` is called by the application. This is primarily 
-done by automated tests to disable all logging even if other control logic exists. 
-
-```js
-// from command line
-export USAGE_LOGGERS_DISABLE="true"
-
-// for Heroku app
-heroku config:set USAGE_LOGGERS_DISABLE=true
-```
-
-<a name="logging_api"/>
-
-### Logging API
-
-Loggers can be directly integrated into your application with this API, which gives complete control over how
-usage logging is implemented.
-
-```js
-const resurfaceio = require('resurfaceio-logger');
-const HttpLogger = resurfaceio.HttpLogger;
-
-// create and configure logger
-const logger = new HttpLogger({url: my_https_url});            // log to remote url
-logger = new HttpLogger({url: my_https_url, enabled: false});  // (initially disabled)
-logger = new HttpLogger({queue: my_queue});                    // log to appendable list
-logger = new HttpLogger({queue: my_queue, enabled: false});    // (initially disabled)
-logger.disable();                                              // enable this logger
-logger.enable();                                               // disable this logger
-if (logger.enabled) ...                                        // test if this enabled
-
-// define request to log
-const request = new HttpServletRequestImpl();
-request.addHeader('A', '123');
-request.method = 'GET';
-request.url = 'http://google.com';
-
-// define response to log
-const response = new HttpServletResponseImpl();
-response.addHeader('B', '234');
-response.statusCode = 200;
-
-// log objects defined above
-logger.log(request, response);
-
-// log with specified request/response bodies
-logger.log(request, response, 'my-response-body', 'my-request-body');
-
-// submit a custom message (destination may accept or not)
-logger.submit('...').then(console.log('Submitted');
-```
+<a href="https://resurface.io/rules.html">Logging rules documentation</a>
