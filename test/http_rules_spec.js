@@ -12,24 +12,6 @@ const HttpRules = resurfaceio.HttpRules;
  */
 describe('HttpRules', () => {
 
-    it('includes standard rules', () => {
-        let rules = HttpRules.parse('include standard');
-        expect(rules.length).to.equal(3);
-        expect(rules.filter(r => 'remove' === r.verb).length).to.equal(1);
-        expect(rules.filter(r => 'replace' === r.verb).length).to.equal(2);
-
-        rules = HttpRules.parse("include standard\n");
-        expect(rules.length).to.equal(3);
-        rules = HttpRules.parse("include standard\nsample 50");
-        expect(rules.length).to.equal(4);
-        expect(rules.filter(r => 'sample' === r.verb).length).to.equal(1);
-
-        rules = HttpRules.parse("include standard\ninclude standard\n");
-        expect(rules.length).to.equal(6);
-        rules = HttpRules.parse("include standard\nsample 50\ninclude standard\n");
-        expect(rules.length).to.equal(7);
-    });
-
     it('includes debug rules', () => {
         let rules = HttpRules.parse('include debug');
         expect(rules.length).to.equal(2);
@@ -48,21 +30,39 @@ describe('HttpRules', () => {
         expect(rules.length).to.equal(5);
     });
 
-    it('includes weblog rules', () => {
-        let rules = HttpRules.parse('include weblog');
+    it('includes standard rules', () => {
+        let rules = HttpRules.parse('include standard');
+        expect(rules.length).to.equal(3);
+        expect(rules.filter(r => 'remove' === r.verb).length).to.equal(1);
+        expect(rules.filter(r => 'replace' === r.verb).length).to.equal(2);
+
+        rules = HttpRules.parse("include standard\n");
+        expect(rules.length).to.equal(3);
+        rules = HttpRules.parse("include standard\nsample 50");
+        expect(rules.length).to.equal(4);
+        expect(rules.filter(r => 'sample' === r.verb).length).to.equal(1);
+
+        rules = HttpRules.parse("include standard\ninclude standard\n");
+        expect(rules.length).to.equal(6);
+        rules = HttpRules.parse("include standard\nsample 50\ninclude standard\n");
+        expect(rules.length).to.equal(7);
+    });
+
+    it('includes strict rules', () => {
+        let rules = HttpRules.parse('include strict');
         expect(rules.length).to.equal(2);
         expect(rules.filter(r => 'remove' === r.verb).length).to.equal(1);
         expect(rules.filter(r => 'replace' === r.verb).length).to.equal(1);
 
-        rules = HttpRules.parse("include weblog\n");
+        rules = HttpRules.parse("include strict\n");
         expect(rules.length).to.equal(2);
-        rules = HttpRules.parse("include weblog\nsample 50");
+        rules = HttpRules.parse("include strict\nsample 50");
         expect(rules.length).to.equal(3);
         expect(rules.filter(r => 'sample' === r.verb).length).to.equal(1);
 
-        rules = HttpRules.parse("include weblog\ninclude weblog\n");
+        rules = HttpRules.parse("include strict\ninclude strict\n");
         expect(rules.length).to.equal(4);
-        rules = HttpRules.parse("include weblog\nsample 50\ninclude weblog\n");
+        rules = HttpRules.parse("include strict\nsample 50\ninclude strict\n");
         expect(rules.length).to.equal(5);
     });
 

@@ -30,7 +30,7 @@ let logger = new HttpLogger();
 logger = new HttpLogger({url: 'https://...'});
 
 // with specific url and rules
-logger = new HttpLogger({url: 'https://...', rules: 'include standard'});
+logger = new HttpLogger({url: 'https://...', rules: 'include strict'});
 ```
 
 <a name="logging_http"/>
@@ -73,18 +73,18 @@ logger.log(request, response);
 
 ## Setting Default Rules
 
-If no rules are provided when creating a logger, the default value of `include standard` will be applied. A different default
-value can be specified as shown below.
+If no <a href="https://resurface.io/rules.html">rules</a> are provided when creating a logger, the default value of 
+`include strict` will be applied. A different default value can be specified as shown below.
 
 ```js
-HttpLogger.defaultRules = 'include weblog';
+HttpLogger.defaultRules = 'include debug';
 ```
 
 When specifying multiple default rules, put each on a separate line. This is most easily done with a template literal.
 
 ```js
 HttpLogger.defaultRules = `
-    include weblog
+    include debug
     sample 10
 `;
 ```

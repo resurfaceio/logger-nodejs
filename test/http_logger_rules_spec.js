@@ -14,7 +14,7 @@ const HttpRules = resurfaceio.HttpRules;
 describe('HttpLogger', () => {
 
     it('manages default rules', () => {
-        expect(HttpLogger.defaultRules).to.equal(HttpRules.standardRules);
+        expect(HttpLogger.defaultRules).to.equal(HttpRules.strictRules);
         try {
             HttpLogger.defaultRules = '';
             expect(HttpLogger.defaultRules).to.equal('');
@@ -34,15 +34,15 @@ describe('HttpLogger', () => {
             expect(rules.length).to.equal(1);
             expect(rules.filter(r => 'sample' === r.verb).length).to.equal(1);
         } finally {
-            HttpLogger.defaultRules = HttpRules.standardRules;
+            HttpLogger.defaultRules = HttpRules.strictRules;
         }
     });
 
     it('overrides default rules', () => {
-        expect(HttpLogger.defaultRules).to.equal(HttpRules.standardRules);
+        expect(HttpLogger.defaultRules).to.equal(HttpRules.strictRules);
         try {
             let logger = new HttpLogger({url: "https://mysite.com"});
-            expect(logger.rules).to.equal(HttpRules.standardRules);
+            expect(logger.rules).to.equal(HttpRules.strictRules);
             logger = new HttpLogger({url: "https://mysite.com", rules: '# 123'});
             expect(logger.rules).to.equal('# 123');
 
@@ -64,7 +64,7 @@ describe('HttpLogger', () => {
             logger = new HttpLogger({url: "https://mysite.com", rules: 'include default\nskip_submission\n'});
             expect(logger.rules).to.equal("sample 42\n\nskip_submission\n");
         } finally {
-            HttpLogger.defaultRules = HttpRules.standardRules;
+            HttpLogger.defaultRules = HttpRules.strictRules;
         }
     });
 

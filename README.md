@@ -41,7 +41,7 @@ const app = express();
 const resurfaceio = require('resurfaceio-logger');
 const logger = new resurfaceio.HttpLogger({
     url: 'https://...',
-    rules: 'include standard'
+    rules: 'include strict'
 });
 
 app.get('/', function (request, response) {
@@ -68,7 +68,7 @@ const app = express();
 const resurfaceio = require('resurfaceio-logger');
 resurfaceio.HttpLoggerForExpress.add(app, {
     url: 'https://...', 
-    rules: 'include standard'
+    rules: 'include strict'
 });
 
 // define routes
@@ -88,7 +88,7 @@ the options described above, but also offers the greatest flexibility and contro
 ## Protecting User Privacy
 
 Loggers always have an active set of <a href="https://resurface.io/rules.html">rules</a> that control what data is logged
-and how sensitive data is masked. All of the examples above use a standard predefined set of rules (`include standard`),
+and how sensitive data is masked. All of the examples above apply a predefined set of rules (`include strict`),
 but logging rules are easily customized to meet the needs of any application.
 
 <a href="https://resurface.io/rules.html">Logging rules documentation</a>
