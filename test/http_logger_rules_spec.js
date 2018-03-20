@@ -49,6 +49,8 @@ describe('HttpLogger', () => {
             HttpLogger.defaultRules = "";
             logger = new HttpLogger({url: "https://mysite.com"});
             expect(logger.rules).to.equal("");
+            logger = new HttpLogger({url: "https://mysite.com", rules: '   '});
+            expect(logger.rules).to.equal("");
             logger = new HttpLogger({url: "https://mysite.com", rules: ' sample 42'});
             expect(logger.rules).to.equal(' sample 42');
 
@@ -60,6 +62,8 @@ describe('HttpLogger', () => {
 
             HttpLogger.defaultRules = "sample 42\n";
             logger = new HttpLogger({url: "https://mysite.com"});
+            expect(logger.rules).to.equal("sample 42\n");
+            logger = new HttpLogger({url: "https://mysite.com", rules: '   '});
             expect(logger.rules).to.equal("sample 42\n");
             logger = new HttpLogger({url: "https://mysite.com", rules: 'include default\nskip_submission\n'});
             expect(logger.rules).to.equal("sample 42\n\nskip_submission\n");
