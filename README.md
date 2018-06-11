@@ -18,7 +18,7 @@ Logging usage of Node.js cloud apps, with user privacy by design.
 
 ## Dependencies
 
-Requires Node.js 6.10.x or later. The only runtime dependency is `valid-url` (https://github.com/ogt/valid-url).
+Requires Node.js 6.10.x or later. No other dependencies to conflict with your app.
 
 <a name="installing_with_npm"/>
 

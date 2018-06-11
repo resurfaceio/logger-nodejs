@@ -24,8 +24,6 @@
     "chai-as-promised": "latest",
     "chai-string": "latest",
     "mocha": "latest"
-  },
-  "dependencies": {
-    "valid-url": "latest"
   }
+
 }
