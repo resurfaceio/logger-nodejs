@@ -1,5 +1,5 @@
 # resurfaceio-logger-nodejs
-&copy; 2016-2018 Resurface Labs LLC
+&copy; 2016-2019 Resurface Labs Inc.
 
 Logging usage of Node.js cloud apps, with user privacy by design.
 

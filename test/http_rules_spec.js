@@ -1,4 +1,4 @@
-// © 2016-2018 Resurface Labs LLC
+// © 2016-2019 Resurface Labs Inc.
 
 const chai = require('chai');
 chai.use(require('chai-string'));
