@@ -24,7 +24,7 @@ Requires Node.js 6.10.x or later. No other dependencies to conflict with your ap
 
 ## Installing With npm
 
-```js
+```
 npm install resurfaceio-logger --save
 ```
 
