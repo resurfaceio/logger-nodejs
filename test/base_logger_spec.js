@@ -27,6 +27,8 @@ describe('BaseLogger', () => {
         expect(logger.constructor['name']).to.equal('BaseLogger');
         expect(logger.enableable).to.be.false;
         expect(logger.enabled).to.be.false;
+        expect(logger.queue).not.to.exist;
+        expect(logger.url).not.to.exist;
     });
 
     it('creates multiple instances', () => {
@@ -73,6 +75,7 @@ describe('BaseLogger', () => {
         expect(version).not.to.contain('\\');
         expect(version).not.to.contain('\"');
         expect(version).not.to.contain('\'');
+
         const logger = new BaseLogger();
         expect(logger.version).to.equal(BaseLogger.version_lookup());
         expect(logger._version).to.equal(BaseLogger.version_lookup());
@@ -198,6 +201,7 @@ describe('BaseLogger', () => {
     it('submits to queue', () => {
         let queue = [];
         const logger = new BaseLogger(MOCK_AGENT, {queue: queue, url: helper.MOCK_URLS_DENIED[0]});
+        expect(logger.queue).to.equal(queue);
         expect(logger.url).to.be.null;
         expect(logger.enableable).to.be.true;
         expect(logger.enabled).to.be.true;
@@ -212,31 +216,31 @@ describe('BaseLogger', () => {
         let logger = new BaseLogger(MOCK_AGENT, {queue: new Set()});
         expect(logger.enableable).to.be.false;
         expect(logger.enabled).to.be.false;
-        expect(logger._queue).to.be.null;
+        expect(logger.queue).to.be.null;
         expect(logger.url).to.be.null;
 
         logger = new BaseLogger(MOCK_AGENT, {queue: 'ASDF'});
         expect(logger.enableable).to.be.false;
         expect(logger.enabled).to.be.false;
-        expect(logger._queue).to.be.null;
+        expect(logger.queue).to.be.null;
         expect(logger.url).to.be.null;
 
         logger = new BaseLogger(MOCK_AGENT, {url: []});
         expect(logger.enableable).to.be.false;
         expect(logger.enabled).to.be.false;
-        expect(logger._queue).to.be.null;
+        expect(logger.queue).to.be.null;
         expect(logger.url).to.be.null;
 
         logger = new BaseLogger(MOCK_AGENT, []);
         expect(logger.enableable).to.be.false;
         expect(logger.enabled).to.be.false;
-        expect(logger._queue).to.be.null;
+        expect(logger.queue).to.be.null;
         expect(logger.url).to.be.null;
 
         logger = new BaseLogger(MOCK_AGENT, new Set());
         expect(logger.enableable).to.be.false;
         expect(logger.enabled).to.be.false;
-        expect(logger._queue).to.be.null;
+        expect(logger.queue).to.be.null;
         expect(logger.url).to.be.null;
     });
 
@@ -253,6 +257,7 @@ describe('BaseLogger', () => {
     it('silently ignores writes to queue', () => {
         let queue = [];
         const logger = new BaseLogger(MOCK_AGENT, {queue: queue});
+        logger.queue = '1234';
         logger._queue = '1234';
         logger['_queue'] = '1234';
         expect(logger._queue).to.equal(queue);
