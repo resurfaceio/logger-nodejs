@@ -23,6 +23,8 @@ describe('HttpLogger', () => {
         expect(logger.constructor['name']).to.equal('HttpLogger');
         expect(logger.enableable).to.be.false;
         expect(logger.enabled).to.be.false;
+        expect(logger.queue).not.to.exist;
+        expect(logger.url).not.to.exist;
     });
 
     it('creates multiple instances', () => {
