@@ -1,6 +1,8 @@
 # resurfaceio-logger-nodejs
 Logging usage of Node.js-based services, with user privacy by design.
 
+[![npm version](https://badge.fury.io/js/resurfaceio-logger.svg)](https://badge.fury.io/js/resurfaceio-logger)
+
 ## Contents
 
 <ul>
