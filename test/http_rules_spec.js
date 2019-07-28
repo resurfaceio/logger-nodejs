@@ -576,7 +576,6 @@ describe('HttpRules', () => {
         parse_ok("|request_header\\|response_header| stop", "stop", "^request_header|response_header$", null, null);
         parse_ok("|request_header\\|response_header\\|boo| stop", "stop", "^request_header|response_header|boo$", null, null);
         parse_ok("/request_header\\/response_header\\/boo/ stop", "stop", "^request_header/response_header/boo$", null, null);
-
     });
 
     it('parses stop_if rules', () => {
