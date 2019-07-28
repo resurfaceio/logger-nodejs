@@ -12,7 +12,7 @@
 
 <a name="creating_loggers"/>
 
-## Creating Loggers
+## Creating Loggers 
 
 To get started, first you'll need to create a `HttpLogger` instance. Here there are options to specify a URL (for where JSON 
 messages will be sent) and/or a specific set of <a href="https://resurface.io/rules.html">logging rules</a> (for what privacy 
@@ -96,11 +96,11 @@ If your application creates more than one logger, or requires different URLs for
 testing vs production), then set the `USAGE_LOGGERS_URL` environment variable as shown below. This value will be applied if no
 other URL is specified when creating a logger.
 
-```js
-// from command line
+```bash
+# from command line
 export USAGE_LOGGERS_URL="https://..."
 
-// for Heroku cli
+# for Heroku cli
 heroku config:set USAGE_LOGGERS_URL=https://...
 ```
 
@@ -123,11 +123,11 @@ All loggers can be permanently disabled with the `USAGE_LOGGERS_DISABLE` environ
 loggers will never become enabled, even if `UsageLoggers.enable()` is called by the application. This is primarily 
 done by automated tests to disable all logging even if other control logic exists. 
 
-```js
-// from command line
+```bash
+# from command line
 export USAGE_LOGGERS_DISABLE="true"
 
-// for Heroku app
+# for Heroku app
 heroku config:set USAGE_LOGGERS_DISABLE=true
 ```
 
