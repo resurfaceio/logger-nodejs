@@ -11,10 +11,6 @@ module.exports = {
 
     MOCK_AGENT: 'helper.js',
 
-    MOCK_JSON: '{ "hello" : "world" }',
-
-    MOCK_JSON_ESCAPED: '{ \\"hello\\" : \\"world\\" }',
-
     MOCK_HTML: "<html>Hello World!</html>",
 
     MOCK_HTML2: "<html>Hola Mundo!</html>",
@@ -30,9 +26,13 @@ SENSITIVE
 </input>
 </html>`,
 
+    MOCK_JSON: '{ "hello" : "world" }',
+
+    MOCK_JSON_ESCAPED: '{ \\"hello\\" : \\"world\\" }',
+
     MOCK_NOW: '1455908640173',
 
-    MOCK_QUERY_STRING: 'boo=yah',
+    MOCK_QUERY_STRING: 'foo=bar',
 
     MOCK_URL: 'http://localhost/index.html',  // todo should have port?
 
@@ -42,9 +42,9 @@ SENSITIVE
 
     mockRequest() {
         const r = new HttpRequestImpl();
-        r.hostname = 'localhost';
         r.method = 'GET';
         r.protocol = 'http';
+        r.hostname = 'localhost';
         r.url = '/index.html';
         return r;
     },
@@ -52,27 +52,21 @@ SENSITIVE
     mockRequestWithJson() {
         const r = new HttpRequestImpl();
         r.headers['content-type'] = 'Application/JSON';
-        r.hostname = 'localhost';
+        r.body['message'] = this.MOCK_JSON;
         r.method = 'POST';
         r.protocol = 'http';
-        r.url = `/index.html?boo=yah`;
-        r.query['query1'] = 'QUERY1';
+        r.hostname = 'localhost';
+        r.url = `/index.html?${this.MOCK_QUERY_STRING}`;
         return r;
     },
 
     mockRequestWithJson2() {
-        const r = new HttpRequestImpl();
-        r.headers['content-type'] = 'Application/JSON';
-        r.hostname = 'localhost';
-        r.method = 'POST';
-        r.protocol = 'http';
-        r.url = `/index.html?boo=yah`;
+        const r = this.mockRequestWithJson();
         r.headers['ABC'] = '123';
         r.addHeader('A', '1');
         r.addHeader('A', '2');
-        r.body['body1'] = 'BODY1';
-        r.query['query1'] = 'QUERY1';
-        r.query['query2'] = 'QUERY2';
+        r.addQueryParam('ABC', '123')
+        r.addQueryParam('ABC', '234')
         return r;
     },
 
@@ -83,9 +77,8 @@ SENSITIVE
     },
 
     mockResponseWithHtml() {
-        const r = new HttpResponseImpl();
+        const r = this.mockResponse();
         r.headers['content-type'] = 'text/html; charset=utf-8';
-        r.statusCode = 200;
         return r;
     },
 
