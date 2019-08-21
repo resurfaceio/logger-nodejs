@@ -8,7 +8,6 @@ const parseable = helper.parseable;
 describe('Helper', () => {
 
     it('detects good json', () => {
-        expect(parseable('[]')).to.be.true;
         expect(parseable('[ ]')).to.be.true;
         expect(parseable('[\n]')).to.be.true;
         expect(parseable('[\n\t\n]')).to.be.true;
@@ -25,6 +24,9 @@ describe('Helper', () => {
         expect(parseable('1234')).to.be.false;
         expect(parseable('archer')).to.be.false;
         expect(parseable("\"sterling archer\"")).to.be.false;
+        expect(parseable(',,')).to.be.false;
+        expect(parseable('[]')).to.be.false;
+        expect(parseable('[,,]')).to.be.false;
         expect(parseable("[\"]")).to.be.false;
         expect(parseable('[:,]')).to.be.false;
         expect(parseable(',')).to.be.false;
