@@ -154,9 +154,9 @@ describe('BaseLogger', () => {
             ['now', MOCK_NOW],
             ['protocol', 'https']
         ];
-        const json = JSON.stringify(message);
-        expect(parseable(json)).to.be.true;
-        return logger.submit(json);
+        const msg = JSON.stringify(message);
+        expect(parseable(msg)).to.be.true;
+        return logger.submit(msg);
     });
 
     it('submits to demo url via http', () => {
@@ -168,9 +168,9 @@ describe('BaseLogger', () => {
             ['now', MOCK_NOW],
             ['protocol', 'http']
         ];
-        const json = JSON.stringify(message);
-        expect(parseable(json)).to.be.true;
-        return logger.submit(json);
+        const msg = JSON.stringify(message);
+        expect(parseable(msg)).to.be.true;
+        return logger.submit(msg);
     });
 
     it('submits to demo url without compression', () => {
@@ -184,9 +184,9 @@ describe('BaseLogger', () => {
             ['protocol', 'https'],
             ['skip_compression', 'true']
         ];
-        const json = JSON.stringify(message);
-        expect(parseable(json)).to.be.true;
-        return logger.submit(json);
+        const msg = JSON.stringify(message);
+        expect(parseable(msg)).to.be.true;
+        return logger.submit(msg);
     });
 
     it('submits to denied url and fails', () => {

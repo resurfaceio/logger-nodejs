@@ -82,10 +82,10 @@ SENSITIVE
         return r;
     },
 
-    parseable: (json) => {
-        if (json == undefined || !json.startsWith('[') || !json.endsWith(']')) return false;
+    parseable: (msg) => {
+        if (msg == undefined || !msg.startsWith('[') || !msg.endsWith(']')) return false;
         try {
-            JSON.parse(json);
+            JSON.parse(msg);
             return true;
         } catch (e) {
             return false;
