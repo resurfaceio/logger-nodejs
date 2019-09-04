@@ -54,14 +54,15 @@ If standard request and response objects aren't available in your case, create m
 
 ```js
 // define request to log
-const request = new HttpServletRequestImpl();
-request.addHeader('A', '123');
-request.method = 'GET';
-request.url = 'http://google.com';
+const request = new HttpRequestImpl();
+request.addHeader('Content-Type', 'application/json');
+request.method = 'POST';
+request.body['B'] = '234';  // POST param
+request.url = 'http://resurface.io';
 
 // define response to log
-const response = new HttpServletResponseImpl();
-response.addHeader('B', '234');
+const response = new HttpResponseImpl();
+response.addHeader('Content-Type', 'text/html; charset=utf-8');
 response.statusCode = 200;
 
 // log objects defined above
