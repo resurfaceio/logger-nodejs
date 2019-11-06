@@ -66,6 +66,20 @@ describe('BaseLogger', () => {
         expect(logger3.enabled).to.be.true;
     });
 
+    it('has valid host', () => {
+        const host = BaseLogger.host_lookup();
+        expect(host).to.exist;
+        expect(host).to.be.a('string');
+        expect(host.length).to.be.above(0);
+        expect(host).not.to.equal('unknown');
+
+        const logger = new BaseLogger();
+        expect(logger.host).to.equal(BaseLogger.host_lookup());
+        expect(logger._host).to.equal(BaseLogger.host_lookup());
+        expect(logger['host']).to.equal(BaseLogger.host_lookup());
+        expect(logger['_host']).to.equal(BaseLogger.host_lookup());
+    });
+
     it('has valid version', () => {
         const version = BaseLogger.version_lookup();
         expect(version).to.exist;
@@ -252,6 +266,16 @@ describe('BaseLogger', () => {
         logger.agent = '1234';
         logger['agent'] = '1234';
         expect(logger.agent).to.equal(MOCK_AGENT);
+    });
+
+    it('silently ignores writes to host', () => {
+        const logger = new BaseLogger(MOCK_AGENT);
+        logger._host = '1234';
+        logger['_host'] = '1234';
+        expect(logger.host).to.equal(BaseLogger.host_lookup());
+        logger.host = '1234';
+        logger['host'] = '1234';
+        expect(logger.host).to.equal(BaseLogger.host_lookup());
     });
 
     it('silently ignores writes to queue', () => {
