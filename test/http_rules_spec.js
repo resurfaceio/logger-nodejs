@@ -12,6 +12,31 @@ const HttpRules = resurfaceio.HttpRules;
  */
 describe('HttpRules', () => {
 
+    it('changes default rules', () => {
+        expect(HttpRules.defaultRules).to.equal(HttpRules.strictRules);
+        try {
+            HttpRules.defaultRules = '';
+            expect(HttpRules.defaultRules).to.equal('');
+            expect(HttpRules.parse(HttpRules.defaultRules).length).to.equal(0);
+
+            HttpRules.defaultRules = ' include default';
+            expect(HttpRules.defaultRules).to.equal('');
+
+            HttpRules.defaultRules = "include default\n";
+            expect(HttpRules.defaultRules).to.equal('');
+
+            HttpRules.defaultRules = " include default\ninclude default\n";
+            expect(HttpRules.parse(HttpRules.defaultRules).length).to.equal(0);
+
+            HttpRules.defaultRules = " include default\ninclude default\nsample 42";
+            let rules = HttpRules.parse(HttpRules.defaultRules);
+            expect(rules.length).to.equal(1);
+            expect(rules.filter(r => 'sample' === r.verb).length).to.equal(1);
+        } finally {
+            HttpRules.defaultRules = HttpRules.strictRules;
+        }
+    });
+
     it('includes debug rules', () => {
         let rules = HttpRules.parse('include debug');
         expect(rules.length).to.equal(2);

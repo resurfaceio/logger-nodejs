@@ -49,7 +49,7 @@ const logger = new resurfaceio.HttpLogger({
 app.get('/', function (request, response) {
     response.render('pages/index', function (e, html) {
         response.status(200).send(html);
-        logger.log(request, response, html);
+        resurfaceio.HttpMessage.send(logger, request, response, html);
     });
 });
 ```

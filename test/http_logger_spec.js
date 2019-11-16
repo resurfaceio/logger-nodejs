@@ -94,15 +94,6 @@ describe('HttpLogger', () => {
         expect(new HttpLogger().agent).to.equal(agent);
     });
 
-    it('skips logging when disabled', () => {
-        for (let url of helper.MOCK_URLS_DENIED) {
-            const logger = new HttpLogger({url: url}).disable();
-            expect(logger.enableable).to.be.true;
-            expect(logger.enabled).to.be.false;
-            expect(logger.log(null)).to.be.fulfilled.and.to.eventually.be.true;  // would fail if enabled
-        }
-    });
-
     it('silently ignores writes to enabled', () => {
         const logger = new HttpLogger();
         logger._enableable = true;

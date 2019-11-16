@@ -40,14 +40,16 @@ Now that you have a logger instance, let's do some logging. Here you can pass st
 as response body and request body content when these are available. 
 
 ```js
+const HttpMessage = resurfaceio.HttpMessage;
+
 // with standard objects
-logger.log(request, response);
+HttpMessage.send(logger, request, response);
 
 // with response body
-logger.log(request, response, 'my-response-body');
+HttpMessage.send(logger, request, response, 'my-response-body');
 
 // log with response and request body
-logger.log(request, response, 'my-response-body', 'my-request-body');
+HttpMessage.send(logger, request, response, 'my-response-body', 'my-request-body');
 ```
 
 If standard request and response objects aren't available in your case, create mock implementations to pass instead.
@@ -66,7 +68,7 @@ response.addHeader('Content-Type', 'text/html; charset=utf-8');
 response.statusCode = 200;
 
 // log objects defined above
-logger.log(request, response);
+HttpMessage.send(logger, request, response);
 ```
 
 <a name="setting_default_rules"/>
