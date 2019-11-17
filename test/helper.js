@@ -1,7 +1,7 @@
 // © 2016-2019 Resurface Labs Inc.
 
 const resurfaceio = require('../lib/all');
-const DemoURL = 'https://demo-resurfaceio.herokuapp.com/ping';
+const DemoURL = 'https://demo.resurface.io/ping';
 const HttpRequestImpl = resurfaceio.HttpRequestImpl;
 const HttpResponseImpl = resurfaceio.HttpResponseImpl;
 
