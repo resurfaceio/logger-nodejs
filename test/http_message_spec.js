@@ -21,7 +21,11 @@ const logger = new resurfaceio.HttpLogger({rules: 'include standard'});
 describe('HttpMessage', () => {
 
     it('formats request', () => {
-        const msg = HttpMessage.format(logger, helper.mockRequest(), helper.mockResponse(), undefined, undefined, helper.MOCK_NOW);
+        let queue = [];
+        let logger = new HttpLogger({queue: queue, rules: "include debug"});
+        HttpMessage.send(logger, helper.mockRequest(), helper.mockResponse(), undefined, undefined, helper.MOCK_NOW);
+        expect(queue.length).to.equal(1);
+        const msg = queue[0];
         expect(parseable(msg)).to.be.true;
         expect(msg).to.contain(`[\"agent\",\"${HttpLogger.AGENT}\"]`);
         expect(msg).to.contain(`[\"host\",\"${HttpLogger.host_lookup()}\"]`);
@@ -35,7 +39,11 @@ describe('HttpMessage', () => {
     });
 
     it('formats request with body', () => {
-        const msg = HttpMessage.format(logger, helper.mockRequestWithJson(), helper.mockResponse(), undefined, helper.MOCK_HTML);
+        let queue = [];
+        let logger = new HttpLogger({queue: queue, rules: "include debug"});
+        HttpMessage.send(logger, helper.mockRequestWithJson(), helper.mockResponse(), undefined, helper.MOCK_HTML);
+        expect(queue.length).to.equal(1);
+        const msg = queue[0];
         expect(parseable(msg)).to.be.true;
         expect(msg).to.contain("[\"request_body\",\"" + helper.MOCK_HTML + "\"]");
         expect(msg).to.contain("[\"request_header:content-type\",\"Application/JSON\"]");
@@ -46,7 +54,11 @@ describe('HttpMessage', () => {
     });
 
     it('formats request with empty body', () => {
-        const msg = HttpMessage.format(logger, helper.mockRequestWithJson2(), helper.mockResponse(), undefined, '');
+        let queue = [];
+        let logger = new HttpLogger({queue: queue, rules: "include debug"});
+        HttpMessage.send(logger, helper.mockRequestWithJson2(), helper.mockResponse(), undefined, '');
+        expect(queue.length).to.equal(1);
+        const msg = queue[0];
         expect(parseable(msg)).to.be.true;
         expect(msg).to.contain("[\"request_header:a\",\"1, 2\"]");
         expect(msg).to.contain("[\"request_header:abc\",\"123\"]");
@@ -60,7 +72,11 @@ describe('HttpMessage', () => {
     });
 
     it('formats request with missing details', () => {
-        const msg = HttpMessage.format(logger, new HttpRequestImpl(), helper.mockResponse(), undefined, null, helper.MOCK_NOW);
+        let queue = [];
+        let logger = new HttpLogger({queue: queue, rules: "include debug"});
+        HttpMessage.send(logger, new HttpRequestImpl(), helper.mockResponse(), undefined, null, helper.MOCK_NOW);
+        expect(queue.length).to.equal(1);
+        const msg = queue[0];
         expect(parseable(msg)).to.be.true;
         expect(msg).not.to.contain('request_body');
         expect(msg).not.to.contain('request_header');
@@ -70,7 +86,11 @@ describe('HttpMessage', () => {
     });
 
     it('formats response', () => {
-        const msg = HttpMessage.format(logger, helper.mockRequest(), helper.mockResponse());
+        let queue = [];
+        let logger = new HttpLogger({queue: queue, rules: "include debug"});
+        HttpMessage.send(logger, helper.mockRequest(), helper.mockResponse());
+        expect(queue.length).to.equal(1);
+        const msg = queue[0];
         expect(parseable(msg)).to.be.true;
         expect(msg).to.contain(`[\"response_code\",\"200\"]`);
         expect(msg).not.to.contain('response_body');
@@ -78,7 +98,11 @@ describe('HttpMessage', () => {
     });
 
     it('formats response with body', () => {
-        const msg = HttpMessage.format(logger, helper.mockRequest(), helper.mockResponseWithHtml(), helper.MOCK_HTML2);
+        let queue = [];
+        let logger = new HttpLogger({queue: queue, rules: "include debug"});
+        HttpMessage.send(logger, helper.mockRequest(), helper.mockResponseWithHtml(), helper.MOCK_HTML2);
+        expect(queue.length).to.equal(1);
+        const msg = queue[0];
         expect(parseable(msg)).to.be.true;
         expect(msg).to.contain("[\"response_body\",\"" + helper.MOCK_HTML2 + "\"]");
         expect(msg).to.contain(`[\"response_code\",\"200\"]`);
@@ -86,7 +110,11 @@ describe('HttpMessage', () => {
     });
 
     it('formats response with empty body', () => {
-        const msg = HttpMessage.format(logger, helper.mockRequest(), helper.mockResponseWithHtml(), '');
+        let queue = [];
+        let logger = new HttpLogger({queue: queue, rules: "include debug"});
+        HttpMessage.send(logger, helper.mockRequest(), helper.mockResponseWithHtml(), '');
+        expect(queue.length).to.equal(1);
+        const msg = queue[0];
         expect(parseable(msg)).to.be.true;
         expect(msg).to.contain(`[\"response_code\",\"200\"]`);
         expect(msg).to.contain("[\"response_header:content-type\",\"text/html; charset=utf-8\"]");
@@ -96,13 +124,21 @@ describe('HttpMessage', () => {
     it('formats response with header array', () => {
         const response = helper.mockResponseWithHtml();
         response.addHeader('blah', ['A', 'BCD', 'EF']);
-        const msg = HttpMessage.format(logger, helper.mockRequest(), response, helper.MOCK_JSON);
+        let queue = [];
+        let logger = new HttpLogger({queue: queue, rules: "include debug"});
+        HttpMessage.send(logger, helper.mockRequest(), response, helper.MOCK_JSON);
+        expect(queue.length).to.equal(1);
+        const msg = queue[0];
         expect(parseable(msg)).to.be.true;
         expect(msg).to.contain("[\"response_header:blah\",\"ABCDEF\"]");
     });
 
     it('formats response with missing details', () => {
-        const msg = HttpMessage.format(logger, helper.mockRequest(), new HttpResponseImpl(), null);
+        let queue = [];
+        let logger = new HttpLogger({queue: queue, rules: "include debug"});
+        HttpMessage.send(logger, helper.mockRequest(), new HttpResponseImpl(), null);
+        expect(queue.length).to.equal(1);
+        const msg = queue[0];
         expect(parseable(msg)).to.be.true;
         expect(msg).not.to.contain('response_body');
         expect(msg).not.to.contain('response_code');
