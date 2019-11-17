@@ -151,15 +151,6 @@ describe('BaseLogger', () => {
         expect(logger.enabled).to.be.false;
     });
 
-    it('skips logging when disabled', () => {
-        for (let url of helper.MOCK_URLS_DENIED) {
-            const logger = new BaseLogger(MOCK_AGENT, {url: url}).disable();
-            expect(logger.enableable).to.be.true;
-            expect(logger.enabled).to.be.false;
-            expect(logger.submit(null)).to.be.fulfilled;  // would be rejected if enabled
-        }
-    });
-
     it('submits to demo url', () => {
         const logger = new BaseLogger(MOCK_AGENT, {url: DEMO_URL});
         const message = [
@@ -203,12 +194,12 @@ describe('BaseLogger', () => {
         return logger.submit(msg);
     });
 
-    it('submits to denied url and fails', () => {
+    it('submits to denied url', () => {
         for (let url of helper.MOCK_URLS_DENIED) {
             const logger = new BaseLogger(MOCK_AGENT, {url: url});
             expect(logger.enableable).to.be.true;
             expect(logger.enabled).to.be.true;
-            expect(logger.submit('{}')).to.be.rejected;
+            expect(logger.submit('{}')).to.be.fulfilled;
         }
     });
 
