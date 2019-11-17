@@ -12,6 +12,7 @@ Visit <a href="https://resurface.io">resurface.io</a> for general information on
 <li><a href="#installing_with_npm">Installing With npm</a></li>
 <li><a href="#logging_from_express_route">Logging From Express Route</a></li>
 <li><a href="#logging_from_express_middleware">Logging From Express Middleware</a></li>
+<li><a href="#logging_from_apollo_server_on_express">Logging From Apollo Server on Express</a></li>
 <li><a href="#logging_with_api">Logging With API</a></li>
 <li><a href="#privacy">Protecting User Privacy</a></li>
 </ul>
@@ -74,6 +75,26 @@ resurfaceio.HttpLoggerForExpress.add(app, {
 });
 
 // define routes
+```
+
+<a name="logging_from_apollo_server_on_express"/>
+
+## Logging From Apollo Server on Express
+
+After <a href="#installing_with_npm">installing the module</a>, add a `HttpLoggerForExpress` instance before calling `applyMiddleware`.
+
+```js
+const app = express();
+
+const resurfaceio = require('resurfaceio-logger');
+resurfaceio.HttpLoggerForExpress.add(app, {
+    url: 'https://...', 
+    rules: 'include strict'
+});
+
+const server = new ApolloServer({ ... });
+
+server.applyMiddleware({ app });
 ```
 
 <a name="logging_with_api"/>
