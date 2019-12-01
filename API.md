@@ -30,6 +30,9 @@ logger = new HttpLogger({url: 'https://...'});
 
 // with specific url and rules
 logger = new HttpLogger({url: 'https://...', rules: 'include strict'});
+
+// with specific url and rules from local file
+logger = new HttpLogger({url: 'https://...', rules: 'file://./rules.txt'});
 ```
 
 <a name="logging_http"/>
