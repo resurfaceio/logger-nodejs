@@ -13,8 +13,6 @@ const HttpMessage = resurfaceio.HttpMessage;
 const HttpRequestImpl = resurfaceio.HttpRequestImpl;
 const HttpResponseImpl = resurfaceio.HttpResponseImpl;
 
-const logger = new resurfaceio.HttpLogger({rules: 'include standard'});
-
 /**
  * Tests against message formatter for HTTP/HTTPS protocol.
  */
@@ -36,6 +34,7 @@ describe('HttpMessage', () => {
         expect(msg).not.to.contain('request_body');
         expect(msg).not.to.contain('request_header');
         expect(msg).not.to.contain('request_param');
+        expect(msg).not.to.contain('interval');
     });
 
     it('formats request with body', () => {

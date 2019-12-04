@@ -17,7 +17,7 @@ describe('HttpRules', () => {
         try {
             HttpRules.defaultRules = '';
             expect(HttpRules.defaultRules).to.equal('');
-            expect(new HttpRules(HttpRules.defaultRules).count).to.equal(0);
+            expect(new HttpRules(HttpRules.defaultRules).length).to.equal(0);
 
             HttpRules.defaultRules = ' include default';
             expect(HttpRules.defaultRules).to.equal('');
@@ -26,12 +26,12 @@ describe('HttpRules', () => {
             expect(HttpRules.defaultRules).to.equal('');
 
             HttpRules.defaultRules = " include default\ninclude default\n";
-            expect(new HttpRules(HttpRules.defaultRules).count).to.equal(0);
+            expect(new HttpRules(HttpRules.defaultRules).length).to.equal(0);
 
             HttpRules.defaultRules = " include default\ninclude default\nsample 42";
             let rules = new HttpRules(HttpRules.defaultRules);
-            expect(rules.count).to.equal(1);
-            expect(rules.rules_sample.length).to.equal(1);
+            expect(rules.length).to.equal(1);
+            expect(rules.sample.length).to.equal(1);
         } finally {
             HttpRules.defaultRules = HttpRules.strictRules;
         }
@@ -39,75 +39,77 @@ describe('HttpRules', () => {
 
     it('includes debug rules', () => {
         let rules = new HttpRules('include debug');
-        expect(rules.count).to.equal(2);
-        expect(rules.rules_allow_http_url).to.equal(true);
-        expect(rules.rules_copy_session_field.length).to.equal(1);
+        expect(rules.length).to.equal(2);
+        expect(rules.allow_http_url).to.equal(true);
+        expect(rules.copy_session_field.length).to.equal(1);
 
         rules = new HttpRules("include debug\n");
-        expect(rules.count).to.equal(2);
+        expect(rules.length).to.equal(2);
         rules = new HttpRules("include debug\nsample 50");
-        expect(rules.count).to.equal(3);
-        expect(rules.rules_sample.length).to.equal(1);
+        expect(rules.length).to.equal(3);
+        expect(rules.sample.length).to.equal(1);
 
         rules = new HttpRules("include debug\ninclude debug\n");
-        expect(rules.count).to.equal(4);
+        expect(rules.length).to.equal(4);
         rules = new HttpRules("include debug\nsample 50\ninclude debug\n");
-        expect(rules.count).to.equal(5);
+        expect(rules.length).to.equal(5);
     });
 
     it('includes standard rules', () => {
         let rules = new HttpRules('include standard');
-        expect(rules.count).to.equal(3);
-        expect(rules.rules_remove.length).to.equal(1);
-        expect(rules.rules_replace.length).to.equal(2);
+        expect(rules.length).to.equal(3);
+        expect(rules.remove.length).to.equal(1);
+        expect(rules.replace.length).to.equal(2);
 
         rules = new HttpRules("include standard\n");
-        expect(rules.count).to.equal(3);
+        expect(rules.length).to.equal(3);
         rules = new HttpRules("include standard\nsample 50");
-        expect(rules.count).to.equal(4);
-        expect(rules.rules_sample.length).to.equal(1);
+        expect(rules.length).to.equal(4);
+        expect(rules.sample.length).to.equal(1);
 
         rules = new HttpRules("include standard\ninclude standard\n");
-        expect(rules.count).to.equal(6);
+        expect(rules.length).to.equal(6);
         rules = new HttpRules("include standard\nsample 50\ninclude standard\n");
-        expect(rules.count).to.equal(7);
+        expect(rules.length).to.equal(7);
     });
 
     it('includes strict rules', () => {
         let rules = new HttpRules('include strict');
-        expect(rules.count).to.equal(2);
-        expect(rules.rules_remove.length).to.equal(1);
-        expect(rules.rules_replace.length).to.equal(1);
+        expect(rules.length).to.equal(2);
+        expect(rules.remove.length).to.equal(1);
+        expect(rules.replace.length).to.equal(1);
 
         rules = new HttpRules("include strict\n");
-        expect(rules.count).to.equal(2);
+        expect(rules.length).to.equal(2);
         rules = new HttpRules("include strict\nsample 50");
-        expect(rules.count).to.equal(3);
-        expect(rules.rules_sample.length).to.equal(1);
+        expect(rules.length).to.equal(3);
+        expect(rules.sample.length).to.equal(1);
 
         rules = new HttpRules("include strict\ninclude strict\n");
-        expect(rules.count).to.equal(4);
+        expect(rules.length).to.equal(4);
         rules = new HttpRules("include strict\nsample 50\ninclude strict\n");
-        expect(rules.count).to.equal(5);
+        expect(rules.length).to.equal(5);
     });
 
     it('loads rules from file', () => {
         let rules = new HttpRules('file://./test/rules1.txt');
-        expect(rules.count).to.equal(1);
-        expect(rules.rules_sample.length).to.equal(1);
-        expect(rules.rules_sample[0].param1).to.equal(55);
+        expect(rules.length).to.equal(1);
+        expect(rules.sample.length).to.equal(1);
+        expect(rules.sample[0].param1).to.equal(55);
 
         rules = new HttpRules('file://./test/rules2.txt');
-        expect(rules.count).to.equal(3);
-        expect(rules.rules_allow_http_url).to.equal(true);
-        expect(rules.rules_copy_session_field.length).to.equal(1);
-        expect(rules.rules_sample[0].param1).to.equal(56);
+        expect(rules.length).to.equal(3);
+        expect(rules.allow_http_url).to.equal(true);
+        expect(rules.copy_session_field.length).to.equal(1);
+        expect(rules.sample.length).to.equal(1);
+        expect(rules.sample[0].param1).to.equal(56);
 
         rules = new HttpRules('file://./test/rules3.txt ');
-        expect(rules.count).to.equal(3);
-        expect(rules.rules_remove.length).to.equal(1);
-        expect(rules.rules_replace.length).to.equal(1);
-        expect(rules.rules_sample[0].param1).to.equal(57);
+        expect(rules.length).to.equal(3);
+        expect(rules.remove.length).to.equal(1);
+        expect(rules.replace.length).to.equal(1);
+        expect(rules.sample.length).to.equal(1);
+        expect(rules.sample[0].param1).to.equal(57);
     });
 
     function parse_fail(line) {
@@ -147,12 +149,12 @@ describe('HttpRules', () => {
     }
 
     it('parses empty rules', () => {
-        expect(new HttpRules(undefined).count).to.equal(2);
-        expect(new HttpRules(null).count).to.equal(2);
-        expect(new HttpRules("").count).to.equal(2);
-        expect(new HttpRules(" ").count).to.equal(2);
-        expect(new HttpRules("\t").count).to.equal(2);
-        expect(new HttpRules("\n").count).to.equal(2);
+        expect(new HttpRules(undefined).length).to.equal(2);
+        expect(new HttpRules(null).length).to.equal(2);
+        expect(new HttpRules("").length).to.equal(2);
+        expect(new HttpRules(" ").length).to.equal(2);
+        expect(new HttpRules("\t").length).to.equal(2);
+        expect(new HttpRules("\n").length).to.equal(2);
 
         expect(HttpRules.parseRule(undefined)).to.be.null;
         expect(HttpRules.parseRule(null)).to.be.null;

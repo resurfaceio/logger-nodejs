@@ -18,31 +18,31 @@ describe('HttpLogger', () => {
         expect(HttpRules.defaultRules).to.equal(HttpRules.strictRules);
         try {
             let logger = new HttpLogger({url: "https://mysite.com"});
-            expect(logger.rules).to.equal(HttpRules.strictRules);
+            expect(logger.rules.text).to.equal(HttpRules.strictRules);
             logger = new HttpLogger({url: "https://mysite.com", rules: '# 123'});
-            expect(logger.rules).to.equal('# 123');
+            expect(logger.rules.text).to.equal('# 123');
 
             HttpRules.defaultRules = "";
             logger = new HttpLogger({url: "https://mysite.com"});
-            expect(logger.rules).to.equal("");
+            expect(logger.rules.text).to.equal("");
             logger = new HttpLogger({url: "https://mysite.com", rules: '   '});
-            expect(logger.rules).to.equal("");
+            expect(logger.rules.text).to.equal("");
             logger = new HttpLogger({url: "https://mysite.com", rules: ' sample 42'});
-            expect(logger.rules).to.equal(' sample 42');
+            expect(logger.rules.text).to.equal(' sample 42');
 
             HttpRules.defaultRules = "skip_compression";
             logger = new HttpLogger({url: "https://mysite.com"});
-            expect(logger.rules).to.equal("skip_compression");
+            expect(logger.rules.text).to.equal("skip_compression");
             logger = new HttpLogger({url: "https://mysite.com", rules: 'include default\nskip_submission\n'});
-            expect(logger.rules).to.equal("skip_compression\nskip_submission\n");
+            expect(logger.rules.text).to.equal("skip_compression\nskip_submission\n");
 
             HttpRules.defaultRules = "sample 42\n";
             logger = new HttpLogger({url: "https://mysite.com"});
-            expect(logger.rules).to.equal("sample 42\n");
+            expect(logger.rules.text).to.equal("sample 42\n");
             logger = new HttpLogger({url: "https://mysite.com", rules: '   '});
-            expect(logger.rules).to.equal("sample 42\n");
+            expect(logger.rules.text).to.equal("sample 42\n");
             logger = new HttpLogger({url: "https://mysite.com", rules: 'include default\nskip_submission\n'});
-            expect(logger.rules).to.equal("sample 42\n\nskip_submission\n");
+            expect(logger.rules.text).to.equal("sample 42\n\nskip_submission\n");
         } finally {
             HttpRules.defaultRules = HttpRules.strictRules;
         }
