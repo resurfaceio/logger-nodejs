@@ -161,7 +161,10 @@ describe('BaseLogger', () => {
         ];
         const msg = JSON.stringify(message);
         expect(parseable(msg)).to.be.true;
-        return logger.submit(msg);
+        logger.submit(msg).then(() => {
+            expect(logger.submit_failures).to.equal(0);
+            expect(logger.submit_successes).to.equal(1);
+        });
     });
 
     it('submits to demo url via http', () => {
@@ -175,7 +178,10 @@ describe('BaseLogger', () => {
         ];
         const msg = JSON.stringify(message);
         expect(parseable(msg)).to.be.true;
-        return logger.submit(msg);
+        logger.submit(msg).then(() => {
+            expect(logger.submit_failures).to.equal(0);
+            expect(logger.submit_successes).to.equal(1);
+        });
     });
 
     it('submits to demo url without compression', () => {
@@ -191,7 +197,10 @@ describe('BaseLogger', () => {
         ];
         const msg = JSON.stringify(message);
         expect(parseable(msg)).to.be.true;
-        return logger.submit(msg);
+        logger.submit(msg).then(() => {
+            expect(logger.submit_failures).to.equal(0);
+            expect(logger.submit_successes).to.equal(1);
+        });
     });
 
     it('submits to denied url', () => {
@@ -199,7 +208,10 @@ describe('BaseLogger', () => {
             const logger = new BaseLogger(MOCK_AGENT, {url: url});
             expect(logger.enableable).to.be.true;
             expect(logger.enabled).to.be.true;
-            expect(logger.submit('{}')).to.be.fulfilled;
+            logger.submit('{}').then(() => {
+                expect(logger.submit_failures).to.equal(1);
+                expect(logger.submit_successes).to.equal(0);
+            });
         }
     });
 
@@ -215,6 +227,8 @@ describe('BaseLogger', () => {
         expect(queue.length).to.equal(1);
         expect(logger.submit('{}')).to.be.fulfilled;
         expect(queue.length).to.equal(2);
+        expect(logger.submit_failures).to.equal(0);
+        expect(logger.submit_successes).to.equal(0);
     });
 
     it('silently ignores unexpected option classes', () => {
