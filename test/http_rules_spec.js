@@ -53,6 +53,17 @@ describe('HttpRules', () => {
         expect(rules.length).to.equal(4);
         rules = new HttpRules("include debug\nsample 50\ninclude debug\n");
         expect(rules.length).to.equal(5);
+
+        expect(HttpRules.defaultRules).to.equal(HttpRules.strictRules);
+        try {
+            HttpRules.defaultRules = "include debug";
+            rules = new HttpRules("");
+            expect(rules.length).to.equal(2);
+            expect(rules.allow_http_url).to.equal(true);
+            expect(rules.copy_session_field.length).to.equal(1);
+        } finally {
+            HttpRules.defaultRules = HttpRules.strictRules;
+        }
     });
 
     it('includes standard rules', () => {
@@ -71,6 +82,17 @@ describe('HttpRules', () => {
         expect(rules.length).to.equal(6);
         rules = new HttpRules("include standard\nsample 50\ninclude standard\n");
         expect(rules.length).to.equal(7);
+
+        expect(HttpRules.defaultRules).to.equal(HttpRules.strictRules);
+        try {
+            HttpRules.defaultRules = "include standard";
+            rules = new HttpRules("");
+            expect(rules.length).to.equal(3);
+            expect(rules.remove.length).to.equal(1);
+            expect(rules.replace.length).to.equal(2);
+        } finally {
+            HttpRules.defaultRules = HttpRules.strictRules;
+        }
     });
 
     it('includes strict rules', () => {
@@ -89,6 +111,17 @@ describe('HttpRules', () => {
         expect(rules.length).to.equal(4);
         rules = new HttpRules("include strict\nsample 50\ninclude strict\n");
         expect(rules.length).to.equal(5);
+
+        expect(HttpRules.defaultRules).to.equal(HttpRules.strictRules);
+        try {
+            HttpRules.defaultRules = "include strict";
+            rules = new HttpRules("");
+            expect(rules.length).to.equal(2);
+            expect(rules.remove.length).to.equal(1);
+            expect(rules.replace.length).to.equal(1);
+        } finally {
+            HttpRules.defaultRules = HttpRules.strictRules;
+        }
     });
 
     it('loads rules from file', () => {

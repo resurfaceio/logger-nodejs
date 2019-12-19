@@ -43,6 +43,10 @@ describe('HttpLogger', () => {
             expect(logger.rules.text).to.equal("sample 42\n");
             logger = new HttpLogger({url: "https://mysite.com", rules: 'include default\nskip_submission\n'});
             expect(logger.rules.text).to.equal("sample 42\n\nskip_submission\n");
+
+            HttpRules.defaultRules = "include debug";
+            logger = new HttpLogger({url: "https://mysite.com", rules: HttpRules.strictRules});
+            expect(logger.rules.text).to.equal(HttpRules.strictRules);
         } finally {
             HttpRules.defaultRules = HttpRules.strictRules;
         }
