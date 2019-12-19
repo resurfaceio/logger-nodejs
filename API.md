@@ -82,13 +82,13 @@ If no <a href="https://resurface.io/rules.html">rules</a> are provided when crea
 `include strict` will be applied. A different default value can be specified as shown below.
 
 ```js
-HttpLogger.defaultRules = 'include debug';
+HttpRules.defaultRules = 'include debug';
 ```
 
 When specifying multiple default rules, put each on a separate line. This is most easily done with a template literal.
 
 ```js
-HttpLogger.defaultRules = `
+HttpRules.defaultRules = `
     include debug
     sample 10
 `;
