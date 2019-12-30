@@ -228,7 +228,7 @@ describe('BaseLogger', () => {
         expect(logger.submit('{}')).to.be.fulfilled;
         expect(queue.length).to.equal(2);
         expect(logger.submit_failures).to.equal(0);
-        expect(logger.submit_successes).to.equal(0);
+        expect(logger.submit_successes).to.equal(2);
     });
 
     it('silently ignores unexpected option classes', () => {
