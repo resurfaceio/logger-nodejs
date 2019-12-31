@@ -82,6 +82,7 @@ describe('HttpMessage', () => {
         expect(msg).not.to.contain('request_method');
         expect(msg).not.to.contain('request_param');
         expect(msg).not.to.contain('request_url');
+        expect(msg).not.to.contain('interval');
     });
 
     it('formats response', () => {
@@ -142,6 +143,7 @@ describe('HttpMessage', () => {
         expect(msg).not.to.contain('response_body');
         expect(msg).not.to.contain('response_code');
         expect(msg).not.to.contain('response_header');
+        expect(msg).not.to.contain('interval');
     });
 
 });
