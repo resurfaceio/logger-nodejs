@@ -10,9 +10,9 @@ Visit <a href="https://resurface.io">resurface.io</a> for general information on
 <ul>
 <li><a href="#dependencies">Dependencies</a></li>
 <li><a href="#installing_with_npm">Installing With npm</a></li>
-<li><a href="#logging_from_express_route">Logging From Express Route</a></li>
 <li><a href="#logging_from_express_middleware">Logging From Express Middleware</a></li>
 <li><a href="#logging_from_apollo_server_on_express">Logging From Apollo Server on Express</a></li>
+<li><a href="#logging_from_express_route">Logging From Specific Express Routes</a></li>
 <li><a href="#logging_with_api">Logging With API</a></li>
 <li><a href="#privacy">Protecting User Privacy</a></li>
 </ul>
@@ -29,30 +29,6 @@ Requires Node.js 8.x or later. No other dependencies to conflict with your app.
 
 ```
 npm install resurfaceio-logger --save
-```
-
-<a name="logging_from_express_route"/>
-
-## Logging From Express Route
-
-After <a href="#installing_with_npm">installing the module</a>, create a logger and call it from the routes of interest.
-
-```js
-const express = require('express');
-const app = express();
-
-const resurfaceio = require('resurfaceio-logger');
-const logger = new resurfaceio.HttpLogger({
-    url: 'https://...',
-    rules: 'include strict'
-});
-
-app.get('/', function (request, response) {
-    response.render('pages/index', function (e, html) {
-        response.status(200).send(html);
-        resurfaceio.HttpMessage.send(logger, request, response, html);
-    });
-});
 ```
 
 <a name="logging_from_express_middleware"/>
@@ -95,6 +71,30 @@ resurfaceio.HttpLoggerForExpress.add(app, {
 const server = new ApolloServer({ ... });
 
 server.applyMiddleware({ app });
+```
+
+<a name="logging_from_express_route"/>
+
+## Logging From Specific Express Routes
+
+After <a href="#installing_with_npm">installing the module</a>, create a logger and call it from the routes of interest.
+
+```js
+const express = require('express');
+const app = express();
+
+const resurfaceio = require('resurfaceio-logger');
+const logger = new resurfaceio.HttpLogger({
+    url: 'https://...',
+    rules: 'include strict'
+});
+
+app.get('/', function (request, response) {
+    response.render('pages/index', function (e, html) {
+        response.status(200).send(html);
+        resurfaceio.HttpMessage.send(logger, request, response, html);
+    });
+});
 ```
 
 <a name="logging_with_api"/>
