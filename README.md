@@ -21,7 +21,7 @@ Visit <a href="https://resurface.io">resurface.io</a> for general information on
 
 ## Dependencies
 
-Requires Node.js 8.x or later. No other dependencies to conflict with your app.
+Requires Node.js 10.x or later. No other dependencies to conflict with your app.
 
 <a name="installing_with_npm"/>
 
