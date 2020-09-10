@@ -85,7 +85,10 @@ describe('BaseLogger', () => {
         const metadata_id = logger.metadata_id;
         expect(metadata_id).to.exist;
         expect(metadata_id).to.be.a('string');
-        expect(metadata_id.length).to.equal(20);
+        expect(metadata_id.length).to.equal(32);
+        expect(metadata_id).not.to.contain('\\');
+        expect(metadata_id).not.to.contain('\"');
+        expect(metadata_id).not.to.contain('\'');
         expect(logger['metadata_id']).to.equal(metadata_id);
         expect(logger['_metadata_id']).to.equal(metadata_id);
     });

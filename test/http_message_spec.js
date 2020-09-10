@@ -29,7 +29,7 @@ describe('HttpMessage', () => {
         expect(msg).to.contain(`[\"host\",\"${HttpLogger.host_lookup()}\"]`);
         expect(msg).to.contain("[\"message_type\",\"metadata\"]");
         expect(msg).to.contain("[\"metadata_id\",\"");
-        expect(msg).to.contain(`[\"version\",\"${HttpLogger.version_lookup()}\"]`);
+        expect(msg).to.contain(`[\"metadata_id\",\"${logger.metadata_id}\"]`);
         expect(msg).not.to.contain("[\"interval");
         expect(msg).not.to.contain("[\"now");
         expect(msg).not.to.contain("[\"request_");
@@ -43,6 +43,7 @@ describe('HttpMessage', () => {
         expect(queue.length).to.equal(2);
         const msg = queue[1];
         expect(parseable(msg)).to.be.true;
+        expect(msg).to.contain(`[\"metadata_id\",\"${logger.metadata_id}\"]`);
         expect(msg).to.contain(`[\"now\",\"${helper.MOCK_NOW}\"]`);
         expect(msg).to.contain("[\"request_method\",\"GET\"]");
         expect(msg).to.contain(`[\"request_url\",\"${helper.MOCK_URL}\"]`);
