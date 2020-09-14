@@ -52,6 +52,13 @@ describe('HttpLogger', () => {
         }
     });
 
+    it('silently ignores writes to rules', () => {
+        const logger = new HttpLogger();
+        logger._rules = null;
+        logger['_rules'] = null;
+        expect(logger.rules.text).to.equal(HttpRules.defaultRules);
+    });
+
     it('uses allow_http_url rules', () => {
         let logger = new HttpLogger("http://mysite.com");
         expect(logger.enableable).to.equal(false);
