@@ -80,25 +80,12 @@ describe('BaseLogger', () => {
         expect(logger['_host']).to.equal(BaseLogger.host_lookup());
     });
 
-    it('has valid metadata id', () => {
-        const logger = new BaseLogger();
-        const metadata_id = logger.metadata_id;
-        expect(metadata_id).to.exist;
-        expect(metadata_id).to.be.a('string');
-        expect(metadata_id.length).to.equal(32);
-        expect(metadata_id).not.to.contain('\\');
-        expect(metadata_id).not.to.contain('\"');
-        expect(metadata_id).not.to.contain('\'');
-        expect(logger['metadata_id']).to.equal(metadata_id);
-        expect(logger['_metadata_id']).to.equal(metadata_id);
-    });
-
     it('has valid version', () => {
         const version = BaseLogger.version_lookup();
         expect(version).to.exist;
         expect(version).to.be.a('string');
         expect(version.length).to.be.above(0);
-        expect(version).to.startsWith('2.1.');
+        expect(version).to.startsWith('2.0.');
         expect(version).not.to.contain('\\');
         expect(version).not.to.contain('\"');
         expect(version).not.to.contain('\'');
@@ -294,16 +281,6 @@ describe('BaseLogger', () => {
         logger.host = '1234';
         logger['host'] = '1234';
         expect(logger.host).to.equal(BaseLogger.host_lookup());
-    });
-
-    it('silently ignores writes to metadata id', () => {
-        const logger = new BaseLogger(MOCK_AGENT);
-        logger._metadata_id = '1234';
-        logger['_metadata_id'] = '1234';
-        expect(logger.metadata_id).not.to.equal('1234');
-        logger.metadata_id = '1234';
-        logger['metadata_id'] = '1234';
-        expect(logger.metadata_id).not.to.equal('1234');
     });
 
     it('silently ignores writes to queue', () => {
