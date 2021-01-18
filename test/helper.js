@@ -1,4 +1,4 @@
-// © 2016-2020 Resurface Labs Inc.
+// © 2016-2021 Resurface Labs Inc.
 
 const resurfaceio = require('../lib/all');
 const DemoURL = 'https://demo.resurface.io/ping';
