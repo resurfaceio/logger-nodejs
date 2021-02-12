@@ -46,8 +46,8 @@ const app = express();
 
 const resurfaceio = require('resurfaceio-logger');
 resurfaceio.HttpLoggerForExpress.add(app, {
-    url: 'https://...', 
-    rules: 'include strict'
+    url: 'http://localhost:4001/message', 
+    rules: 'include debug'
 });
 
 // define routes
@@ -64,8 +64,8 @@ const app = express();
 
 const resurfaceio = require('resurfaceio-logger');
 resurfaceio.HttpLoggerForExpress.add(app, {
-    url: 'https://...', 
-    rules: 'include strict'
+    url: 'http://localhost:4001/message', 
+    rules: 'include debug'
 });
 
 const server = new ApolloServer({ ... });
@@ -85,8 +85,8 @@ const app = express();
 
 const resurfaceio = require('resurfaceio-logger');
 const logger = new resurfaceio.HttpLogger({
-    url: 'https://...',
-    rules: 'include strict'
+    url: 'http://localhost:4001/message',
+    rules: 'include debug'
 });
 
 app.get('/', function (request, response) {
@@ -111,7 +111,7 @@ the options described above, but also offers the greatest flexibility and contro
 ## Protecting User Privacy
 
 Loggers always have an active set of <a href="https://resurface.io/rules.html">rules</a> that control what data is logged
-and how sensitive data is masked. All of the examples above apply a predefined set of rules (`include strict`),
+and how sensitive data is masked. All of the examples above apply a predefined set of rules (`include debug`),
 but logging rules are easily customized to meet the needs of any application.
 
 <a href="https://resurface.io/rules.html">Logging rules documentation</a>
