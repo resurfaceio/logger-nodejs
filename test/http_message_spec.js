@@ -25,9 +25,7 @@ describe('HttpMessage', () => {
         expect(queue.length).to.equal(1);
         const msg = queue[0];
         expect(parseable(msg)).to.be.true;
-        expect(msg).to.contain(`[\"agent\",\"${HttpLogger.AGENT}\"]`);
         expect(msg).to.contain(`[\"host\",\"${HttpLogger.host_lookup()}\"]`);
-        expect(msg).to.contain(`[\"version\",\"${HttpLogger.version_lookup()}\"]`);
         expect(msg).to.contain(`[\"now\",\"${helper.MOCK_NOW}\"]`);
         expect(msg).to.contain("[\"request_method\",\"GET\"]");
         expect(msg).to.contain(`[\"request_url\",\"${helper.MOCK_URL}\"]`);
