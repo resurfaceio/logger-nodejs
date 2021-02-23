@@ -1,9 +1,10 @@
 # resurfaceio-logger-nodejs
-Logging usage of Node.js-based services, with user privacy by design.
+Easily log API requests and responses to your own <a href="https://resurface.io">system of record</a>.
 
-Visit <a href="https://resurface.io">resurface.io</a> for general information on usage logging.
-
-[![npm version](https://badge.fury.io/js/resurfaceio-logger.svg)](https://badge.fury.io/js/resurfaceio-logger)
+[![npm](https://img.shields.io/npm/v/resurfaceio-logger)](https://badge.fury.io/js/resurfaceio-logger)
+[![CodeFactor](https://www.codefactor.io/repository/github/resurfaceio/logger-nodejs/badge)](https://www.codefactor.io/repository/github/resurfaceio/logger-nodejs)
+[![License](https://img.shields.io/github/license/resurfaceio/logger-nodejs)](https://github.com/resurfaceio/logger-nodejs/blob/master/LICENSE)
+[![Contributing](https://img.shields.io/badge/contributions-welcome-green.svg)](https://github.com/resurfaceio/logger-nodejs/blob/master/CONTRIBUTING.md)
 
 ## Contents
 
