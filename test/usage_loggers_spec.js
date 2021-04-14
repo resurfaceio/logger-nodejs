@@ -2,9 +2,9 @@
 
 const chai = require('chai');
 
-const {expect} = chai;
+const { expect } = chai;
 
-const {UsageLoggers} = require('../lib/all');
+const { UsageLoggers } = require('../lib/all');
 
 /**
  * Tests against utilities for all usage loggers.

@@ -3,11 +3,11 @@
 const chai = require('chai');
 chai.use(require('chai-string'));
 
-const {expect} = chai;
+const { expect } = chai;
 
 const resurfaceio = require('../lib/all');
 
-const {HttpRules} = resurfaceio;
+const { HttpRules } = resurfaceio;
 
 /**
  * Tests against rules implementation for HTTP logger.

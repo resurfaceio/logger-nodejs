@@ -3,8 +3,8 @@
 const resurfaceio = require('../lib/all');
 
 const DemoURL = 'https://demo.resurface.io/ping';
-const {HttpRequestImpl} = resurfaceio;
-const {HttpResponseImpl} = resurfaceio;
+const { HttpRequestImpl } = resurfaceio;
+const { HttpResponseImpl } = resurfaceio;
 
 module.exports = {
   DEMO_URL: DemoURL,
@@ -83,7 +83,7 @@ SENSITIVE
   },
 
   parseable: (msg) => {
-    if (msg === undefined || !msg.startsWith('[') || !msg.endsWith(']') || msg.includes('[]') || msg.includes(',,')) return false;
+    if (!msg || !msg.startsWith('[') || !msg.endsWith(']') || msg.includes('[]') || msg.includes(',,')) return false;
     try {
       JSON.parse(msg);
       return true;

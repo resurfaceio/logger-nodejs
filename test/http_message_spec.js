@@ -4,17 +4,17 @@ const chai = require('chai');
 chai.use(require('chai-as-promised'));
 chai.use(require('chai-string'));
 
-const {expect} = chai;
+const { expect } = chai;
 const helper = require('./helper');
 
-const {parseable} = helper;
+const { parseable } = helper;
 
 const resurfaceio = require('../lib/all');
 
-const {HttpLogger} = resurfaceio;
-const {HttpMessage} = resurfaceio;
-const {HttpRequestImpl} = resurfaceio;
-const {HttpResponseImpl} = resurfaceio;
+const { HttpLogger } = resurfaceio;
+const { HttpMessage } = resurfaceio;
+const { HttpRequestImpl } = resurfaceio;
+const { HttpResponseImpl } = resurfaceio;
 
 /**
  * Tests against message formatter for HTTP/HTTPS protocol.
@@ -44,7 +44,7 @@ describe('HttpMessage', () => {
     expect(queue.length).to.equal(1);
     const msg = queue[0];
     expect(parseable(msg)).to.be.true;
-    expect(msg).to.contain(`["request_body","${  helper.MOCK_HTML  }"]`);
+    expect(msg).to.contain(`["request_body","${helper.MOCK_HTML}"]`);
     expect(msg).to.contain('["request_header:content-type","Application/JSON"]');
     expect(msg).to.contain('["request_method","POST"]');
     expect(msg).to.contain(`[\"request_param:message\",\"${helper.MOCK_JSON_ESCAPED}\"]`);
@@ -104,7 +104,7 @@ describe('HttpMessage', () => {
     expect(queue.length).to.equal(1);
     const msg = queue[0];
     expect(parseable(msg)).to.be.true;
-    expect(msg).to.contain(`["response_body","${  helper.MOCK_HTML2  }"]`);
+    expect(msg).to.contain(`["response_body","${helper.MOCK_HTML2}"]`);
     expect(msg).to.contain(`[\"response_code\",\"200\"]`);
     expect(msg).to.contain('["response_header:content-type","text/html; charset=utf-8"]');
   });

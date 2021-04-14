@@ -2,10 +2,10 @@
 
 const chai = require('chai');
 
-const {expect} = chai;
+const { expect } = chai;
 const helper = require('./helper');
 
-const {parseable} = helper;
+const { parseable } = helper;
 
 describe('Helper', () => {
   it('detects good json', () => {

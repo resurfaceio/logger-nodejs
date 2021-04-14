@@ -4,9 +4,9 @@ const chai = require('chai');
 chai.use(require('chai-as-promised'));
 chai.use(require('chai-string'));
 
-const {expect} = chai;
+const { expect } = chai;
 
-const {HttpRequestImpl} = require('../lib/all');
+const { HttpRequestImpl } = require('../lib/all');
 
 /**
  * Tests against mock request implementation.

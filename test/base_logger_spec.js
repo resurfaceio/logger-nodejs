@@ -4,19 +4,19 @@ const chai = require('chai');
 chai.use(require('chai-as-promised'));
 chai.use(require('chai-string'));
 
-const {expect} = chai;
+const { expect } = chai;
 
 const helper = require('./helper');
 
-const {DEMO_URL} = helper;
-const {MOCK_AGENT} = helper;
-const {MOCK_NOW} = helper;
-const {parseable} = helper;
+const { DEMO_URL } = helper;
+const { MOCK_AGENT } = helper;
+const { MOCK_NOW } = helper;
+const { parseable } = helper;
 
 const resurfaceio = require('../lib/all');
 
-const {BaseLogger} = resurfaceio;
-const {UsageLoggers} = resurfaceio;
+const { BaseLogger } = resurfaceio;
+const { UsageLoggers } = resurfaceio;
 
 /**
  * Tests against basic usage logger to embed or extend.

@@ -4,15 +4,15 @@ const chai = require('chai');
 chai.use(require('chai-as-promised'));
 chai.use(require('chai-string'));
 
-const {expect} = chai;
+const { expect } = chai;
 const helper = require('./helper');
 
-const {DEMO_URL} = helper;
+const { DEMO_URL } = helper;
 
 const resurfaceio = require('../lib/all');
 
-const {HttpLogger} = resurfaceio;
-const {UsageLoggers} = resurfaceio;
+const { HttpLogger } = resurfaceio;
+const { UsageLoggers } = resurfaceio;
 
 /**
  * Tests against usage logger for HTTP/HTTPS protocol.
