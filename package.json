@@ -8,7 +8,7 @@
   },
   "scripts": {
     "test": "mocha --reporter spec --timeout 10000",
-    "prettier-format": "prettier --config .prettierrc \"(lib|test)/**/*.js\" --write",
+    "prettier": "prettier --config .prettierrc \"(lib|test)/**/*.js\" --write",
     "lint": "eslint . --ext .js --fix"
   },
   "husky": {
