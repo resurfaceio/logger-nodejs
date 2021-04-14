@@ -7,7 +7,14 @@
     "lib": "./lib"
   },
   "scripts": {
-    "test": "mocha --reporter spec --timeout 10000"
+    "test": "mocha --reporter spec --timeout 10000",
+    "prettier-format": "prettier --config .prettierrc \"(lib|test)/**/*.js\" --write",
+    "lint": "eslint . --ext .js --fix"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "npm run prettier-format && npm run lint"
+    }
   },
   "repository": {
     "type": "git",
@@ -23,6 +30,12 @@
     "chai": "latest",
     "chai-as-promised": "latest",
     "chai-string": "latest",
-    "mocha": "latest"
+    "eslint": "^7.24.0",
+    "eslint-config-airbnb-base": "^14.2.1",
+    "eslint-config-prettier": "^8.2.0",
+    "eslint-plugin-import": "^2.22.1",
+    "husky": "^6.0.0",
+    "mocha": "latest",
+    "prettier": "^2.2.1"
   }
 }
