@@ -83,7 +83,7 @@ SENSITIVE
   },
 
   parseable: (msg) => {
-    if (msg == undefined || !msg.startsWith('[') || !msg.endsWith(']') || msg.includes('[]') || msg.includes(',,')) return false;
+    if (msg === undefined || !msg.startsWith('[') || !msg.endsWith(']') || msg.includes('[]') || msg.includes(',,')) return false;
     try {
       JSON.parse(msg);
       return true;
