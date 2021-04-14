@@ -27,10 +27,10 @@ describe('HttpMessage', () => {
     expect(queue.length).to.equal(1);
     const msg = queue[0];
     expect(parseable(msg)).to.be.true;
-    expect(msg).to.contain(`[\"host\",\"${HttpLogger.host_lookup()}\"]`);
-    expect(msg).to.contain(`[\"now\",\"${helper.MOCK_NOW}\"]`);
+    expect(msg).to.contain(`["host","${HttpLogger.host_lookup()}"]`);
+    expect(msg).to.contain(`["now","${helper.MOCK_NOW}"]`);
     expect(msg).to.contain('["request_method","GET"]');
-    expect(msg).to.contain(`[\"request_url\",\"${helper.MOCK_URL}\"]`);
+    expect(msg).to.contain(`["request_url","${helper.MOCK_URL}"]`);
     expect(msg).not.to.contain('request_body');
     expect(msg).not.to.contain('request_header');
     expect(msg).not.to.contain('request_param');
@@ -47,8 +47,8 @@ describe('HttpMessage', () => {
     expect(msg).to.contain(`["request_body","${helper.MOCK_HTML}"]`);
     expect(msg).to.contain('["request_header:content-type","Application/JSON"]');
     expect(msg).to.contain('["request_method","POST"]');
-    expect(msg).to.contain(`[\"request_param:message\",\"${helper.MOCK_JSON_ESCAPED}\"]`);
-    expect(msg).to.contain(`[\"request_url\",\"${helper.MOCK_URL}?${helper.MOCK_QUERY_STRING}\"]`);
+    expect(msg).to.contain(`["request_param:message","${helper.MOCK_JSON_ESCAPED}"]`);
+    expect(msg).to.contain(`["request_url","${helper.MOCK_URL}?${helper.MOCK_QUERY_STRING}"]`);
     expect(msg).not.to.contain('request_param:foo');
   });
 
@@ -64,8 +64,8 @@ describe('HttpMessage', () => {
     expect(msg).to.contain('["request_header:content-type","Application/JSON"]');
     expect(msg).to.contain('["request_method","POST"]');
     expect(msg).to.contain('["request_param:abc","123, 234"]');
-    expect(msg).to.contain(`[\"request_param:message\",\"${helper.MOCK_JSON_ESCAPED}\"]`);
-    expect(msg).to.contain(`[\"request_url\",\"${helper.MOCK_URL}?${helper.MOCK_QUERY_STRING}\"]`);
+    expect(msg).to.contain(`["request_param:message","${helper.MOCK_JSON_ESCAPED}"]`);
+    expect(msg).to.contain(`["request_url","${helper.MOCK_URL}?${helper.MOCK_QUERY_STRING}"]`);
     expect(msg).not.to.contain('request_body');
     expect(msg).not.to.contain('request_param:foo');
   });
@@ -92,7 +92,7 @@ describe('HttpMessage', () => {
     expect(queue.length).to.equal(1);
     const msg = queue[0];
     expect(parseable(msg)).to.be.true;
-    expect(msg).to.contain(`[\"response_code\",\"200\"]`);
+    expect(msg).to.contain(`["response_code","200"]`);
     expect(msg).not.to.contain('response_body');
     expect(msg).not.to.contain('response_header');
   });
@@ -105,7 +105,7 @@ describe('HttpMessage', () => {
     const msg = queue[0];
     expect(parseable(msg)).to.be.true;
     expect(msg).to.contain(`["response_body","${helper.MOCK_HTML2}"]`);
-    expect(msg).to.contain(`[\"response_code\",\"200\"]`);
+    expect(msg).to.contain(`["response_code","200"]`);
     expect(msg).to.contain('["response_header:content-type","text/html; charset=utf-8"]');
   });
 
@@ -116,7 +116,7 @@ describe('HttpMessage', () => {
     expect(queue.length).to.equal(1);
     const msg = queue[0];
     expect(parseable(msg)).to.be.true;
-    expect(msg).to.contain(`[\"response_code\",\"200\"]`);
+    expect(msg).to.contain(`["response_code","200"]`);
     expect(msg).to.contain('["response_header:content-type","text/html; charset=utf-8"]');
     expect(msg).not.to.contain('response_body');
   });
