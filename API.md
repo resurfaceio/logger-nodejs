@@ -10,7 +10,7 @@
 <li><a href="#enabling_and_disabling_loggers">Enabling and Disabling Loggers</a></li>
 </ul>
 
-<a name="creating_loggers"/>
+<a name="creating_loggers" ></a>
 
 ## Creating Loggers 
 
@@ -35,7 +35,7 @@ logger = new HttpLogger({url: 'https://...', rules: 'include strict'});
 logger = new HttpLogger({url: 'https://...', rules: 'file://./rules.txt'});
 ```
 
-<a name="logging_http"/>
+<a name="logging_http"/></a>
 
 ## Logging HTTP Calls
 
@@ -74,7 +74,7 @@ response.statusCode = 200;
 HttpMessage.send(logger, request, response);
 ```
 
-<a name="setting_default_rules"/>
+<a name="setting_default_rules"/></a>
 
 ## Setting Default Rules
 
@@ -94,7 +94,7 @@ HttpRules.defaultRules = `
 `;
 ```
 
-<a name="setting_default_url"/>
+<a name="setting_default_url"/></a>
 
 ## Setting Default URL
 
@@ -110,7 +110,7 @@ export USAGE_LOGGERS_URL="https://..."
 heroku config:set USAGE_LOGGERS_URL=https://...
 ```
 
-<a name="enabling_and_disabling_loggers"/>
+<a name="enabling_and_disabling_loggers"/></a>
 
 ## Enabling and Disabling Loggers
 
