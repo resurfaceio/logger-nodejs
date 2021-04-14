@@ -7,9 +7,9 @@ grateful to these developers for all their efforts.
 
 ### Chai
 
-http://chaijs.com<br>Used under MIT License
+http://chaijs.com<br />Used under MIT License
 
-Copyright &copy; 2016 Chai.js Assertion Library
+Copyright &copy; 2016 Chai.js Assertion Libr /ary
 
 THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A
 PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF
@@ -17,17 +17,17 @@ CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFT
 
 ### Chai-as-Promised
 
-https://github.com/domenic/chai-as-promised<br>Used under "Do What the Fuck You Want to Public License"
+https://github.com/domenic/chai-as-promised<br />Used under "Do What the Fuck You Want to Public License"
 
 Copyright &copy; 2004 Sam Hocevar (sam@hocevar.net)
 
-DO WHAT THE FUCK YOU WANT TO PUBLIC LICENSE<br>
-TERMS AND CONDITIONS FOR COPYING, DISTRIBUTION AND MODIFICATION<br>
+DO WHAT THE FUCK YOU WANT TO PUBLIC LICENSE<br />
+TERMS AND CONDITIONS FOR COPYING, DISTRIBUTION AND MODIFICATION<br />
 0. You just DO WHAT THE FUCK YOU WANT TO.
 
 ### Chai-string
 
-https://github.com/onechiporenko/chai-string<br>Used under MIT License
+https://github.com/onechiporenko/chai-string<br />Used under MIT License
 
 Copyright &copy; 2013 Oleg Nechiporenko
 
@@ -37,7 +37,7 @@ CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFT
 
 ### Mocha
 
-https://mochajs.org<br>Used under MIT License
+https://mochajs.org<br />Used under MIT License
 
 Copyright &copy; 2011-2017 JS Foundation and contributors
 
@@ -47,7 +47,7 @@ CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFT
 
 ### Node.js
 
-https://nodejs.org<br>Used under MIT License
+https://nodejs.org<br />Used under MIT License
 
 Copyright Joyent, Inc. and other Node contributors. All rights reserved.
 
@@ -55,9 +55,29 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
 PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF
 CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
+### Eslint
+
+https://github.com/eslint/eslint<br />Used under MIT License
+
+Copyright JS Foundation and other contributors, https://js.foundation. All rights reserved.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A
+PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF
+CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+
+
+### Prettier
+
+https://github.com/prettier/prettier <br />Used under MIT License
+
+Copyright © James Long and contributors. All rights reserved.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A
+PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF
+CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 ### valid-url
 
-https://github.com/ogt/valid-url<br>Used under MIT License
+https://github.com/ogt/valid-url<br />Used under MIT License
 
 Copyright &copy; 2013 Odysseas Tsatalos and oDesk Corporation
 
