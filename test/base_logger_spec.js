@@ -153,60 +153,6 @@ describe('BaseLogger', () => {
     expect(logger.enabled).to.be.false;
   });
 
-  it('submits to demo url', () => {
-    const logger = new BaseLogger(MOCK_AGENT, { url: DEMO_URL });
-    const message = [
-      ['agent', logger.agent],
-      ['version', logger.version],
-      ['now', MOCK_NOW],
-      ['protocol', 'https'],
-    ];
-    const msg = JSON.stringify(message);
-    expect(parseable(msg)).to.be.true;
-    logger.submit(msg).then(() => {
-      expect(logger.submit_failures).to.equal(0);
-      expect(logger.submit_successes).to.equal(1);
-    });
-  });
-
-  it('submits to demo url via http', () => {
-    const logger = new BaseLogger(MOCK_AGENT, {
-      url: DEMO_URL.replace('https://', 'http://'),
-    });
-    expect(logger.url).to.startsWith('http://');
-    const message = [
-      ['agent', logger.agent],
-      ['version', logger.version],
-      ['now', MOCK_NOW],
-      ['protocol', 'http'],
-    ];
-    const msg = JSON.stringify(message);
-    expect(parseable(msg)).to.be.true;
-    logger.submit(msg).then(() => {
-      expect(logger.submit_failures).to.equal(0);
-      expect(logger.submit_successes).to.equal(1);
-    });
-  });
-
-  it('submits to demo url without compression', () => {
-    const logger = new BaseLogger(MOCK_AGENT, { url: DEMO_URL });
-    logger.skip_compression = true;
-    expect(logger.skip_compression).to.be.true;
-    const message = [
-      ['agent', logger.agent],
-      ['version', logger.version],
-      ['now', MOCK_NOW],
-      ['protocol', 'https'],
-      ['skip_compression', 'true'],
-    ];
-    const msg = JSON.stringify(message);
-    expect(parseable(msg)).to.be.true;
-    logger.submit(msg).then(() => {
-      expect(logger.submit_failures).to.equal(0);
-      expect(logger.submit_successes).to.equal(1);
-    });
-  });
-
   it('submits to denied url', () => {
     for (const url of helper.MOCK_URLS_DENIED) {
       const logger = new BaseLogger(MOCK_AGENT, { url });
