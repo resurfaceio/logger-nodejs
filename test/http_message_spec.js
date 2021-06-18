@@ -15,6 +15,7 @@ const { HttpLogger } = resurfaceio;
 const { HttpMessage } = resurfaceio;
 const { HttpRequestImpl } = resurfaceio;
 const { HttpResponseImpl } = resurfaceio;
+const { WriterWrapper } = resurfaceio;
 
 /**
  * Tests against message formatter for HTTP/HTTPS protocol.
@@ -144,5 +145,19 @@ describe('HttpMessage', () => {
     expect(msg).not.to.contain('response_code');
     expect(msg).not.to.contain('response_header');
     expect(msg).not.to.contain('interval');
+  });
+
+  it('caps at overflow limit', () => {
+    const queue = [];
+    const logger = new HttpLogger({ queue, rules: 'include debug' });
+    const response = new HttpResponseImpl();
+    response.write = () => {};
+    const wrapped = new WriterWrapper(response);
+    response.write(Buffer.alloc(wrapped.limit + 1, 0));
+    HttpMessage.send(logger, helper.mockRequest(), response, wrapped.logged());
+    expect(queue.length).to.equal(1);
+    const msg = queue[0];
+    expect(parseable(msg)).to.be.true;
+    expect(msg).to.contain(`["response_body","{\\"overflowed: ${wrapped.limit + 1}\\"}"]`);
   });
 });
