@@ -4,3 +4,4 @@
 *.iml
 node_modules/
 *-lock.json
+.vscode
