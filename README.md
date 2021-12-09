@@ -54,6 +54,27 @@ resurfaceio.HttpLoggerForExpress.add(app, {
 // define routes
 ```
 
+<a name="logging_from_koa_middleware"/>
+
+## Logging From Koa Middleware
+
+After <a href="#installing_with_npm">installing the module</a>, add a `HttpLoggerForKoa` instance to your app, after
+any body parsers in use.
+
+```js
+const Koa = require('koa');
+const app = new Koa();
+
+// add body parsers
+
+const resurfaceio = require('resurfaceio-logger');
+resurfaceio.HttpLoggerForKoa.add(app, {
+    url: 'http://localhost:4001/message', 
+    rules: 'include debug'
+});
+
+```
+
 <a name="logging_from_apollo_server_on_express"/>
 
 ## Logging From Apollo Server on Express
