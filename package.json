@@ -31,5 +31,8 @@
     "eslint-plugin-import": "^2.22.1",
     "mocha": "latest",
     "prettier": "^2.2.1"
+  },
+  "dependencies": {
+    "axios": "^0.24.0"
   }
 }
