@@ -22,7 +22,7 @@ Easily log API requests and responses to your own <a href="https://resurface.io"
 
 ## Dependencies
 
-Requires Node.js 10.x or later. No other dependencies to conflict with your app.
+Requires Node.js 10.x or later, and Axios http client. No other dependencies to conflict with your app.
 
 <a name="installing_with_npm"/>
 
