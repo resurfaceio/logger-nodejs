@@ -22,7 +22,7 @@ Easily log API requests and responses to your own <a href="https://resurface.io"
 
 ## Dependencies
 
-Requires Node.js 10.x or later. No other dependencies to conflict with your app.
+Requires Node.js 10.x or later, and Axios http client. No other dependencies to conflict with your app.
 
 <a name="installing_with_npm"/>
 
@@ -47,7 +47,7 @@ const app = express();
 
 const resurfaceio = require('resurfaceio-logger');
 resurfaceio.HttpLoggerForExpress.add(app, {
-    url: 'http://localhost:4001/message', 
+    url: 'http://localhost:7701/message', 
     rules: 'include debug'
 });
 
@@ -69,7 +69,7 @@ const app = new Koa();
 
 const resurfaceio = require('resurfaceio-logger');
 resurfaceio.HttpLoggerForKoa.add(app, {
-    url: 'http://localhost:4001/message', 
+    url: 'http://localhost:7701/message', 
     rules: 'include debug'
 });
 
@@ -86,7 +86,7 @@ const app = express();
 
 const resurfaceio = require('resurfaceio-logger');
 resurfaceio.HttpLoggerForExpress.add(app, {
-    url: 'http://localhost:4001/message', 
+    url: 'http://localhost:7701/message', 
     rules: 'include debug'
 });
 
@@ -107,7 +107,7 @@ const app = express();
 
 const resurfaceio = require('resurfaceio-logger');
 const logger = new resurfaceio.HttpLogger({
-    url: 'http://localhost:4001/message',
+    url: 'http://localhost:7701/message',
     rules: 'include debug'
 });
 
@@ -139,4 +139,4 @@ but logging rules are easily customized to meet the needs of any application.
 <a href="https://resurface.io/rules.html">Logging rules documentation</a>
 
 ---
-<small>&copy; 2016-2021 <a href="https://resurface.io">Resurface Labs Inc.</a></small>
+<small>&copy; 2016-2022 <a href="https://resurface.io">Resurface Labs Inc.</a></small>
