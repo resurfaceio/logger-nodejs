@@ -1,5 +1,5 @@
 # resurfaceio-logger-nodejs
-Easily log API requests and responses to your own <a href="https://resurface.io">system of record</a>.
+Easily log API requests and responses to your own <a href="https://resurface.io">security data lake</a>.
 
 [![npm](https://img.shields.io/npm/v/resurfaceio-logger)](https://badge.fury.io/js/resurfaceio-logger)
 [![CodeFactor](https://www.codefactor.io/repository/github/resurfaceio/logger-nodejs/badge)](https://www.codefactor.io/repository/github/resurfaceio/logger-nodejs)
