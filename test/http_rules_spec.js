@@ -1,4 +1,4 @@
-// © 2016-2023 Graylog, Inc.
+// © 2016-2024 Graylog, Inc.
 
 const chai = require('chai');
 chai.use(require('chai-string'));
